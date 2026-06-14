@@ -12,9 +12,9 @@
 - `MEMORY.md`: このリポジトリを作るための開発運用メモリ。
 - `knowledge/docs/requirements/Biz-compiler_要求定義.md`: 現時点の要求定義本体。
 - `knowledge/docs/README.md`: Compassから逃がした詳細知識をいつ読むかのread routing。
-- `knowledge/docs/meta/`: 数字工程に入らない本当のメタ土台の棚卸し。整備済み/未整備の一覧と更新ルールを置く。
+- `knowledge/docs/meta/`: 数字工程に入らない本当のメタ土台。Markdown台帳、state model、phase catalog、artifact placement、session/subagent brief、completion criteriaを置く。
 - `knowledge/docs/decisions/`: 設計・運用上の決定記録。
-- `knowledge/docs/lexicon/`: 用語定義と概念境界。
+- `knowledge/docs/lexicon/`: 用語定義と概念境界。v0では `gate`、`approval`、`validation`、`IR`、`contract`、`manifest`、`provenance`、`confidence`、`executor`、`N-interface`、`disposition`、`ledger`、`registry` を定義する。
 - `knowledge/docs/ir/`: IR、contract、schema、manifestの概念設計。
 - `knowledge/docs/method/`: phase設計、ENCRS、検証ループなどの方法論。
 - `knowledge/docs/casebook/`: 判断例、反例、良い/悪い設計の比較。
@@ -43,6 +43,8 @@
 - `USER.md` は、主に話しかけてくる相手の作業モデルを置く。個人プロフィールではない。
 - Compassはルートの `COMPASS.md` に置き、作業者やsubagentに思考の指向性を渡すdirection packetとして扱う。
 - Compassは短く保つ。メタ土台の棚卸し、用語、IR詳細、方法論、事例、評価条件、決定理由は `knowledge/docs/README.md` のread routingに従って分ける。
+- メタ土台v0は `knowledge/docs/meta/README.md` をMarkdown正本台帳として維持する。JSON台帳化は保留し、必要性が出るまでMarkdown運用にする。
+- メタ土台v0として、`state-model.md`、`phase-catalog.md`、`artifact-placement.md`、`session-brief.md`、`subagent-brief.md`、`completion-criteria.md`、`knowledge/docs/lexicon/README.md` を整備済みとして扱う。
 - 要求定義は `knowledge/docs/requirements/` に置く。
 - 決定記録、未承認候補、作業ログは `knowledge/` 配下でグループ化し、`docs` / `pending` / `journal` の役割は混ぜない。
 - フェーズ50のフローチャートHTMLは `template/50-consent/pipeline-flowchart/` に置く。`samples/` には置かない。
@@ -81,8 +83,8 @@
 
 ## 次に整える候補
 
-- `knowledge/docs/meta/` 内の未整備メタ土台: `phase-catalog.md`、`state-model.md`、`session-brief.md`、`subagent-brief.md`、`completion-criteria.md`、`artifact-placement.md`。
-- `knowledge/docs/lexicon/` v0: `provenance`、`confidence`、`gate`、`irreversible`、`N-interface` などの語彙定義。
+- `template/<数字phase>/` 側のphase-local README v0。`knowledge/docs/meta/phase-catalog.md` を参照し、各phase固有の成果物雛形はmetaではなくtemplate側に置く。
+- `registry-management`: Markdown台帳で不足が出るまでJSON化は保留。項目増加、更新漏れ、validator需要が出たら再検討する。
 - `knowledge/docs/casebook/` v0: 良い判断/悪い判断の対比事例。
 - `knowledge/docs/evaluation/` v0: Compassあり/なしで業務設計出力差を見るシナリオ。
 - `knowledge/docs/ir/` v0: 同意ビューJSONと実行IRの関係を固定する最小スキーマ。

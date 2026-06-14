@@ -20,8 +20,8 @@
 
 | 読むタイミング | 読む場所 | 用途 |
 |---|---|---|
-| メタ土台の棚卸し、配置判断、session/subagent brief、状態分類を扱う時 | `knowledge/docs/meta/` | 数字工程に入らない上位ルールと未整備/整備済み一覧 |
-| 用語の意味・語彙境界を決める時 | `knowledge/docs/lexicon/` | `provenance`、`confidence`、`gate`、`N-interface` などの定義 |
+| メタ土台の棚卸し、配置判断、session/subagent brief、状態分類、phase catalog、completion criteriaを扱う時 | `knowledge/docs/meta/` | 数字工程に入らない上位ルール、整備済み/未整備台帳、状態モデル、配置判断、brief型 |
+| 用語の意味・語彙境界を決める時 | `knowledge/docs/lexicon/` | `provenance`、`confidence`、`gate`、`approval`、`validation`、`N-interface` などの定義 |
 | IR、contract、schema、manifest、同意ビューJSONを触る時 | `knowledge/docs/ir/` | 契約データと機械可読仕様の読み方 |
 | phase設計、業務設計手順、検証ループ、ENCRS運用を考える時 | `knowledge/docs/method/` | 業務をどう読んで進めるかの方法論 |
 | 判断に迷う時、良い/悪い設計例を見たい時 | `knowledge/docs/casebook/` | 判断例、反例、比較ケース |
@@ -45,10 +45,10 @@
 
 - 作業種別に該当する Conditional Read Routing の該当ディレクトリ
 - 対象ファイルに関係する `knowledge/docs/decisions/`
+- 委譲時は `knowledge/docs/meta/subagent-brief.md` の型
 
 ## Boundary
 
 `COMPASS.md` に残すものは、作業者の思考の向き、価値順位、疑うもの、判断の倒し方である。
 
 `knowledge/docs/` に逃がすものは、メタ土台の棚卸し、用語定義、IR詳細、方法論、事例、評価条件、決定理由である。
-
