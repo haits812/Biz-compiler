@@ -48,10 +48,10 @@ knowledge/  確定知識、pending、journal、repo-local ops
 
 `Hello,world.md` は現在地を返すスモークテストである。
 
+外から叩くコマンドは1つだけ。ハロワ更新、検査、必要なら日本語commit、GitHub push、post-checkまでこのgateで行う。
+
 ```powershell
-.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 check
-.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 sync
-.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 publish `
+.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 `
   -Type "運用" `
   -Subject "何を変えたか" `
   -Reason "なぜ必要だったか" `
@@ -59,10 +59,11 @@ knowledge/  確定知識、pending、journal、repo-local ops
   -Risks "残っている注意点"
 ```
 
-構成を変えたら `sync` と `check` を通す。GitHubへ上げる時は `publish` を使い、日本語commit messageに `理由`、`確認`、`残リスク` を残す。
+変更がなければ、更新・検査だけしてcommit/push不要として正常終了する。GitHubへ上げる依頼はハロワ更新込みで扱う。
 
 ## Status
 
 このリポジトリは構想・要求定義・運用ルールを固めながら実装している開発作業場である。
 
 最新状態は `Hello,world.md` を見る。
+

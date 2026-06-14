@@ -8,10 +8,10 @@
 
 `Hello,world.md` を現在状態に同期・検査し、GitHubへ上げる時もこのgateでcommit/pushする。
 
+外から叩くコマンドは1つだけ。
+
 ```powershell
-.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 check
-.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 sync
-.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 publish `
+.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 `
   -Type "運用" `
   -Subject "何を変えたか" `
   -Reason "なぜ必要だったか" `
@@ -19,7 +19,7 @@
   -Risks "残っている注意点"
 ```
 
-`publish` は、`sync`、`check`、`git add -A`、日本語commit、`git push`、post-checkを順番に実行する。
+このコマンドは、ハロワ更新、検査、`git add -A`、日本語commit、`git push`、post-checkを順番に実行する。変更がなければcommit/push不要として正常終了する。
 
 ## skills/pending-memory/
 
@@ -36,3 +36,4 @@
 ```
 
 `approve` は候補を `knowledge/pending/approved/` へ移すだけで、正式ファイルを自動編集しない。正式反映では、対象ファイルの役割と既存記述を読んでから文脈込みで編集する。
+

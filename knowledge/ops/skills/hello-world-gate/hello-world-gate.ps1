@@ -1,8 +1,4 @@
 param(
-  [Parameter(Mandatory=$false, Position=0)]
-  [ValidateSet("check", "sync", "gate", "publish")]
-  [string]$Action = "check",
-
   [Parameter(Mandatory=$false)]
   [string]$Subject = "",
 
@@ -26,10 +22,6 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..\..\..")).Path
 $helloPath = Join-Path $repoRoot "Hello,world.md"
-
-if ($Action -eq "gate") {
-  $Action = "check"
-}
 
 $forbiddenRootDirs = @(
   "docs",
@@ -196,7 +188,7 @@ function Assert-HelloWorldStructure {
 
   foreach ($fileName in $requiredRootFiles) {
     $filePath = Join-Path $repoRoot $fileName
-    if ($fileName -eq "Hello,world.md" -and $Action -eq "sync") {
+    if ($fileName -eq "Hello,world.md" -and -not (Test-Path -LiteralPath $filePath -PathType Leaf)) {
       continue
     }
     if (-not (Test-Path -LiteralPath $filePath -PathType Leaf)) {
@@ -323,13 +315,15 @@ function New-HelloWorldContent {
     "",
     "## Gate Command",
     "",
-    "このファイルは knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1 で同期・検査・publishする。",
+    "このファイルは knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1 で同期・検査・commit/pushまで一気通貫する。",
     "",
     "~~~powershell",
-    ".\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 sync   # 現在地を再生成する",
-    ".\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 check  # stale / 嘘を検出して失敗する",
-    ".\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 gate   # check の別名",
-    ".\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 publish `  # sync/checkして日本語commit/push",
+    '.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 `',
+    '  -Type "運用" `',
+    '  -Subject "何を変えたか" `',
+    '  -Reason "なぜ必要だったか" `',
+    '  -Verified "何を確認したか" `',
+    '  -Risks "残っている注意点"',
     "~~~",
     "",
     "## What This Repo Is",
@@ -427,7 +421,12 @@ function New-HelloWorldContent {
     "確認コマンド:",
     "",
     "~~~powershell",
-    ".\knowledge\ops\skills\pending-memory\pending-review.ps1 list -Stage all",
+    '.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 `',
+    '  -Type "運用" `',
+    '  -Subject "何を変えたか" `',
+    '  -Reason "なぜ必要だったか" `',
+    '  -Verified "何を確認したか" `',
+    '  -Risks "残っている注意点"',
     "~~~",
     "",
     "## What Hello World Must Not Include",
@@ -446,7 +445,7 @@ function New-HelloWorldContent {
     "- knowledge/ の構成",
     "- output/ の業務ID生成ルール",
     "- pending / approved の状態をこのファイルで数える場合",
-    "- knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1 check が失敗した場合",
+    "- knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1 が失敗した場合",
     "",
     "## Smoke Test",
     "",
@@ -493,11 +492,11 @@ function Assert-JapaneseText {
   )
 
   if ([string]::IsNullOrWhiteSpace($Text)) {
-    throw "$Label is required for publish."
+    throw "$Label is required for hello-world-gate commit."
   }
 
   if ($Text -notmatch '[\p{IsHiragana}\p{IsKatakana}\p{IsCJKUnifiedIdeographs}]') {
-    throw "$Label must include Japanese text. Hello World publish commit messages are written in Japanese."
+    throw "$Label must include Japanese text. Hello World Gate commit messages are written in Japanese."
   }
 }
 
@@ -518,7 +517,7 @@ function Convert-ToBulletLines {
   return @($items | ForEach-Object { "- $_" })
 }
 
-function New-PublishCommitMessage {
+function New-GateCommitMessage {
   Assert-JapaneseText -Label "Type" -Text $Type
   Assert-JapaneseText -Label "Subject" -Text $Subject
   Assert-JapaneseText -Label "Reason" -Text $Reason
@@ -559,16 +558,16 @@ function Assert-HelloWorldMatches {
   param([Parameter(Mandatory=$true)][string]$ExpectedContent)
 
   if (-not (Test-Path -LiteralPath $helloPath -PathType Leaf)) {
-    throw "Hello,world.md is missing. Run: .\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 sync"
+    throw "Hello,world.md is missing and could not be generated."
   }
 
   $actual = Get-Content -LiteralPath $helloPath -Raw
   if ((Normalize-Text -Text $actual) -ne (Normalize-Text -Text $ExpectedContent)) {
-    throw "Hello World is stale or inaccurate. Run: .\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 sync"
+    throw "Hello World is stale or inaccurate after regeneration."
   }
 }
 
-function Invoke-HelloWorldPublish {
+function Invoke-HelloWorldGate {
   Set-Location -LiteralPath $repoRoot
 
   $insideWorkTree = Get-GitOutput -GitArgs @("rev-parse", "--is-inside-work-tree")
@@ -578,7 +577,7 @@ function Invoke-HelloWorldPublish {
 
   $branch = Get-GitOutput -GitArgs @("rev-parse", "--abbrev-ref", "HEAD")
   if ($branch -eq "HEAD") {
-    throw "Detached HEAD is not allowed for hello-world-gate publish."
+    throw "Detached HEAD is not allowed for hello-world-gate."
   }
 
   $remote = Get-GitOutput -GitArgs @("remote", "get-url", "origin")
@@ -596,10 +595,13 @@ function Invoke-HelloWorldPublish {
 
   $statusBefore = Get-GitOutput -GitArgs @("status", "--porcelain")
   if ([string]::IsNullOrWhiteSpace($statusBefore)) {
-    throw "No changes to publish after hello-world-gate sync/check."
+    Write-Output "hello-world-gate: no changes to commit or push"
+    Write-Output "hello-world-gate: final status"
+    Invoke-Git -GitArgs @("status", "--short", "--branch")
+    return
   }
 
-  $message = New-PublishCommitMessage
+  $message = New-GateCommitMessage
   $messagePath = Join-Path ([System.IO.Path]::GetTempPath()) ("hello-world-gate-message-{0}.txt" -f [System.Guid]::NewGuid().ToString("N"))
   Set-Content -LiteralPath $messagePath -Value $message -Encoding UTF8
 
@@ -609,7 +611,7 @@ function Invoke-HelloWorldPublish {
 
     & git diff --cached --quiet
     if ($LASTEXITCODE -eq 0) {
-      throw "No staged changes to publish."
+      throw "No staged changes to commit."
     }
     if ($LASTEXITCODE -ne 1) {
       throw "git diff --cached --quiet failed."
@@ -641,29 +643,7 @@ function Invoke-HelloWorldPublish {
   }
 }
 
-Assert-HelloWorldStructure
-$expected = New-HelloWorldContent
+Invoke-HelloWorldGate
 
-switch ($Action) {
-  "sync" {
-    Set-Content -LiteralPath $helloPath -Value $expected -Encoding UTF8
-    Write-Output "Synced: $helloPath"
-  }
-
-  "check" {
-    try {
-      Assert-HelloWorldMatches -ExpectedContent $expected
-    } catch {
-      Write-Error $_.Exception.Message
-      exit 1
-    }
-
-    Write-Output "Hello World gate passed."
-  }
-
-  "publish" {
-    Invoke-HelloWorldPublish
-  }
-}
 
 

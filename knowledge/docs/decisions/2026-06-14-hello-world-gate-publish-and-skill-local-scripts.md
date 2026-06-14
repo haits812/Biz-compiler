@@ -1,4 +1,4 @@
-# Hello World Gate がpublishまで担当する
+# Hello World Gate がcommit/pushまで担当する
 
 - Status: Accepted
 - Date: 2026-06-14
@@ -13,7 +13,7 @@ Biz-compilerには `Hello,world.md` を嘘にしないgateが必要である。
 
 ## Decision
 
-Biz-compilerでは、commit/push込みの公開処理も `hello-world-gate` が担当する。
+Biz-compilerでは、commit/push込みのGitHub反映も `hello-world-gate` が担当する。
 
 `commit-push-gate` というrepo-local Skillは作らない。
 
@@ -32,7 +32,7 @@ knowledge/ops/
       pending-review.ps1
 ```
 
-`hello-world-gate.ps1 publish` は、`sync`、`check`、`git add -A`、日本語commit、`git push`、post-checkを順番に実行する。
+外向けコマンドは `hello-world-gate.ps1` ひとつだけにする。このコマンドは、ハロワ更新、検査、`git add -A`、日本語commit、`git push`、post-checkを順番に実行する。
 
 ## Consequences
 

@@ -22,13 +22,15 @@
 
 ## Gate Command
 
-このファイルは knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1 で同期・検査・publishする。
+このファイルは knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1 で同期・検査・commit/pushまで一気通貫する。
 
 ~~~powershell
-.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 sync   # 現在地を再生成する
-.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 check  # stale / 嘘を検出して失敗する
-.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 gate   # check の別名
-.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 publish   # sync/checkして日本語commit/push
+.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 `
+  -Type "運用" `
+  -Subject "何を変えたか" `
+  -Reason "なぜ必要だったか" `
+  -Verified "何を確認したか" `
+  -Risks "残っている注意点"
 ~~~
 
 ## What This Repo Is
@@ -140,7 +142,12 @@ Current pending state at last verification:
 確認コマンド:
 
 ~~~powershell
-.\knowledge\ops\skills\pending-memory\pending-review.ps1 list -Stage all
+.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 `
+  -Type "運用" `
+  -Subject "何を変えたか" `
+  -Reason "なぜ必要だったか" `
+  -Verified "何を確認したか" `
+  -Risks "残っている注意点"
 ~~~
 
 ## What Hello World Must Not Include
@@ -159,7 +166,7 @@ Current pending state at last verification:
 - knowledge/ の構成
 - output/ の業務ID生成ルール
 - pending / approved の状態をこのファイルで数える場合
-- knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1 check が失敗した場合
+- knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1 が失敗した場合
 
 ## Smoke Test
 

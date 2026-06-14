@@ -1,6 +1,6 @@
 ---
 name: hello-world-gate
-description: Use when Biz-compiler repository work may affect Hello,world.md, current-state self-description, root/template/knowledge/output layout, pending counts, or when publishing repo changes through the Hello World gate.
+description: Biz-compilerで、ハロワやっといて/ハロワ見て/ハロワ更新しといて/githubあげといて/GitHub上げて/pushして等の依頼が出た時に使う。Hello,world.md更新、検査、日本語commit、GitHub pushまでを単一gateで行う。
 ---
 
 # Hello World Gate
@@ -19,15 +19,30 @@ description: Use when Biz-compiler repository work may affect Hello,world.md, cu
 
 `Hello,world.md` を嘘にしない。
 
-さらに、GitHubへ上げる時もこのgateを通す。Biz-compilerでは `commit-push-gate` という別Skill名を作らない。commit/pushまで含めて `hello-world-gate` が担当する。
+外から叩くコマンドは1つだけ。`hello-world-gate.ps1` は、ハロワ更新、検査、必要なら日本語commit、GitHub push、post-checkまでを一気通貫で行う。
+
+変更がなければ、更新・検査だけして「commit/push不要」として正常終了する。
+
+## 発話トリガー
+
+次のような言い方が出たら、このSkillを使う。
+
+| ユーザーの言い方 | 解釈 | 実行 |
+|---|---|---|
+| `ハロワやっといて` | ハロワ更新、検査、必要ならGitHubへ反映 | `hello-world-gate.ps1` |
+| `ハロワ見て` / `ハロワ確認して` | ハロワ更新、検査、必要ならGitHubへ反映 | `hello-world-gate.ps1` |
+| `ハロワ更新しといて` | ハロワ更新、検査、必要ならGitHubへ反映 | `hello-world-gate.ps1` |
+| `githubあげといて` / `GitHub上げて` | ハロワ更新・検査込みでGitHubへ反映 | `hello-world-gate.ps1` |
+| `pushして` / `pushしといて` | ハロワ更新・検査込みでGitHubへ反映 | `hello-world-gate.ps1` |
+
+GitHubへ上げる依頼は、必ずハロワ更新込みとして扱う。人間に `ハロワ更新してからgithubあげて` と二段で言わせない。
+
+`githubあげといて` と言われた時に、別の `commit-push-gate` を探したり作ったりしない。Biz-compilerでは `hello-world-gate.ps1` が唯一の出口である。
 
 ## コマンド
 
 ```powershell
-.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 check
-.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 sync
-.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 gate
-.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 publish `
+.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 `
   -Type "運用" `
   -Subject "何を変えたか" `
   -Reason "なぜ必要だったか" `
@@ -35,43 +50,19 @@ description: Use when Biz-compiler repository work may affect Hello,world.md, cu
   -Risks "残っている注意点"
 ```
 
-- `check`: 現在の `Hello,world.md` が実際の構成と一致するか検査する。
-- `sync`: 現在の構成から `Hello,world.md` を再生成する。
-- `gate`: `check` の別名。
-- `publish`: `sync`、`check`、`git add -A`、日本語commit、`git push`、post-checkを順番に実行する。
+やること:
 
-## いつ使うか
+1. 現在状態から `Hello,world.md` を再生成する。
+2. `Hello,world.md` が現在状態と一致するか検査する。
+3. 変更がなければ正常終了する。
+4. 変更があれば `git add -A` する。
+5. 日本語commit messageでcommitする。
+6. `git push` する。
+7. post-checkする。
 
-次に触る、または影響しそうな時は使う。
+## commit message
 
-- ルート構成、ルートファイル説明
-- 読み込み順、first-read files
-- `Hello,world.md`
-- `AGENTS.md`、`SOUL.md`、`USER.md`、`COMPASS.md`、`MEMORY.md`
-- `template/` のphase構成、Hello Worldに載るtemplate asset
-- `knowledge/` の構成、pending/approved件数、Hello Worldに載るops asset
-- `output/` の業務IDルール、実際の `output/` 配下ディレクトリ
-- このSkill自身、または `hello-world-gate.ps1`
-- GitHubへ変更をpushする時
-
-## 必須の流れ
-
-通常作業:
-
-1. リポジトリルート `D:\local\Biz-compiler` で作業する。
-2. 現在地を信じる必要があるなら先に `check` する。
-3. 変更する。
-4. `Hello,world.md` に載る状態を変えたなら同じターンで `sync` する。
-5. 完了前に必ず `check` を通す。
-
-GitHubへ上げる時:
-
-1. 変更を終える。
-2. `publish` を使う。
-3. commit messageは日本語で、`理由`、`確認`、`残リスク` を含める。
-4. `publish` が失敗したら完了扱いにしない。
-
-## publish のcommit message
+変更がある場合は、commit message用の引数を日本語で渡す。
 
 必須形:
 
@@ -92,38 +83,42 @@ GitHubへ上げる時:
 
 英語の技術語、ファイルパス、`git`、`IR`、`schema` などは混ざってよい。ただし文章としては日本語で読む前提にする。
 
-## syncするタイミング
+## いつ発火するか
 
-`sync` は変更後に実行する。先に実行しても意味がない。
+次に触る、または影響しそうな時は発火する。
 
-同じターンで `sync` する例:
-
-- root、`template/`、`knowledge/`、`output/` 配下の追加・移動・削除
-- first-read filesの意味や説明の変更
-- pending/approved状態の変更
-- `COMPASS.md` の役割説明やread routingの変更
-- `hello-world-gate.ps1` の生成ロジック変更
-
-説明だけのread-only作業なら通常は `check` のみ。`check` がstaleで落ちた時だけ、構造違反でないことを確認して `sync` する。
+- ルート構成、ルートファイル説明
+- 読み込み順、first-read files
+- `Hello,world.md`
+- `AGENTS.md`、`SOUL.md`、`USER.md`、`COMPASS.md`、`MEMORY.md`
+- `template/` のphase構成、Hello Worldに載るtemplate asset
+- `knowledge/` の構成、pending/approved件数、Hello Worldに載るops asset
+- `output/` の業務IDルール、実際の `output/` 配下ディレクトリ
+- このSkill自身、または `hello-world-gate.ps1`
+- GitHubへ変更をpushする時
 
 ## gateが止めるもの
 
-`check` は次を検出したら失敗する。
+このgateは次を検出したら失敗する。
 
 - 必須ルートディレクトリ/ファイルの欠落
 - 禁止ルートディレクトリの存在
 - `template/` の必須phase欠落
 - 同意ビューassetの欠落
 - `output/` のプレースホルダ、または命名違反の業務フォルダ
-- 実際の現在状態と `Hello,world.md` の差分
+- 再生成後も `Hello,world.md` が現在状態と一致しない状態
+- 変更があるのに日本語commit message情報が足りない状態
+- push失敗
 
 ## やらないこと
 
+- 外向けに `check`、`sync`、`publish` の複数コマンドを分けない。
 - Biz-compiler側に `commit-push-gate` Skillを作らない。
 - `knowledge/ops/` 直下に `.ps1` を置かない。
-- `publish` 前の日記ファイルを必須にしない。必要な記録は日本語commit messageへ集約する。
+- GitHub反映前の日記ファイルを必須にしない。必要な記録は日本語commit messageへ集約する。
 - Codex Desktopの `::git-*` directive は出さない。
 
 ## 報告
 
-完了報告では、`sync` 実行有無、`check` 結果、pushした場合はcommit hashとbranch、残リスクだけを短く書く。
+完了報告では、ハロワ更新・検査結果、commit/pushした場合はcommit hashとbranch、残リスクだけを短く書く。
+
