@@ -36,7 +36,7 @@
 | compass | 判断方位 | 作業者の思考prior、疑うもの、価値順位 | 整備済み | `COMPASS.md` | `SOUL.md`, `USER.md`, `knowledge/docs/README.md` | `COMPASS.md`, `knowledge/docs/README.md`, `MEMORY.md` | なし | 必要時だけ圧縮更新 |
 | soul | 対話姿勢 | agentの振る舞い、聞き取り姿勢、避ける失敗 | 整備済み | `SOUL.md` | `USER.md`, `COMPASS.md` | `SOUL.md`, `MEMORY.md` | なし | 維持 |
 | user-model | ユーザー作業モデル | 主利用者の進め方、嫌う混同、会話前提 | 整備済み | `USER.md` | `SOUL.md`, `COMPASS.md` | `USER.md`, `MEMORY.md` | なし | 維持 |
-| memory | 開発運用メモリ | knowledge候補を格上げするか捨てるかの判断口 | 整備済み | `MEMORY.md`, `knowledge/pending/`, `knowledge/journal/` | `knowledge/docs/meta/state-model.md`, `knowledge/ops/skills/pending-memory/` | `MEMORY.md`, 必要なら `knowledge/docs/decisions/` | state-model | 常時効くものだけ格上げし、不要なら捨てる |
+| memory | 開発運用メモリ | 常時効く決定済み事項と現在構成 | 整備済み | `MEMORY.md` | `knowledge/docs/meta/README.md`, `knowledge/ops/skills/knowledge-curation/` | `MEMORY.md`, 必要なら `knowledge/docs/decisions/` | なし | 肥大化時にdocsへ退避 |
 | read-routing | Read routing | 作業種別ごとの追加読み込み先 | 整備済み | `knowledge/docs/README.md` | `COMPASS.md`, `AGENTS.md` | `knowledge/docs/README.md`, `AGENTS.md`, `MEMORY.md` | compass | 新しい知識区分追加時に更新 |
 | gate-workflow | Gate workflow | Hello World更新、commit/push、対象なし判定 | 整備済み | `knowledge/ops/skills/hello-world-gate/` | `Hello,world.md`, `MEMORY.md` | `Hello,world.md`, `AGENTS.md`, `MEMORY.md` | hello-world | 維持 |
 | phase-catalog | Phase catalog | 00〜80が何の工程で、何を決めるか | 整備済み | `knowledge/docs/meta/phase-catalog.md` | `template/phase-local-missing.md`, `knowledge/docs/requirements/Biz-compiler_要求定義.md` | `knowledge/docs/meta/README.md`, `knowledge/docs/README.md`, `MEMORY.md` | read-routing | phase-local README作成時に参照 |
@@ -47,21 +47,6 @@
 | completion-criteria | Meta completion criteria | メタ土台が一旦使えると言える条件 | 整備済み | `knowledge/docs/meta/completion-criteria.md` | `phase-catalog.md`, `state-model.md`, `knowledge/docs/lexicon/README.md` | `knowledge/docs/meta/README.md`, `MEMORY.md` | phase-catalog, state-model, lexicon-v0 | メタ土台評価時に使う |
 | artifact-placement | Artifact placement rule整理版 | root、template、_shared、knowledge、outputの配置判断 | 整備済み | `knowledge/docs/meta/artifact-placement.md` | `AGENTS.md`, `MEMORY.md`, `template/phase-local-missing.md` | `knowledge/docs/meta/README.md`, `AGENTS.md`, `MEMORY.md`, `Hello,world.md` | phase-catalog | 新規ファイル追加時に参照 |
 
-## Knowledge Curation
-
-`MEMORY.md`、`knowledge/pending/`、`knowledge/journal/`、`knowledge/docs/decisions/` は、別々のメタ土台を増やすための箱ではない。
-
-必要なのは、会話や作業で出た知識候補を次のどれにするかの判断である。
-
-| 判断 | 行き先 |
-|---|---|
-| 次回以降も常に効く短い事実 | `MEMORY.md` へ格上げ |
-| 重要だが未承認、または判断に迷う | `knowledge/pending/` に保留 |
-| 作業過程、試行錯誤、長いログ | `knowledge/journal/` に退避 |
-| 背景理由つきの設計判断として残す | `knowledge/docs/decisions/` へ退避 |
-| もう効かない、重複、誤り | 捨てる、またはrejectedとして記録 |
-
-この判断口は `memory` 行に含める。`decision-workflow` や `registry-management` を独立メタ土台として増やさない。
 ## ここに含めるもの
 
 - 全工程で使う状態や語彙のルール
@@ -84,6 +69,7 @@
 | 判断例、反例、比較ケース | `knowledge/docs/casebook/` |
 | eval、fresh executor、shadow run | `knowledge/docs/evaluation/` |
 | 決定の背景理由 | `knowledge/docs/decisions/` |
+| 知識候補の格上げ/保留/退避/廃棄の運用手順 | `knowledge/ops/skills/knowledge-curation/` |
 | 実際にコンパイルしている個別業務の状態 | `output/Biz-001-業務名/` |
 
 ## Markdown正本で進める理由

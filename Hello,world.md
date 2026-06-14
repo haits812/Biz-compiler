@@ -131,6 +131,7 @@ Known knowledge ops assets:
 - knowledge/ops/README.md
 - knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1
 - knowledge/ops/skills/hello-world-gate/SKILL.md
+- knowledge/ops/skills/knowledge-curation/SKILL.md
 - knowledge/ops/skills/pending-memory/new-pending-memory.ps1
 - knowledge/ops/skills/pending-memory/pending-review.ps1
 - knowledge/ops/skills/pending-memory/SKILL.md

@@ -16,7 +16,6 @@
 | Subagent brief型がある | subagentにCompassと別の仮ゴール、成果物契約、禁止事項を渡せる | `knowledge/docs/meta/subagent-brief.md` |
 | Ledger更新ルールがある | メタ土台の整備状態、正本、併読、依存、次アクションを台帳管理できる | `knowledge/docs/meta/README.md` |
 | Read routingがある | meta/lexicon/ir/method/casebook/evaluation/decisionsを作業種別で読める | `knowledge/docs/README.md` |
-| Knowledge候補の格上げ/廃棄判断がある | memory、pending、journal、decisionsのどこへ置くか、または捨てるかを判断できる | `knowledge/docs/meta/README.md`, `MEMORY.md` |
 | Hello World Gateが通る | 構成変更後に現在地、検査、commit/pushを同期できる | `knowledge/ops/skills/hello-world-gate/` |
 
 ## v0では不要なもの

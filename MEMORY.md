@@ -29,6 +29,7 @@
 - `knowledge/ops/skills/pending-memory/SKILL.md`: 未承認Memory/Compass/Decision候補の作成、確認、承認、却下、適用済み処理を定義するrepo-local Skill。
 - `knowledge/ops/skills/pending-memory/new-pending-memory.ps1`: 即時メモ候補を `knowledge/pending/memory/` に作る。
 - `knowledge/ops/skills/pending-memory/pending-review.ps1`: pending候補を `list`、`show`、`approve`、`reject`、`applied` する。
+- `knowledge/ops/skills/knowledge-curation/SKILL.md`: 知識候補をMarkdownルール化、Hello World Gate、将来phase script候補、MEMORY、pending、journal、decisions、廃棄へ振り分けるrepo-local Skill。外部hook/denyは扱わない。
 - `template/`: 業務フォルダの原型。数字phaseごとの雛形と、業務フォルダへコピーされる `_shared/` を置く。
 - `template/_shared/`: phase横断で業務フォルダ内から使う内部部品、runner、validator、tool、実行スクリプトの置き場。
 - `template/50-consent/pipeline-flowchart/pipeline-flowchart.html`: フェーズ50同意ビューのテンプレート資産。
@@ -45,7 +46,7 @@
 - Compassは短く保つ。メタ土台の棚卸し、用語、IR詳細、方法論、事例、評価条件、決定理由は `knowledge/docs/README.md` のread routingに従って分ける。
 - メタ土台v0は `knowledge/docs/meta/README.md` をMarkdown正本台帳として維持する。メタ土台は急増しない前提なので、JSON台帳化は現時点では不要。
 - メタ土台v0として、`state-model.md`、`phase-catalog.md`、`artifact-placement.md`、`session-brief.md`、`subagent-brief.md`、`completion-criteria.md`、`knowledge/docs/lexicon/README.md` を整備済みとして扱う。
-- `MEMORY.md`、`knowledge/pending/`、`knowledge/journal/`、`knowledge/docs/decisions/` は、知識候補を格上げするか捨てるかの判断口として扱う。Decision workflowやregistry-managementを独立メタ土台にしない。
+- 知識候補の格上げ/保留/退避/廃棄は、メタ台帳ではなくrepo-local `knowledge-curation` Skillで扱う。常時効く禁止・配置・読み順・運用制約は、先にMarkdown正本へルール化できるかを見る。repo外へ影響し得るHook/denyは現時点では導入せず、まずMDルール化とrepo-local `hello-world-gate` へ寄せる。数字phase処理が固まった後にscript化を候補に入れる。
 - 要求定義は `knowledge/docs/requirements/` に置く。
 - 決定記録、未承認候補、作業ログは `knowledge/` 配下でグループ化し、`docs` / `pending` / `journal` の役割は混ぜない。
 - フェーズ50のフローチャートHTMLは `template/50-consent/pipeline-flowchart/` に置く。`samples/` には置かない。
