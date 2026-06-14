@@ -138,7 +138,7 @@ Known knowledge ops assets:
 
 Current pending state at last verification:
 
-- pending items: 9
+- pending items: 4
 - approved items: 0
 
 確認コマンド:

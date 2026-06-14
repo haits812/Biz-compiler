@@ -1,3 +1,17 @@
+<!--
+Status: applied
+ResolvedAt: 2026-06-15T01:48:03+09:00
+SourceId: approved/memory/20260614-210630-ontology-world-model-layer-as-biz-compiler-map.md
+Reason: Ontology/mapという固定ファイルではなく、Hello World・Compass・read routing・meta docsで自己記述レイヤーとして整理済み。
+-->
+
+<!--
+Status: approved
+ResolvedAt: 2026-06-15T01:48:03+09:00
+SourceId: memory/20260614-210630-ontology-world-model-layer-as-biz-compiler-map.md
+Reason: Ontology/mapという固定ファイルではなく、Hello World・Compass・read routing・meta docsで自己記述レイヤーとして整理済み。
+-->
+
 # Ontology world model layer as Biz-compiler map
 
 ## Target
@@ -11,3 +25,5 @@ Biz-compilerの次に整える候補として、Ontology / World Model を検討
 
 ## Risk
 Ontologyを早く固定しすぎると業務を型にはめるL3化が起きる。逆に置かないと、AIがIPO、gate、scope、provenanceなどを場当たり的に解釈し、Compassの判断priorがIRへ安定して伝わらない。
+
+
