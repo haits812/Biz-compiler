@@ -176,6 +176,48 @@ function Get-PendingCounts {
   }
 }
 
+function Get-RepoLocalSkillLines {
+  $skillsRoot = Join-Path $repoRoot "knowledge\ops\skills"
+  $skillLines = @()
+
+  if (-not (Test-Path -LiteralPath $skillsRoot -PathType Container)) {
+    return @("- None")
+  }
+
+  $skillDirs = @(Get-ChildItem -LiteralPath $skillsRoot -Directory -Force | Sort-Object Name)
+  foreach ($dir in $skillDirs) {
+    $skillPath = Join-Path $dir.FullName "SKILL.md"
+    $name = $dir.Name
+    $description = "repo-local Skill"
+
+    if (Test-Path -LiteralPath $skillPath -PathType Leaf) {
+      $skillText = Get-Content -LiteralPath $skillPath -Raw
+      $nameMatch = [regex]::Match($skillText, '(?m)^name:\s*(.+?)\s*$')
+      $descriptionMatch = [regex]::Match($skillText, '(?m)^description:\s*(.+?)\s*$')
+      if ($nameMatch.Success) {
+        $name = $nameMatch.Groups[1].Value.Trim()
+      }
+      if ($descriptionMatch.Success) {
+        $description = $descriptionMatch.Groups[1].Value.Trim()
+      }
+    }
+
+    $skillLines += "- ${name}: $description"
+    $skillLines += "  - path: $(Get-RelativePath -Path $dir.FullName)/"
+
+    $scriptFiles = @(Get-ChildItem -LiteralPath $dir.FullName -File -Filter "*.ps1" -Force | Sort-Object Name)
+    if ($scriptFiles.Count -gt 0) {
+      $scriptList = ($scriptFiles | ForEach-Object { Get-RelativePath -Path $_.FullName }) -join ", "
+      $skillLines += "  - commands: $scriptList"
+    }
+  }
+
+  if ($skillLines.Count -eq 0) {
+    return @("- None")
+  }
+
+  return $skillLines
+}
 function Assert-HelloWorldStructure {
   $errors = New-Object System.Collections.Generic.List[string]
 
@@ -238,6 +280,7 @@ function Assert-HelloWorldStructure {
 function New-HelloWorldContent {
   $date = Get-Date -Format "yyyy-MM-dd"
   $pendingCounts = Get-PendingCounts
+  $repoLocalSkillLines = Get-RepoLocalSkillLines
 
   $rootDirs = Sort-ByPreferredOrder -Items @(Get-ChildItem -LiteralPath $repoRoot -Directory -Force | Where-Object { $_.Name -ne ".git" }) -PreferredOrder $rootDirOrder
   $rootFiles = Sort-ByPreferredOrder -Items @(Get-ChildItem -LiteralPath $repoRoot -File -Force) -PreferredOrder $rootFileOrder
@@ -413,6 +456,14 @@ function New-HelloWorldContent {
     "Known knowledge ops assets:"
   )
   $lines += $opsAssetLines
+  $lines += @(
+    "",
+    "## Repo-local Skills",
+    "",
+    "初期読み込みでは、既存Skillを確認してから新しいSkillを作る。似た役割のSkillがあるなら、まず既存Skillへ統合する。",
+    ""
+  )
+  $lines += $repoLocalSkillLines
   $lines += @(
     "",
     "Current pending state at last verification:",

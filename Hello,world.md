@@ -137,6 +137,17 @@ Known knowledge ops assets:
 - knowledge/ops/skills/knowledge-curation/pending-review.ps1
 - knowledge/ops/skills/knowledge-curation/SKILL.md
 
+## Repo-local Skills
+
+初期読み込みでは、既存Skillを確認してから新しいSkillを作る。似た役割のSkillがあるなら、まず既存Skillへ統合する。
+
+- hello-world-gate: Use when Biz-compilerでハロワやっといて/ハロワ見て/ハロワ更新しといて/githubあげといて/GitHub上げて/pushして等の依頼が出た時。
+  - path: knowledge/ops/skills/hello-world-gate/
+  - commands: knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1
+- knowledge-curation: Biz-compiler repo内のMEMORYメモと知識候補を、Markdownルール化、Hello World Gate、将来phase script候補、pending、journal、decisions、廃棄へ振り分けるrepo-local Skill。pending候補の作成・承認・却下・適用もこのSkillで扱う。
+  - path: knowledge/ops/skills/knowledge-curation/
+  - commands: knowledge/ops/skills/knowledge-curation/new-pending-update.ps1, knowledge/ops/skills/knowledge-curation/pending-review.ps1
+
 Current pending state at last verification:
 
 - pending items: 4

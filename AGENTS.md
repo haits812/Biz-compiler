@@ -50,7 +50,7 @@ gitのstage / commit / push結果は、通常の文章またはbacktick付きコ
 
 各ファイルの役割:
 
-- `Hello,world.md`: Biz-compilerの現在地を返す最小自己記述。構成変更時は同じターンで更新する。
+- `Hello,world.md`: Biz-compilerの現在地を返す最小自己記述。repo-local Skill一覧もここで確認する。構成変更時は同じターンで更新する。
 - `SOUL.md`: このリポジトリで作業するagentの対話姿勢。汎用コンサル人格ではなく、Biz-compilerを一緒に作る聞き取り型の共同設計者としての振る舞いを定義する。
 - `USER.md`: このリポジトリで主に話しかけてくる相手の作業モデル。個人プロフィールの保存場所ではなく、会話・設計・実装の進め方を合わせるための前提を置く。
 - `COMPASS.md`: 作業者やsubagentへ思考の指向性を渡す direction packet。テンプレート、asset、具体例より先に読む。
@@ -79,6 +79,8 @@ gitのstage / commit / push結果は、通常の文章またはbacktick付きコ
 | 過去の決定理由が必要 | `knowledge/docs/decisions/` |
 
 subagentや別作業者へ重い作業を渡す時は、`Hello,world.md`、`SOUL.md`、`USER.md`、`COMPASS.md`、`knowledge/docs/lexicon.md`、`MEMORY.md` に加え、作業種別に該当する追加読み込み先だけを渡す。
+
+新しいrepo-local Skillを作る前に、必ず `Hello,world.md` の `Repo-local Skills` と `knowledge/ops/README.md` を確認する。似た役割がある場合は、別Skillを増やさず既存Skillへ統合する。
 
 ## 実装方針
 
