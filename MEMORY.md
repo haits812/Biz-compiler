@@ -60,7 +60,7 @@
 - `Hello,world.md` は read の入口であり、decide / act の入口ではない。実際にコンパイルしている個別業務の状態は含めない。
 - `knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1` で `Hello,world.md` の更新、検査、必要ならcommit/pushまで行う。gateが失敗したら次の作業へ進まない。
 - ハロワゲートは `knowledge/ops/skills/hello-world-gate/SKILL.md` としてrepo-local Skill化済み。グローバルSkillにはしない。commit/pushも同じハロワゲートに含め、外向けコマンドは1つだけにする。
-- `ハロワやっといて`、`ハロワ見て`、`ハロワ確認して`、`ハロワ更新しといて` は `hello-world-gate` を発火する。`githubあげといて`、`GitHub上げて`、`pushして`、`pushしといて` は `hello-world-gate.ps1` を発火する。GitHubへ上げる依頼はハロワ更新込みで、更新・検査・commit・push・post-checkを一気通貫で行う。
+- `ハロワやっといて`、`ハロワ見て`、`ハロワ確認して`、`ハロワ更新しといて` は `hello-world-gate` を発火する。`githubあげといて`、`GitHub上げて`、`pushして`、`pushしといて` は、まず `git status --short --branch` で対象有無を見る。ローカル差分も未push commitもなく `main...origin/main` が同期済みなら、gate本体は実行せず `対象ないよ。main と origin/main は同期済み。` と返す。対象がある場合だけ、ハロワ更新・検査・commit・push・post-checkを一気通貫で行う。
 
 ## 常に守る制約
 
@@ -87,6 +87,7 @@
 - `map.md`: ファイルが増えてきたら、全体像・読み方・配置を把握するための地図として検討する。`MEMORY.md` とは役割を分ける。
 - Output repo template v0: `template/` をコピーして `output/Biz-001-業務名/` を作る初期化規約。
 - 開発運用メモリの自動/半自動レビュー: 会話長期化やコンテキスト圧縮に依存しないチェックポイント機構。
+
 
 
 

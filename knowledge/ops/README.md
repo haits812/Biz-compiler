@@ -19,7 +19,7 @@
   -Risks "残っている注意点"
 ```
 
-このコマンドは、ハロワ更新、検査、`git add -A`、日本語commit、`git push`、post-checkを順番に実行する。変更がなければcommit/push不要として正常終了する。
+このコマンドは、ハロワ更新、検査、`git add -A`、日本語commit、`git push`、post-checkを順番に実行する。GitHub/push依頼では、先に `git status --short --branch` で対象有無を見る。対象がなければgate本体を実行せず `対象ないよ。main と origin/main は同期済み。` と返す。
 
 ## skills/pending-memory/
 
@@ -36,4 +36,5 @@
 ```
 
 `approve` は候補を `knowledge/pending/approved/` へ移すだけで、正式ファイルを自動編集しない。正式反映では、対象ファイルの役割と既存記述を読んでから文脈込みで編集する。
+
 

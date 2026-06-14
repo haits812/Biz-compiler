@@ -19,7 +19,7 @@
 
 - 現在状態から `Hello,world.md` を再生成する。
 - `Hello,world.md` が生成結果と一致するか検査する。
-- 変更がなければcommit/push不要として正常終了する。
+- 変更がなければ未push commitの有無を見る。未push commitもなければ `対象ないよ` として正常終了する。
 - 変更があれば `git add -A` する。
 - `理由`、`確認`、`残リスク` を含む日本語commit messageでcommitする。
 - `git push` する。
@@ -36,7 +36,7 @@
 ## Rules
 
 - 構成を変えたら、同じターンで `.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1` を実行する。
-- GitHubへ上げる時も同じコマンドを使い、ハロワ更新を別依頼にしない。
+- GitHubへ上げる時は、まず `git status --short --branch` で対象有無を見る。対象がなければgate本体を実行せず `対象ないよ。main と origin/main は同期済み。` と返す。対象がある場合だけ同じコマンドを使い、ハロワ更新を別依頼にしない。
 - gateが失敗する状態で、次の作業へ進まない。
 - 実際にコンパイルしている個別業務の進行状態は、引き続き `Hello,world.md` へ入れない。
 
@@ -46,3 +46,4 @@
 - ルート直下の散らかり、template phaseの欠落、outputのプレースホルダを早期に止められる。
 - `Hello,world.md` は構成変更時に再生成されうるため、差分には現在地の更新が含まれる。
 - この gate は read / position の検査であり、判断や実行の承認ゲートではない。
+

@@ -485,6 +485,44 @@ function Get-GitOutput {
   return ($output -join [Environment]::NewLine).Trim()
 }
 
+function Get-UpstreamBranch {
+  $output = & git rev-parse --abbrev-ref --symbolic-full-name "@{u}" 2>$null
+  if ($LASTEXITCODE -ne 0) {
+    return ""
+  }
+  return ($output -join [Environment]::NewLine).Trim()
+}
+
+function Get-AheadCount {
+  param([Parameter(Mandatory=$true)][string]$Upstream)
+
+  if ([string]::IsNullOrWhiteSpace($Upstream)) {
+    return 0
+  }
+
+  $count = Get-GitOutput -GitArgs @("rev-list", "--count", "$Upstream..HEAD")
+  if ([string]::IsNullOrWhiteSpace($count)) {
+    return 0
+  }
+
+  return [int]$count
+}
+
+function Get-BehindCount {
+  param([Parameter(Mandatory=$true)][string]$Upstream)
+
+  if ([string]::IsNullOrWhiteSpace($Upstream)) {
+    return 0
+  }
+
+  $count = Get-GitOutput -GitArgs @("rev-list", "--count", "HEAD..$Upstream")
+  if ([string]::IsNullOrWhiteSpace($count)) {
+    return 0
+  }
+
+  return [int]$count
+}
+
 function Assert-JapaneseText {
   param(
     [Parameter(Mandatory=$true)][string]$Label,
@@ -594,8 +632,33 @@ function Invoke-HelloWorldGate {
   Write-Output "hello-world-gate: check passed"
 
   $statusBefore = Get-GitOutput -GitArgs @("status", "--porcelain")
+  $upstream = Get-UpstreamBranch
+  $aheadCount = Get-AheadCount -Upstream $upstream
+  $behindCount = Get-BehindCount -Upstream $upstream
+
+  if ($behindCount -gt 0) {
+    throw "Current branch is behind $upstream by $behindCount commit(s). Sync before hello-world-gate push."
+  }
+
   if ([string]::IsNullOrWhiteSpace($statusBefore)) {
-    Write-Output "hello-world-gate: no changes to commit or push"
+    if ($aheadCount -gt 0) {
+      if ($NoPush) {
+        Write-Output "hello-world-gate: NoPush specified. $aheadCount commit(s) are ahead of $upstream."
+      } else {
+        Write-Output "hello-world-gate: git push origin $branch"
+        Invoke-Git -GitArgs @("push", "-u", "origin", $branch)
+        Write-Output "hello-world-gate: pushed $aheadCount existing commit(s) to origin/$branch"
+      }
+
+      $postExpected = New-HelloWorldContent
+      Assert-HelloWorldMatches -ExpectedContent $postExpected
+      Write-Output "hello-world-gate: post-check passed"
+      Write-Output "hello-world-gate: final status"
+      Invoke-Git -GitArgs @("status", "--short", "--branch")
+      return
+    }
+
+    Write-Output "hello-world-gate: 対象ないよ (no changes or unpushed commits)"
     Write-Output "hello-world-gate: final status"
     Invoke-Git -GitArgs @("status", "--short", "--branch")
     return
@@ -644,6 +707,10 @@ function Invoke-HelloWorldGate {
 }
 
 Invoke-HelloWorldGate
+
+
+
+
 
 
 

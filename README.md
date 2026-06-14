@@ -59,11 +59,12 @@ knowledge/  確定知識、pending、journal、repo-local ops
   -Risks "残っている注意点"
 ```
 
-変更がなければ、更新・検査だけしてcommit/push不要として正常終了する。GitHubへ上げる依頼はハロワ更新込みで扱う。
+GitHubへ上げる依頼は、まず `git status --short --branch` で対象有無を見る。ローカル差分も未push commitもなく同期済みなら、gate本体は実行せず `対象ないよ。main と origin/main は同期済み。` と返す。対象がある場合だけ、ハロワ更新込みでこのgateを実行する。
 
 ## Status
 
 このリポジトリは構想・要求定義・運用ルールを固めながら実装している開発作業場である。
 
 最新状態は `Hello,world.md` を見る。
+
 
