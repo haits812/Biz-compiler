@@ -43,8 +43,9 @@
 - `USER.md` は、主に話しかけてくる相手の作業モデルを置く。個人プロフィールではない。
 - Compassはルートの `COMPASS.md` に置き、作業者やsubagentに思考の指向性を渡すdirection packetとして扱う。
 - Compassは短く保つ。メタ土台の棚卸し、用語、IR詳細、方法論、事例、評価条件、決定理由は `knowledge/docs/README.md` のread routingに従って分ける。
-- メタ土台v0は `knowledge/docs/meta/README.md` をMarkdown正本台帳として維持する。JSON台帳化は保留し、必要性が出るまでMarkdown運用にする。
+- メタ土台v0は `knowledge/docs/meta/README.md` をMarkdown正本台帳として維持する。メタ土台は急増しない前提なので、JSON台帳化は現時点では不要。
 - メタ土台v0として、`state-model.md`、`phase-catalog.md`、`artifact-placement.md`、`session-brief.md`、`subagent-brief.md`、`completion-criteria.md`、`knowledge/docs/lexicon/README.md` を整備済みとして扱う。
+- `MEMORY.md`、`knowledge/pending/`、`knowledge/journal/`、`knowledge/docs/decisions/` は、知識候補を格上げするか捨てるかの判断口として扱う。Decision workflowやregistry-managementを独立メタ土台にしない。
 - 要求定義は `knowledge/docs/requirements/` に置く。
 - 決定記録、未承認候補、作業ログは `knowledge/` 配下でグループ化し、`docs` / `pending` / `journal` の役割は混ぜない。
 - フェーズ50のフローチャートHTMLは `template/50-consent/pipeline-flowchart/` に置く。`samples/` には置かない。
@@ -84,7 +85,6 @@
 ## 次に整える候補
 
 - `template/<数字phase>/` 側のphase-local README v0。`knowledge/docs/meta/phase-catalog.md` を参照し、各phase固有の成果物雛形はmetaではなくtemplate側に置く。
-- `registry-management`: Markdown台帳で不足が出るまでJSON化は保留。項目増加、更新漏れ、validator需要が出たら再検討する。
 - `knowledge/docs/casebook/` v0: 良い判断/悪い判断の対比事例。
 - `knowledge/docs/evaluation/` v0: Compassあり/なしで業務設計出力差を見るシナリオ。
 - `knowledge/docs/ir/` v0: 同意ビューJSONと実行IRの関係を固定する最小スキーマ。

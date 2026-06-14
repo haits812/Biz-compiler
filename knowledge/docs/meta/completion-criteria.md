@@ -16,6 +16,7 @@
 | Subagent brief型がある | subagentにCompassと別の仮ゴール、成果物契約、禁止事項を渡せる | `knowledge/docs/meta/subagent-brief.md` |
 | Ledger更新ルールがある | メタ土台の整備状態、正本、併読、依存、次アクションを台帳管理できる | `knowledge/docs/meta/README.md` |
 | Read routingがある | meta/lexicon/ir/method/casebook/evaluation/decisionsを作業種別で読める | `knowledge/docs/README.md` |
+| Knowledge候補の格上げ/廃棄判断がある | memory、pending、journal、decisionsのどこへ置くか、または捨てるかを判断できる | `knowledge/docs/meta/README.md`, `MEMORY.md` |
 | Hello World Gateが通る | 構成変更後に現在地、検査、commit/pushを同期できる | `knowledge/ops/skills/hello-world-gate/` |
 
 ## v0では不要なもの
@@ -27,12 +28,10 @@
 - IR/schema/manifestの実装完了
 - 同意ビューの全仕様確定
 - 実業務 `output/Biz-001-*` の作成
-- registry-managementの完全自動化
 
 ## 受け入れチェック
 
 - `knowledge/docs/meta/README.md` の未整備メタ土台7件が `整備済み` になっている。
-- `registry-management` は `一部あり` のまま、JSON化保留が明記されている。
 - 新規メタdocを読めば、数字工程に入る前の配置・状態・brief・完了条件が分かる。
 - `knowledge/docs/README.md` から `knowledge/docs/meta/` と `knowledge/docs/lexicon/` を辿れる。
 - `MEMORY.md` に常時参照が必要な最小情報だけが残り、詳細は各docに分かれている。
@@ -48,7 +47,6 @@
 |---|---|
 | phase-local README v0 | `template/<数字phase>/` 側の作業雛形を揃える |
 | IR/schema v0 | 同意ビューJSONと実行IRの関係を固定する |
-| registry-management判断 | Markdown台帳を続けるか、JSON台帳へ移るかを再判定する |
 | evaluation v0 | fresh executor / shadow run / evalの最初の検証観点を作る |
 | casebook v0 | 良い判断/悪い判断の比較例を作る |
 
