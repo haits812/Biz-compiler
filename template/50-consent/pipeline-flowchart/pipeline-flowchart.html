@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>業務パイプライン — スイムレーン同意ビュー（抽象テンプレ）</title>
+
+<script id="pipeline-contract" type="application/json">
+{
+  "pipeline": "abstract-template",
+  "version": "0.6",
+  "versions": {
+    "as-is": {
+      "label": "現状 (As-Is)",
+      "desc": "今は複数人が手作業でやっている。営業A/Bが動き、経理C・購入先Zも関与。まず『今こうですよね？』を確認する版。",
+      "actors": [
+        {"name":"Aさん","dept":"営業部","scope":"in"},
+        {"name":"Bさん","dept":"営業部","scope":"in"},
+        {"name":"経理Cさん","dept":"経理部","scope":"out"},
+        {"name":"Z社","dept":"購入先","scope":"out"}
+      ],
+      "nodes": [
+        { "id":"s1","name":"依頼受領・整理","actor":"Aさん","executor":"human","autonomy":"-","gate":"none","kind":"process","step":0,"process":"依頼を受けて内容を整理","input":[{"name":"trigger","type":"event"}],"output":[{"name":"req","type":"Request"}] },
+        { "id":"s2","name":"見積依頼作成","actor":"Aさん","executor":"human","autonomy":"-","gate":"none","kind":"process","step":1,"process":"見積依頼の文面を作る","input":[{"name":"req","type":"Request"}],"output":[{"name":"rfq","type":"Draft"}] },
+        { "id":"s3","name":"金額・在庫チェック","actor":"Bさん","executor":"human","autonomy":"-","gate":"none","kind":"process","step":2,"process":"金額と在庫を確認","checklist":[{"t":"受注CSVをダウンロード","to":"auto"},{"t":"A列「ステータス」を「未処理」でフィルタ","to":"auto"},{"t":"その状態でB列「区分」を「製品」でフィルタ","to":"auto"},{"t":"商品コードで在庫マスタをVLOOKUP突合","to":"auto"},{"t":"商品コードで単価マスタをVLOOKUP突合","to":"auto"},{"t":"金額＝数量×単価 を再計算","to":"auto"},{"t":"前回値と±10%超の差異を目視チェック","to":"manual"},{"t":"在庫不足品を色付けして抽出","to":"auto"},{"t":"異常があれば担当へ口頭確認","to":"manual"},{"t":"作業用に別ブックへコピー保存","to":"eliminate"},{"t":"結果を見積票へ転記","to":"auto"}],"input":[{"name":"rfq","type":"Draft"}],"output":[{"name":"checked","type":"Draft"}] },
+        { "id":"s4","name":"経理確認","actor":"経理Cさん","executor":"human","autonomy":"-","gate":"HITL-confirm","kind":"process","step":3,"process":"経理が予算・科目を確認","input":[{"name":"checked","type":"Draft"}],"output":[{"name":"approved","type":"Doc"}] },
+        { "id":"s5","name":"発注メール送付","actor":"Aさん","executor":"human","autonomy":"-","gate":"N-interface","kind":"process","step":4,"process":"購入先へ発注メールを送る","input":[{"name":"approved","type":"Doc"}],"output":[{"name":"po","type":"PO"}] },
+        { "id":"s6","name":"受注対応","actor":"Z社","executor":"external","autonomy":"-","gate":"N-interface","kind":"process","step":5,"process":"購入先が受注・返答","input":[{"name":"po","type":"PO"}],"output":[{"name":"ack","type":"Ack"}] },
+        { "id":"s7","name":"記録","actor":"Bさん","executor":"human","autonomy":"-","gate":"none","kind":"process","step":6,"process":"結果を記録して完了","input":[{"name":"ack","type":"Ack"}],"output":[{"name":"closed","type":"Receipt"}] }
+      ],
+      "edges": [
+        {"from":{"node":"s1","field":"req"},"to":{"node":"s2","field":"req"}},
+        {"from":{"node":"s2","field":"rfq"},"to":{"node":"s3","field":"rfq"}},
+        {"from":{"node":"s3","field":"checked"},"to":{"node":"s4","field":"checked"}},
+        {"from":{"node":"s4","field":"approved"},"to":{"node":"s5","field":"approved"}},
+        {"from":{"node":"s5","field":"po"},"to":{"node":"s6","field":"po"}},
+        {"from":{"node":"s6","field":"ack"},"to":{"node":"s7","field":"ack"}}
+      ]
+    },
+    "to-be": {
+      "label": "再設計 (To-Be)",
+      "desc": "営業A/Bの仕事をAI・自動化に移管。経理C・購入先Zは対象外のまま連携。送信はチェック付き。分岐・並列・合流あり。",
+      "actors": [
+        {"name":"Aさん","dept":"営業部","scope":"in"},
+        {"name":"Bさん","dept":"営業部","scope":"in"},
+        {"name":"経理Cさん","dept":"経理部","scope":"out"},
+        {"name":"Z社","dept":"購入先","scope":"out"}
+      ],
+      "nodes": [
+        { "id":"t1","name":"依頼整理","actor":"Aさん","executor":"skill","autonomy":"report-after","gate":"none","kind":"process","step":0,"process":"依頼を整理(AIが代行)","input":[{"name":"trigger","type":"event"}],"output":[{"name":"req","type":"Request"}] },
+        { "id":"t2","name":"分岐判断","actor":"Aさん","executor":"skill","autonomy":"report-after","gate":"none","kind":"decision","step":1,"process":"内容でルートを判断","input":[{"name":"req","type":"Request"}],"output":[{"name":"route","type":"Decision"}] },
+        { "id":"t3a","name":"金額チェック(自動)","actor":"Bさん","executor":"automation","autonomy":"full-auto","gate":"none","kind":"process","step":2,"process":"条件A: 決定論で検算","input":[{"name":"route","type":"Decision"}],"output":[{"name":"resA","type":"Draft"}] },
+        { "id":"t3b","name":"与信判断(AI)","actor":"Aさん","executor":"skill","autonomy":"report-after","gate":"none","kind":"process","step":2,"process":"条件B: 文脈判断","input":[{"name":"route","type":"Decision"}],"output":[{"name":"resB","type":"Draft"}] },
+        { "id":"t4","name":"統合","actor":"Aさん","executor":"skill","autonomy":"report-after","gate":"none","kind":"process","step":3,"process":"結果を合流して発注案を作る","input":[{"name":"resA","type":"Draft"},{"name":"resB","type":"Draft"}],"output":[{"name":"merged","type":"Draft"}] },
+        { "id":"t5","name":"経理確認","actor":"経理Cさん","executor":"human","autonomy":"-","gate":"HITL-confirm","kind":"process","step":4,"process":"経理が確認(対象外・必要)","input":[{"name":"merged","type":"Draft"}],"output":[{"name":"approved","type":"Doc"}] },
+        { "id":"t6","name":"発注メール送付","actor":"Aさん","executor":"automation","autonomy":"full-auto","gate":"HITL-confirm","kind":"process","step":5,"process":"外部宛=送信前チェック必須","input":[{"name":"approved","type":"Doc"}],"output":[{"name":"po","type":"PO"}] },
+        { "id":"t7","name":"受注対応","actor":"Z社","executor":"external","autonomy":"-","gate":"N-interface","kind":"process","step":6,"process":"購入先が受注(外部・N調整)","input":[{"name":"po","type":"PO"}],"output":[{"name":"ack","type":"Ack"}] },
+        { "id":"t8","name":"記録","actor":"Bさん","executor":"automation","autonomy":"full-auto","gate":"none","kind":"process","step":7,"process":"自動で記録・完了","input":[{"name":"ack","type":"Ack"}],"output":[{"name":"closed","type":"Receipt"}] }
+      ],
+      "edges": [
+        {"from":{"node":"t1","field":"req"},"to":{"node":"t2","field":"req"}},
+        {"from":{"node":"t2","field":"route"},"to":{"node":"t3a","field":"route"},"label":"条件A"},
+        {"from":{"node":"t2","field":"route"},"to":{"node":"t3b","field":"route"},"label":"条件B"},
+        {"from":{"node":"t3a","field":"resA"},"to":{"node":"t4","field":"resA"}},
+        {"from":{"node":"t3b","field":"resB"},"to":{"node":"t4","field":"resB"}},
+        {"from":{"node":"t4","field":"merged"},"to":{"node":"t5","field":"merged"}},
+        {"from":{"node":"t5","field":"approved"},"to":{"node":"t6","field":"approved"}},
+        {"from":{"node":"t6","field":"po"},"to":{"node":"t7","field":"po"}},
+        {"from":{"node":"t7","field":"ack"},"to":{"node":"t8","field":"ack"}}
+      ]
+    },
+    "final": {
+      "label": "運用後 (Final)",
+      "desc": "回して調整。経理確認が事後(report-after)に昇格して停止ゲートが外れ自律度UP。外部送信のチェックは安全のため維持。",
+      "actors": [
+        {"name":"Aさん","dept":"営業部","scope":"in"},
+        {"name":"Bさん","dept":"営業部","scope":"in"},
+        {"name":"経理Cさん","dept":"経理部","scope":"out"},
+        {"name":"Z社","dept":"購入先","scope":"out"}
+      ],
+      "nodes": [
+        { "id":"f1","name":"依頼整理","actor":"Aさん","executor":"skill","autonomy":"full-auto","gate":"none","kind":"process","step":0,"process":"依頼を整理","input":[{"name":"trigger","type":"event"}],"output":[{"name":"req","type":"Request"}] },
+        { "id":"f2","name":"見積依頼ドラフト","actor":"Aさん","executor":"skill","autonomy":"report-after","gate":"none","kind":"process","step":1,"process":"見積依頼を生成","input":[{"name":"req","type":"Request"}],"output":[{"name":"rfq","type":"Draft"}] },
+        { "id":"f3","name":"金額・在庫チェック","actor":"Bさん","executor":"automation","autonomy":"full-auto","gate":"none","kind":"process","step":2,"process":"自動で検算","input":[{"name":"rfq","type":"Draft"}],"output":[{"name":"checked","type":"Draft"}] },
+        { "id":"f4","name":"経理確認(事後)","actor":"経理Cさん","executor":"human","autonomy":"report-after","gate":"none","kind":"process","step":3,"process":"昇格: 停止せず事後確認","input":[{"name":"checked","type":"Draft"}],"output":[{"name":"approved","type":"Doc"}] },
+        { "id":"f5","name":"発注メール送付","actor":"Aさん","executor":"automation","autonomy":"full-auto","gate":"HITL-confirm","kind":"process","step":4,"process":"外部送信は安全のためチェック維持","input":[{"name":"approved","type":"Doc"}],"output":[{"name":"po","type":"PO"}] },
+        { "id":"f6","name":"受注対応","actor":"Z社","executor":"external","autonomy":"-","gate":"N-interface","kind":"process","step":5,"process":"購入先が受注","input":[{"name":"po","type":"PO"}],"output":[{"name":"ack","type":"Ack"}] },
+        { "id":"f7","name":"記録","actor":"Bさん","executor":"automation","autonomy":"full-auto","gate":"none","kind":"process","step":6,"process":"自動で記録・完了","input":[{"name":"ack","type":"Ack"}],"output":[{"name":"closed","type":"Receipt"}] }
+      ],
+      "edges": [
+        {"from":{"node":"f1","field":"req"},"to":{"node":"f2","field":"req"}},
+        {"from":{"node":"f2","field":"rfq"},"to":{"node":"f3","field":"rfq"}},
+        {"from":{"node":"f3","field":"checked"},"to":{"node":"f4","field":"checked"}},
+        {"from":{"node":"f4","field":"approved"},"to":{"node":"f5","field":"approved"}},
+        {"from":{"node":"f5","field":"po"},"to":{"node":"f6","field":"po"}},
+        {"from":{"node":"f6","field":"ack"},"to":{"node":"f7","field":"ack"}}
+      ]
+    }
+  }
+}
+</script>
+
+<style>
+  :root{
+    /* surfaces & ink */
+    --bg:#f3f2ef;--card:#ffffff;--card-2:#faf9f6;
+    --ink:#222019;--ink-soft:#403b33;--sub:#7a736a;--faint:#a59e92;
+    --line:#e6e2da;--line-soft:#efebe3;
+    /* semantic executor colors (color == meaning) */
+    --skill-bg:#fdf1e3;--skill-bd:#dc9145;--skill-tx:#90500f;
+    --auto-bg:#e7f1ec;--auto-bd:#4aa07c;--auto-tx:#2b6549;
+    --human-bg:#ebe8f6;--human-bd:#8775c4;--human-tx:#513e8c;
+    --ext-bg:#eeece8;--ext-bd:#bbb4a9;--ext-tx:#675f56;
+    --warn:#bf5328;
+    --radius:14px;--radius-md:11px;--radius-sm:8px;
+    --shadow-sm:0 1px 2px rgba(34,32,25,.05);
+    --shadow:0 1px 2px rgba(34,32,25,.04),0 6px 22px rgba(34,32,25,.06);
+    --mono:"SFMono-Regular",ui-monospace,Consolas,"Liberation Mono",monospace;
+    --sans:system-ui,-apple-system,"Segoe UI","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1140px;margin:0 auto;padding:36px 28px 72px}
+  .appbar{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:20px}
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:0 0 8px}
+  h1{font-size:25px;font-weight:700;letter-spacing:-.01em;margin:0}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  .intro{margin:0 0 22px;color:var(--sub);font-size:13.5px;line-height:1.65;max-width:78ch}
+  .intro b{color:var(--ink-soft);font-weight:600}
+
+  /* version strip */
+  .vbar{margin:0 0 18px}
+  .tabs{display:inline-flex;gap:3px;background:var(--card-2);border:1px solid var(--line);border-radius:11px;padding:4px;margin:0 0 11px}
+  .tab{font-size:13px;font-weight:600;border:1px solid transparent;background:transparent;color:var(--sub);padding:8px 17px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
+  .tab:hover{color:var(--ink)}
+  .tab.active{background:var(--ink);color:#fff;box-shadow:var(--shadow-sm)}
+  .vdesc{font-size:13px;color:var(--sub);margin:0;min-height:20px;line-height:1.65;max-width:84ch}
+
+  button{font-family:var(--sans);font-size:13px;font-weight:500;border:1px solid var(--line);background:var(--card);color:var(--ink-soft);padding:8px 15px;border-radius:var(--radius-sm);cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s,box-shadow .15s}
+  button:hover{border-color:var(--faint);background:var(--card-2)}
+  button.primary{background:var(--ink);border-color:var(--ink);color:#fff}
+  button.primary:hover{background:#000;border-color:#000;box-shadow:var(--shadow-sm)}
+
+  /* control card */
+  .controls{border:1px solid var(--line);border-radius:var(--radius);background:var(--card-2);padding:13px 16px;margin:0 0 20px}
+  .ctl-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .ctl-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);min-width:48px;flex-shrink:0}
+  .ctl-divider{height:1px;background:var(--line);margin:12px 0}
+  .legend-sep{width:1px;align-self:stretch;background:var(--line);margin:0 2px}
+  .flowhint{margin:0 0 9px;font-size:12px;color:var(--faint)}
+  .crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:0 0 12px}
+  .crumb{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:4px 11px;font-size:12px;color:var(--sub);cursor:pointer;font-family:var(--sans)}
+  .crumb:hover{color:var(--ink);border-color:var(--faint)}
+  .crsep{color:var(--faint)}
+  .crcur{font-weight:700;color:var(--ink);font-size:12.5px}
+  .boundary{flex-basis:100%;margin-top:2px;font-family:var(--mono);font-size:11.5px;color:var(--sub)}
+  .boundary .ok{color:var(--auto-tx)}.boundary .ng{color:var(--warn);font-weight:700}
+  .clhead{margin:16px 0 7px;font-size:11px;letter-spacing:.06em;color:var(--faint);text-transform:uppercase;font-weight:700}
+  .clist{margin:0;padding-left:20px;font-size:12.5px;color:var(--ink-soft)}
+  .clist li{margin:5px 0}
+  .cltag{display:inline-block;font-size:10px;font-weight:700;border-radius:5px;padding:1px 7px;margin-right:8px;white-space:nowrap}
+  .clsum{margin-top:9px;font-size:12px;color:var(--sub);font-weight:600}
+
+  /* lane reorder row */
+  .laneorder{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin:0}
+  .lchip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:10px;padding:4px 7px 4px 11px;font-size:12.5px;background:var(--card);white-space:nowrap;box-shadow:var(--shadow-sm)}
+  .lchip.out{background:var(--card-2);border-style:dashed;border-color:var(--faint)}
+  .lchip .lname{font-weight:600;color:var(--ink)}
+  .lchip .lname small{color:var(--faint);font-size:10.5px;margin-left:6px;font-weight:400}
+  .lchip .mv{border:none;background:transparent;padding:0 3px;font-size:11px;color:var(--sub);cursor:pointer;line-height:1}
+  .lchip .mv:hover:not(:disabled){color:var(--ink)}
+  .lchip .mv:disabled{color:#d4cec4;cursor:default}
+  .scopebtn{border:1px solid var(--auto-bd);border-radius:6px;font-size:10.5px;font-weight:600;padding:2px 8px;cursor:pointer;background:var(--auto-bg);color:var(--auto-tx);transition:.15s}
+  .scopebtn.out{color:var(--sub);background:var(--ext-bg);border-color:var(--ext-bd)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:8px 12px;margin:0;font-size:12px;color:var(--sub);align-items:center}
+  .badge{display:inline-flex;align-items:center;padding:3px 11px;border-radius:999px;font-size:11.5px;font-weight:600;white-space:nowrap}
+  .ex-skill{background:var(--skill-bg);color:var(--skill-tx)}
+  .ex-automation{background:var(--auto-bg);color:var(--auto-tx)}
+  .ex-human{background:var(--human-bg);color:var(--human-tx)}
+  .ex-external{background:var(--ext-bg);color:var(--ext-tx)}
+  .hint{font-size:11.5px;color:var(--faint)}
+
+  #flow{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px;overflow:auto;box-shadow:var(--shadow)}
+  .node{cursor:pointer}
+  .node:hover{filter:brightness(.98)}
+
+  #panel{margin-top:18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--card);padding:22px;display:none;box-shadow:var(--shadow)}
+  #panel.show{display:block}
+  #panel h3{margin:0 0 14px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:9px}
+  .kv{font-size:13px;margin:5px 0;color:var(--ink-soft)}
+  .kv b{display:inline-block;min-width:96px;color:var(--sub);font-weight:600}
+  .io{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+  .io h4{margin:0 0 7px;font-size:11px;letter-spacing:.06em;color:var(--faint);text-transform:uppercase;font-weight:700}
+  .field{font-family:var(--mono);font-size:12px;background:var(--card-2);border:1px solid var(--line);border-radius:7px;padding:5px 9px;margin-bottom:6px}
+  .field .ty{color:var(--skill-tx);font-weight:600}
+  .res{font-family:var(--mono);font-size:12.5px;border-bottom:1px solid var(--line-soft);padding:8px 2px}
+  .ok{color:var(--auto-tx)}.ng{color:var(--warn);font-weight:700}
+  .summary-line{font-weight:700;margin-top:14px;font-size:13.5px}
+  #panel pre{background:#26241d;color:#f1ede3;border-radius:10px;padding:16px;font-size:11.5px;overflow:auto;line-height:1.55}
+  footer{margin-top:30px;color:var(--faint);font-size:12px;border-top:1px solid var(--line);padding-top:16px;line-height:1.7}
+  footer code{font-family:var(--mono);background:var(--card-2);border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--sub)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="appbar">
+    <div class="brand">
+      <h1>業務フロー図</h1>
+    </div>
+    <div class="actions">
+      <button class="primary" id="btn-verify">疎通確認</button>
+      <button id="btn-json">契約JSON</button>
+      <button id="btn-orient">向き: 縦</button>
+    </div>
+  </header>
+
+  <section class="vbar">
+    <div class="tabs" id="tabs"></div>
+  </section>
+
+  <section class="controls">
+    <div class="ctl-row">
+      <span class="ctl-label">レーン順</span>
+      <div class="laneorder" id="laneorder"></div>
+    </div>
+    <div class="ctl-divider"></div>
+    <div class="ctl-row">
+      <span class="ctl-label">凡例</span>
+      <div class="legend">
+        <span class="badge ex-skill">skill（AI判断）</span>
+        <span class="badge ex-automation">automation</span>
+        <span class="badge ex-human">human</span>
+        <span class="badge ex-external">external（外部）</span>
+        <span class="legend-sep"></span>
+        <span class="hint">◇ 分岐　⛋ ゲート(HITL/N)　帯の濃淡＝自動化対象／対象外</span>
+      </div>
+    </div>
+  </section>
+
+  <p class="flowhint">ノードをクリックで契約（入出力・ゲート）を表示。☰ が付くノードは手順チェックリスト（各手順の由来つき）を持ちます。⊞ はサブフロー（別フロー）。</p>
+  <div id="crumbs" class="crumbs" style="display:none"></div>
+  <div id="flow"></div>
+  <div id="panel"></div>
+
+  <footer>
+    具体業務はノード／レーン／分岐を差し替えて利用。正本データは <code>&lt;script type="application/json"&gt;</code> 内の契約JSON。
+  </footer>
+</div>
+
+<script>
+const DATA = JSON.parse(document.getElementById('pipeline-contract').textContent);
+const VKEYS = Object.keys(DATA.versions);
+const COLORS = {
+  skill:{f:'#fdf1e3',s:'#dc9145',t:'#90500f'},
+  automation:{f:'#e7f1ec',s:'#4aa07c',t:'#2b6549'},
+  human:{f:'#ebe8f6',s:'#8775c4',t:'#513e8c'},
+  external:{f:'#eeece8',s:'#bbb4a9',t:'#675f56'}
+};
+let cur = VKEYS[0];
+let vertical = true;
+let path = [];      // ドリルした親ノードの履歴（サブフロー）
+const ORDER = {};   // ビューごとのレーン順
+const SCOPE = {};   // ビューごとのスコープ上書き
+function vkey(){ return path.length ? 'sub:'+path[path.length-1].key : cur; }
+const V = () => path.length ? DATA.subflows[path[path.length-1].key] : DATA.versions[cur];
+const byId = (v) => Object.fromEntries(v.nodes.map(n=>[n.id,n]));
+function actorOf(nm){ const a=V().actors.find(x=>x.name===nm)||{name:nm}; const k=vkey(); const ov=SCOPE[k]&&SCOPE[k][nm]; return {...a, scope: ov || a.scope || 'in'}; }
+function getOrder(){ const k=vkey(); if(!ORDER[k]) ORDER[k]=V().actors.map(a=>a.name); return ORDER[k]; }
+function deptSegments(order){ const segs=[]; let c=null; order.forEach((nm,i)=>{ const d=actorOf(nm).dept||''; if(c&&c.dept===d){c.end=i;} else {c={dept:d,start:i,end:i};segs.push(c);} }); return segs; }
+
+function verify(v){
+  const id = byId(v); const fail = [];
+  const rows = v.edges.map((e,i)=>{
+    const o = id[e.from.node].output.find(f=>f.name===e.from.field);
+    const inp = id[e.to.node].input.find(f=>f.name===e.to.field);
+    const ok = !!o && !!inp && o.type===inp.type;
+    if(!ok) fail.push(i);
+    return { ok, text:`${e.from.node}.${e.from.field}(${o?o.type:'?'}) → ${e.to.node}.${e.to.field}(${inp?inp.type:'?'})` };
+  });
+  return { rows, fail, pass: fail.length===0 };
+}
+
+const NW=148, NH=54;
+function layout(v){
+  const order=getOrder();
+  const laneIdx=Object.fromEntries(order.map((nm,i)=>[nm,i]));
+  const maxStep=Math.max(...v.nodes.map(n=>n.step));
+  const pos={}; let W,H,g;
+  if(vertical){
+    const LP=10,DEPTH=22,HEAD=40,BANDW=178,ROWH=104, top=22+40;
+    v.nodes.forEach(n=>{ pos[n.id]={ cx:LP+laneIdx[n.actor]*BANDW+BANDW/2, cy:top+n.step*ROWH+ROWH/2 }; });
+    W=LP+order.length*BANDW+10; H=top+(maxStep+1)*ROWH+10;
+    g={vertical:true,LP,DEPTH,HEAD,BANDW};
+  } else {
+    const TOP=8,DEPTW=58,GUT=130,COLW=168,BANDH=96, left=58+130;
+    v.nodes.forEach(n=>{ pos[n.id]={ cx:left+24+n.step*COLW+NW/2, cy:TOP+laneIdx[n.actor]*BANDH+BANDH/2 }; });
+    W=left+(maxStep+1)*COLW+30; H=TOP+order.length*BANDH+10;
+    g={vertical:false,TOP,DEPTW,GUT,BANDH};
+  }
+  return { pos, W, H, order, g };
+}
+
+function nodeSVG(n, pos){
+  const {cx,cy}=pos, c=COLORS[n.executor]||COLORS.human;
+  let shape;
+  if(n.kind==='decision'){ const dw=NW/2+8, dh=NH/2+12;
+    shape=`<polygon points="${cx},${cy-dh} ${cx+dw},${cy} ${cx},${cy+dh} ${cx-dw},${cy}" fill="${c.f}" stroke="${c.s}" stroke-width="1.6"/>`;
+  } else { shape=`<rect x="${cx-NW/2}" y="${cy-NH/2}" width="${NW}" height="${NH}" rx="9" fill="${c.f}" stroke="${c.s}" stroke-width="1.6"/>`; }
+  const hasGate=n.gate!=='none';
+  const gateTxt=n.gate==='HITL-confirm'?'⛋ 承認で停止':(n.gate==='N-interface'?'⛋ N(調整)':'');
+  const aut=n.autonomy&&n.autonomy!=='-'?' · '+n.autonomy:'';
+  let txt;
+  if(hasGate){
+    txt=`<text x="${cx}" y="${cy-13}" text-anchor="middle" font-size="13" font-weight="700" fill="${c.t}">${n.name}</text>`
+      + `<text x="${cx}" y="${cy+1}" text-anchor="middle" font-size="10" fill="${c.t}">${n.executor}${aut}</text>`
+      + `<text x="${cx}" y="${cy+15}" text-anchor="middle" font-size="9.5" fill="#bf5328">${gateTxt}</text>`;
+  } else {
+    txt=`<text x="${cx}" y="${cy-5}" text-anchor="middle" font-size="13" font-weight="700" fill="${c.t}">${n.name}</text>`
+      + `<text x="${cx}" y="${cy+10}" text-anchor="middle" font-size="10" fill="${c.t}">${n.executor}${aut}</text>`;
+  }
+  const mark = n.subflow ? '⊞' : (n.checklist ? '☰' : '');
+  const subMark = mark ? `<text x="${cx+NW/2-13}" y="${cy-NH/2+15}" font-size="12" fill="${c.t}">${mark}</text>` : '';
+  return `<g class="node" onclick="nodeClick('${n.id}')">${shape}${txt}${subMark}</g>`;
+}
+
+function edgeSVG(e, i, fail, pos){
+  const a=pos[e.from.node], b=pos[e.to.node];
+  const red=fail.includes(i), col=red?'#bf5328':'#c2b9ab', wdt=red?2.6:1.6, mk=red?'url(#ahr)':'url(#ah)';
+  let path, lx, ly;
+  if(vertical){
+    const sx=a.cx, sy=a.cy+NH/2, tx=b.cx, ty=b.cy-NH/2, midY=(sy+ty)/2;
+    path=`M ${sx} ${sy} V ${midY} H ${tx} V ${ty}`; lx=(sx+tx)/2; ly=midY;
+  } else {
+    const sx=a.cx+NW/2, sy=a.cy, tx=b.cx-NW/2, ty=b.cy, midX=(sx+tx)/2;
+    path=`M ${sx} ${sy} H ${midX} V ${ty} H ${tx}`; lx=midX; ly=(sy+ty)/2;
+  }
+  let label='';
+  if(e.label){ label=`<rect x="${lx-22}" y="${ly-9}" width="44" height="18" rx="4" fill="#fff" stroke="${col}"/><text x="${lx}" y="${ly+4}" text-anchor="middle" font-size="10.5" fill="${col}">${e.label}</text>`; }
+  return `<path d="${path}" fill="none" stroke="${col}" stroke-width="${wdt}" marker-end="${mk}"/>${label}`;
+}
+
+function genSVG(v, fail){
+  const {pos,W,H,order,g}=layout(v);
+  let s='';
+  // 1) レーン本体の塗り（スコープで濃淡）
+  order.forEach((nm,i)=>{
+    const a=actorOf(nm), out=a.scope==='out';
+    const fill=out?'#f0eee9':(i%2?'#ffffff':'#fbfaf7'), stroke=out?'#ddd6ca':'#efebe3', dash=out?' stroke-dasharray="3 3"':'';
+    if(g.vertical){ const x=g.LP+i*g.BANDW; s+=`<rect x="${x}" y="${g.DEPTH+g.HEAD}" width="${g.BANDW}" height="${H-(g.DEPTH+g.HEAD)}" fill="${fill}" stroke="${stroke}"${dash}/>`; }
+    else { const y=g.TOP+i*g.BANDH; s+=`<rect x="${g.DEPTW+g.GUT}" y="${y}" width="${W-(g.DEPTW+g.GUT)}" height="${g.BANDH}" fill="${fill}" stroke="${stroke}"${dash}/>`; }
+  });
+  // 2) 担当者ヘッダ（名前＋スコープタグ）
+  order.forEach((nm,i)=>{
+    const a=actorOf(nm), out=a.scope==='out', sub=out?'対象外':'自動化対象', subC=out?'#857e74':'#2b6549';
+    if(g.vertical){ const x=g.LP+i*g.BANDW;
+      s+=`<rect x="${x}" y="${g.DEPTH}" width="${g.BANDW}" height="${g.HEAD}" fill="${out?'#ece8e0':'#f6f3ec'}" stroke="#ebe6dd"/>`
+       + `<text x="${x+g.BANDW/2}" y="${g.DEPTH+17}" text-anchor="middle" font-size="12.5" font-weight="700" fill="#4a453d">${nm}</text>`
+       + `<text x="${x+g.BANDW/2}" y="${g.DEPTH+32}" text-anchor="middle" font-size="9.5" fill="${subC}">${sub}</text>`;
+    } else { const y=g.TOP+i*g.BANDH;
+      s+=`<rect x="${g.DEPTW}" y="${y}" width="${g.GUT}" height="${g.BANDH}" fill="${out?'#ece8e0':'#f6f3ec'}" stroke="#ebe6dd"/>`
+       + `<text x="${g.DEPTW+g.GUT/2}" y="${y+g.BANDH/2-2}" text-anchor="middle" font-size="12.5" font-weight="700" fill="#4a453d">${nm}</text>`
+       + `<text x="${g.DEPTW+g.GUT/2}" y="${y+g.BANDH/2+13}" text-anchor="middle" font-size="9.5" fill="${subC}">${sub}</text>`;
+    }
+  });
+  // 3) 部署ヘッダ（連続する同部署をまとめる）
+  deptSegments(order).forEach(seg=>{
+    if(g.vertical){ const x=g.LP+seg.start*g.BANDW, w=(seg.end-seg.start+1)*g.BANDW;
+      s+=`<rect x="${x}" y="0" width="${w}" height="${g.DEPTH}" fill="#eae3d6" stroke="#ddd4c5"/>`
+       + `<text x="${x+w/2}" y="15" text-anchor="middle" font-size="11" font-weight="700" fill="#6b6358">${seg.dept}</text>`;
+    } else { const y=g.TOP+seg.start*g.BANDH, h=(seg.end-seg.start+1)*g.BANDH, cxx=g.DEPTW/2, cyy=y+h/2;
+      s+=`<rect x="0" y="${y}" width="${g.DEPTW}" height="${h}" fill="#eae3d6" stroke="#ddd4c5"/>`
+       + `<text x="${cxx}" y="${cyy}" text-anchor="middle" font-size="10.5" font-weight="700" fill="#6b6358" transform="rotate(-90 ${cxx} ${cyy})">${seg.dept}</text>`;
+    }
+  });
+  const edges=v.edges.map((e,i)=>edgeSVG(e,i,fail,pos)).join('');
+  const nodes=v.nodes.map(n=>nodeSVG(n,pos[n.id])).join('');
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" style="display:block;max-width:none">
+    <defs>
+      <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M1 1 L7 4.5 L1 8" fill="none" stroke="#c2b9ab" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+      <marker id="ahr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M1 1 L7 4.5 L1 8" fill="none" stroke="#bf5328" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker>
+    </defs>${s}${edges}${nodes}</svg>`;
+}
+
+function draw(){
+  try{ const v=V(); const {fail}=verify(v);
+    document.getElementById('flow').innerHTML=genSVG(v,fail);
+  }catch(err){ document.getElementById('flow').innerHTML='<p style="color:#bf5328;padding:16px">描画エラー: '+err.message+'</p>'; }
+}
+
+function renderTabs(){
+  document.getElementById('tabs').innerHTML = VKEYS.map(k=>
+    `<button class="tab${k===cur?' active':''}" onclick="switchV('${k}')">${DATA.versions[k].label}</button>`).join('');
+}
+function renderLaneOrder(){
+  const order=getOrder();
+  document.getElementById('laneorder').innerHTML = order.map((nm,i)=>{
+    const a=actorOf(nm), out=a.scope==='out';
+    return `<span class="lchip ${out?'out':''}">`
+      + `<button class="mv" onclick="moveLane('${nm}',-1)" ${i===0?'disabled':''} title="前へ">◀</button>`
+      + `<span class="lname">${nm}<small>${a.dept||''}</small></span>`
+      + `<button class="scopebtn ${out?'out':''}" onclick="toggleScope('${nm}')" title="自動化対象/対象外を切替">${out?'対象外':'対象'}</button>`
+      + `<button class="mv" onclick="moveLane('${nm}',1)" ${i===order.length-1?'disabled':''} title="後へ">▶</button></span>`;
+  }).join('');
+}
+window.moveLane=(nm,dir)=>{ const order=getOrder(); const i=order.indexOf(nm), j=i+dir; if(j<0||j>=order.length) return; [order[i],order[j]]=[order[j],order[i]]; renderLaneOrder(); draw(); };
+window.toggleScope=(nm)=>{ const k=vkey(); if(!SCOPE[k])SCOPE[k]={}; SCOPE[k][nm]= actorOf(nm).scope==='in'?'out':'in'; renderLaneOrder(); draw(); };
+window.switchV=(k)=>{ cur=k; path=[]; renderTabs(); renderCrumbs(); renderLaneOrder(); document.getElementById('panel').className=''; draw(); };
+window.openSub=(key,label,pIn,pOut)=>{ path.push({key,label,pIn,pOut}); renderCrumbs(); renderLaneOrder(); document.getElementById('panel').className=''; draw(); };
+window.gotoLevel=(idx)=>{ path=path.slice(0,idx); renderCrumbs(); renderLaneOrder(); document.getElementById('panel').className=''; draw(); };
+function renderCrumbs(){
+  const el=document.getElementById('crumbs');
+  if(!path.length){ el.style.display='none'; el.innerHTML=''; return; }
+  el.style.display='flex';
+  const fmt=a=>a.map(f=>f.name+':'+f.type).join(', ');
+  let html=`<button class="crumb" onclick="gotoLevel(0)">← ${DATA.versions[cur].label}</button>`;
+  path.forEach((p,i)=>{ html+=`<span class="crsep">▸</span>`+(i===path.length-1?`<span class="crcur">${p.label}</span>`:`<button class="crumb" onclick="gotoLevel(${i+1})">${p.label}</button>`); });
+  const sf=DATA.subflows[path[path.length-1].key], last=path[path.length-1];
+  const inOk=JSON.stringify(sf.boundary.input)===JSON.stringify(last.pIn), outOk=JSON.stringify(sf.boundary.output)===JSON.stringify(last.pOut);
+  html+=`<div class="boundary">境界 in[${fmt(sf.boundary.input)}] → out[${fmt(sf.boundary.output)}] ／ 親ノードと ${inOk&&outOk?'<span class="ok">一致 ✓</span>':'<span class="ng">不一致 ✗</span>'}</div>`;
+  el.innerHTML=html;
+}
+
+window.nodeClick=function(id){
+  const v=V(), n=byId(v)[id]; if(!n) return;
+  if(n.subflow){ openSub(n.subflow, n.name, n.input, n.output); return; }
+  const a=actorOf(n.actor);
+  const fields=(arr)=>arr.map(f=>`<div class="field">${f.name}: <span class="ty">${f.type}</span></div>`).join('')||'<div class="field">—</div>';
+  const DISP={auto:['自動化','#2b6549','#e7f1ec'],manual:['人手で残す','#513e8c','#ebe8f6'],eliminate:['削除','#7a736a','#eeece8'],merge:['結合','#90500f','#fdf1e3']};
+  let checklist='';
+  if(n.checklist&&n.checklist.length){
+    const cnt={}; n.checklist.forEach(it=>cnt[it.to]=(cnt[it.to]||0)+1);
+    const items=n.checklist.map(it=>{const d=DISP[it.to]||DISP.auto;return `<li><span class="cltag" style="color:${d[1]};background:${d[2]}">${d[0]}</span>${it.t}</li>`;}).join('');
+    const sum=`自動化 ${cnt.auto||0} ／ 人手 ${cnt.manual||0} ／ 削除 ${cnt.eliminate||0}${cnt.merge?' ／ 結合 '+cnt.merge:''}`;
+    checklist=`<h4 class="clhead">手順（ヒアリング）— ${n.checklist.length}項目</h4><ol class="clist">${items}</ol><div class="clsum">由来 → ${sum}</div>`;
+  }
+  const panel=document.getElementById('panel'); panel.className='show';
+  panel.innerHTML=`<h3>${n.name} <span class="badge ex-${n.executor}">${n.executor}</span></h3>
+    <div class="kv"><b>部署</b> ${a.dept||'—'}</div>
+    <div class="kv"><b>担当(レーン)</b> ${n.actor}</div>
+    <div class="kv"><b>自動化範囲</b> ${a.scope==='out'?'対象外（連携のみ）':'自動化対象'}</div>
+    <div class="kv"><b>kind</b> ${n.kind}${n.kind==='decision'?'（分岐）':''}</div>
+    <div class="kv"><b>自律</b> ${n.autonomy}</div>
+    <div class="kv"><b>ゲート</b> ${n.gate}</div>
+    <div class="kv"><b>処理(P)</b> ${n.process}</div>
+    <div class="io"><div><h4>Input</h4>${fields(n.input)}</div><div><h4>Output</h4>${fields(n.output)}</div></div>${checklist}`;
+};
+
+document.getElementById('btn-verify').onclick=()=>{
+  const {rows,pass}=verify(V());
+  const panel=document.getElementById('panel'); panel.className='show';
+  panel.innerHTML=`<h3>疎通確認（O→I の型チェック・${V().label}）</h3>`+
+    rows.map(r=>`<div class="res">${r.ok?'<span class="ok">✓</span>':'<span class="ng">✗</span>'} ${r.text}</div>`).join('')+
+    `<div class="summary-line ${pass?'ok':'ng'}">${pass?'✓ 全エッジ整合。実装フェーズに進める。':'✗ 不整合あり。赤いエッジの契約を直してから実装へ。'}</div>`;
+  draw();
+};
+document.getElementById('btn-json').onclick=()=>{
+  const panel=document.getElementById('panel'); panel.className='show';
+  panel.innerHTML=`<h3>契約JSON（${V().label}）</h3><pre>${JSON.stringify(V(),null,2)}</pre>`;
+};
+document.getElementById('btn-orient').onclick=(e)=>{ vertical=!vertical; e.target.textContent='向き: '+(vertical?'縦':'横'); draw(); };
+
+renderTabs(); renderCrumbs(); renderLaneOrder(); draw();
+</script>
+</body>
+</html>
