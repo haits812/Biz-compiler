@@ -63,11 +63,11 @@ gitのstage / commit / push結果は、通常の文章またはbacktick付きコ
 | 作業種別 | 追加で読む場所 |
 |---|---|
 | メタ土台、配置判断、状態分類、session/subagent briefを扱う | `knowledge/docs/meta/` |
-| 用語・概念境界を扱う | `knowledge/docs/lexicon/` |
+| 用語・概念境界を扱う | `knowledge/docs/lexicon.md` |
 | IR / schema / manifest / contract を触る | `knowledge/docs/ir/` |
 | phase設計 / ENCRS / 検証ループを扱う | `knowledge/docs/method/` |
-| 判断例・反例・比較ケースが必要 | `knowledge/docs/casebook/` |
-| eval / fresh executor / shadow run を設計する | `knowledge/docs/evaluation/` |
+| 判断例・反例・比較ケースが必要 | `knowledge/docs/casebook.md` |
+| eval / fresh executor / shadow run を設計する | `knowledge/docs/evaluation.md` |
 | 過去の決定理由が必要 | `knowledge/docs/decisions/` |
 
 subagentや別作業者へ重い作業を渡す時は、`Hello,world.md`、`SOUL.md`、`USER.md`、`COMPASS.md`、`MEMORY.md` に加え、作業種別に該当する追加読み込み先だけを渡す。
@@ -222,7 +222,7 @@ final前の更新要否確認は保険であり、主機構ではない。
 ## ドキュメント編集
 
 - 日本語を基本とし、`IPO`、`IR`、`gate`、`provenance` などの既に定着した英語用語は維持する。
-- Compassにテンプレート、具体例、語彙定義、IR詳細、方法論を詰め込みすぎない。具体例は `knowledge/docs/casebook/`、語彙定義は `knowledge/docs/lexicon/`、IR詳細は `knowledge/docs/ir/`、方法論は `knowledge/docs/method/` へ分ける。
+- Compassにテンプレート、具体例、語彙定義、IR詳細、方法論を詰め込みすぎない。具体例は `knowledge/docs/casebook.md`、語彙定義は `knowledge/docs/lexicon.md`、IR詳細は `knowledge/docs/ir/`、方法論は `knowledge/docs/method/` へ分ける。
 - 要求定義を変更した場合は、変更がCompass、IR、同意ビュー、運用ループのどこに効くかを明示する。
 - リスク指摘を「単なる未実装」として流さない。意図的な未固定領域か、安全制約として今すぐ固定すべき領域かを分ける。
 - ユーザーが出した言葉、ファイル名、概念の区別を勝手に潰さない。補完が必要な場合は推測として扱う。

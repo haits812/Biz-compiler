@@ -11,11 +11,11 @@
 | State modelがある | 整備状態、主張状態、pending運用状態を混ぜないルールがある | `knowledge/docs/meta/state-model.md` |
 | Phase catalogがある | 00〜80の目的、入力、出力、完了条件、handoffを一表で読める | `knowledge/docs/meta/phase-catalog.md` |
 | Artifact placementがある | root、knowledge、template、outputの配置判断を説明できる | `knowledge/docs/meta/artifact-placement.md` |
-| Lexicon v0がある | gate、approval、validation、IR、contract、manifest等の初期語彙がある | `knowledge/docs/lexicon/README.md` |
+| Lexicon v0がある | gate、approval、validation、IR、contract、manifest等の初期語彙がある | `knowledge/docs/lexicon.md` |
 | Session brief型がある | 通常会話の仮ゴール、scope、読むもの、成果物、完了条件を扱える | `knowledge/docs/meta/session-brief.md` |
 | Subagent brief型がある | subagentにCompassと別の仮ゴール、成果物契約、禁止事項を渡せる | `knowledge/docs/meta/subagent-brief.md` |
 | Ledger更新ルールがある | メタ土台の整備状態、正本、併読、依存、次アクションを台帳管理できる | `knowledge/docs/meta/README.md` |
-| Read routingがある | meta/lexicon/ir/method/casebook/evaluation/decisionsを作業種別で読める | `knowledge/docs/README.md` |
+| Read routingがある | meta/, lexicon.md, ir/, method/, casebook.md, evaluation.md, decisions/を作業種別で読める | `knowledge/docs/README.md` |
 | Hello World Gateが通る | 構成変更後に現在地、検査、commit/pushを同期できる | `knowledge/ops/skills/hello-world-gate/` |
 
 ## v0では不要なもの
@@ -32,7 +32,7 @@
 
 - `knowledge/docs/meta/README.md` の未整備メタ土台7件が `整備済み` になっている。
 - 新規メタdocを読めば、数字工程に入る前の配置・状態・brief・完了条件が分かる。
-- `knowledge/docs/README.md` から `knowledge/docs/meta/` と `knowledge/docs/lexicon/` を辿れる。
+- `knowledge/docs/README.md` から `knowledge/docs/meta/` と `knowledge/docs/lexicon.md` を辿れる。
 - `MEMORY.md` に常時参照が必要な最小情報だけが残り、詳細は各docに分かれている。
 - `template/phase-local-missing.md` に残すべきphase-local不足物を、meta台帳へ混ぜていない。
 - `git diff --check` が通る。

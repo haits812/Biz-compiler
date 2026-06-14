@@ -14,11 +14,11 @@
 - `knowledge/docs/README.md`: Compassから逃がした詳細知識をいつ読むかのread routing。
 - `knowledge/docs/meta/`: 数字工程に入らない本当のメタ土台。Markdown台帳、state model、phase catalog、artifact placement、session/subagent brief、completion criteriaを置く。
 - `knowledge/docs/decisions/`: 設計・運用上の決定記録。
-- `knowledge/docs/lexicon/`: 用語定義と概念境界。v0では `gate`、`approval`、`validation`、`IR`、`contract`、`manifest`、`provenance`、`confidence`、`executor`、`N-interface`、`disposition`、`ledger`、`registry` を定義する。
+- `knowledge/docs/lexicon.md`: 用語定義と概念境界。v0では `gate`、`approval`、`validation`、`IR`、`contract`、`manifest`、`provenance`、`confidence`、`executor`、`N-interface`、`disposition`、`ledger`、`registry` を定義する。
 - `knowledge/docs/ir/`: IR、contract、schema、manifestの概念設計。
 - `knowledge/docs/method/`: phase設計、ENCRS、検証ループなどの方法論。
-- `knowledge/docs/casebook/`: 判断例、反例、良い/悪い設計の比較。
-- `knowledge/docs/evaluation/`: fresh executor、shadow run、eval、受け入れ条件。
+- `knowledge/docs/casebook.md`: 判断例、反例、良い/悪い設計の比較。
+- `knowledge/docs/evaluation.md`: fresh executor、shadow run、eval、受け入れ条件。
 - `knowledge/pending/`: AIまたは作業者が提案した、未承認のMemory/Compass/Decision更新。
 - `knowledge/pending/approved/`: 人間が正式反映を認めたが、まだ対象ファイルへ反映済みとは限らない候補。
 - `knowledge/journal/`: 作業セッションのログ、検討過程、未整理メモ、pendingの適用/却下ログ。
@@ -45,7 +45,7 @@
 - Compassはルートの `COMPASS.md` に置き、作業者やsubagentに思考の指向性を渡すdirection packetとして扱う。
 - Compassは短く保つ。メタ土台の棚卸し、用語、IR詳細、方法論、事例、評価条件、決定理由は `knowledge/docs/README.md` のread routingに従って分ける。
 - メタ土台v0は `knowledge/docs/meta/README.md` をMarkdown正本台帳として維持する。メタ土台は急増しない前提なので、JSON台帳化は現時点では不要。
-- メタ土台v0として、`state-model.md`、`phase-catalog.md`、`artifact-placement.md`、`session-brief.md`、`subagent-brief.md`、`completion-criteria.md`、`knowledge/docs/lexicon/README.md` を整備済みとして扱う。
+- メタ土台v0として、`state-model.md`、`phase-catalog.md`、`artifact-placement.md`、`session-brief.md`、`subagent-brief.md`、`completion-criteria.md`、`knowledge/docs/lexicon.md` を整備済みとして扱う。
 - 知識候補の格上げ/保留/退避/廃棄は、メタ台帳ではなくrepo-local `knowledge-curation` Skillで扱う。常時効く禁止・配置・読み順・運用制約は、先にMarkdown正本へルール化できるかを見る。repo外へ影響し得るHook/denyは現時点では導入せず、まずMDルール化とrepo-local `hello-world-gate` へ寄せる。数字phase処理が固まった後にscript化を候補に入れる。
 - 要求定義は `knowledge/docs/requirements/` に置く。
 - 決定記録、未承認候補、作業ログは `knowledge/` 配下でグループ化し、`docs` / `pending` / `journal` の役割は混ぜない。
@@ -86,8 +86,8 @@
 ## 次に整える候補
 
 - `template/<数字phase>/` 側のphase-local README v0。`knowledge/docs/meta/phase-catalog.md` を参照し、各phase固有の成果物雛形はmetaではなくtemplate側に置く。
-- `knowledge/docs/casebook/` v0: 良い判断/悪い判断の対比事例。
-- `knowledge/docs/evaluation/` v0: Compassあり/なしで業務設計出力差を見るシナリオ。
+- `knowledge/docs/casebook.md` v0: 良い判断/悪い判断の対比事例。
+- `knowledge/docs/evaluation.md` v0: Compassあり/なしで業務設計出力差を見るシナリオ。
 - `knowledge/docs/ir/` v0: 同意ビューJSONと実行IRの関係を固定する最小スキーマ。
 - `COMPASS.md` はv1 direction packetへ掃除済み。方法論は `knowledge/docs/method/empirical-business-design-loop.md`、IR要求は `knowledge/docs/ir/minimum-ir-attributes.md` へ退避済み。
 - `map.md`: ファイルが増えてきたら、全体像・読み方・配置を把握するための地図として検討する。`MEMORY.md` とは役割を分ける。

@@ -118,7 +118,7 @@ IR凍結で未整備:
 
 次はphase-localではなく、横断メタ土台または `_shared/` 側で扱う。
 
-- Lexicon: `knowledge/docs/lexicon/`
+- Lexicon: `knowledge/docs/lexicon.md`
 - 状態分類: 決定済み / 仮説 / 未検証 / pending / accepted / applied など
 - session brief: 今回の作業の仮ゴール、scope、完了条件
 - subagent brief: 委譲先への仮ゴール、Compass、必要資料、成果物契約

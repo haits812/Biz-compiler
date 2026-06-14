@@ -100,11 +100,11 @@ Compassから逃がした詳細はここで読む。
 
 | Need | Read |
 |---|---|
-| 用語・概念境界 | `knowledge/docs/lexicon/` |
+| 用語・概念境界 | `knowledge/docs/lexicon.md` |
 | IR / schema / manifest / contract | `knowledge/docs/ir/` |
 | phase設計 / ENCRS / 検証ループ | `knowledge/docs/method/` |
-| 判断例・反例・比較ケース | `knowledge/docs/casebook/` |
-| eval / fresh executor / shadow run | `knowledge/docs/evaluation/` |
+| 判断例・反例・比較ケース | `knowledge/docs/casebook.md` |
+| eval / fresh executor / shadow run | `knowledge/docs/evaluation.md` |
 | 背景理由 | `knowledge/docs/decisions/` |
 
 ## Keep This File Small

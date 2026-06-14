@@ -6,7 +6,7 @@
 
 - `memory/`: `MEMORY.md` へ反映する候補。
 - `compass/`: `COMPASS.md` へ反映する候補。
-- `decisions/`: `knowledge/knowledge/docs/decisions/` へ昇格する候補。
+- `decisions/`: `knowledge/docs/decisions/` へ昇格する候補。
 - `approved/`: 人間が正式反映を認めたが、まだ対象ファイルへ反映済みとは限らない候補。
 
 ## ルール

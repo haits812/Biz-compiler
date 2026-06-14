@@ -36,7 +36,7 @@
 | phaseごとのREADME、質問票、チェックリスト | `template/<数字phase>/` |
 | 業務フォルダへコピーされるschema、validator、runner、script | `template/_shared/` |
 | 実業務のphase ledger、artifact、event log | `output/Biz-001-業務名/<数字phase>/` |
-| 共通語彙 | `knowledge/docs/lexicon/` |
+| 共通語彙 | `knowledge/docs/lexicon.md` |
 | IR/schema/manifestの詳細 | `knowledge/docs/ir/` |
 | ENCRSや検証ループの方法論 | `knowledge/docs/method/` |
 

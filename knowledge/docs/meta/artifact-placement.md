@@ -11,11 +11,11 @@
 | root | 毎回読む入口、repo全体の現在地、作業規約、思考方位 | 個別phase成果物、script集、schema集、samples | 全作業者が最初に読むか、repo全体の入口か |
 | `knowledge/docs/` | 確定知識、要求、決定、メタ土台、用語、IR設計、方法論、事例、評価 | 業務実行時にコピーされるasset、個別業務の運用ログ | このrepoを作るための知識か |
 | `knowledge/docs/meta/` | 数字工程に入らない本当のメタ土台 | phase-local雛形、個別業務artifact | 全phase、会話、委譲、配置判断にまたがるか |
-| `knowledge/docs/lexicon/` | 用語定義と概念境界 | Compass本体、IR schemaの詳細 | 語の意味や似た語の違いを固定するか |
+| `knowledge/docs/lexicon.md` | 用語定義と概念境界 | Compass本体、IR schemaの詳細 | 語の意味や似た語の違いを固定するか |
 | `knowledge/docs/ir/` | IR、contract、schema、manifestの概念設計 | phaseごとの質問票、表示HTML | 機械可読契約の意味に関わるか |
 | `knowledge/docs/method/` | ENCRS、phase設計、検証ループなどの方法論 | 実行script、業務固有runbook | 進め方や判断手順の知識か |
-| `knowledge/docs/casebook/` | 判断例、反例、比較ケース | 正本schema、運用ログ | 判断に迷う時の事例か |
-| `knowledge/docs/evaluation/` | fresh executor、shadow run、eval、受け入れ条件 | 実業務の検証結果そのもの | 検証の設計・観点か |
+| `knowledge/docs/casebook.md` | 判断例、反例、比較ケース | 正本schema、運用ログ | 判断に迷う時の事例か |
+| `knowledge/docs/evaluation.md` | fresh executor、shadow run、eval、受け入れ条件 | 実業務の検証結果そのもの | 検証の設計・観点か |
 | `knowledge/docs/decisions/` | 採用/却下の背景理由 | 常時読む短い現在地 | なぜそう決めたかを残す必要があるか |
 | `knowledge/ops/` | knowledgeを操作するrepo-local Skillと管理コマンド | 業務実行用の個別Skill、直下の野良`.ps1` | このrepoの知識運用を操作するか |
 | `template/<数字phase>/` | 業務フォルダへコピーされるphase-local雛形 | 全phase共通の思想や用語本文 | 特定phaseで作業者が使う雛形か |
@@ -29,7 +29,7 @@
 | 特定の数字phaseだけで使う質問票・雛形・チェックリストか | `template/<数字phase>/` |
 | 業務フォルダへコピーされて、その業務の中で使われるか | `template/<数字phase>/` または `template/_shared/` |
 | 全phaseの読み方、状態、配置、brief、完成条件を決めるか | `knowledge/docs/meta/` |
-| 用語の意味や境界を決めるだけか | `knowledge/docs/lexicon/` |
+| 用語の意味や境界を決めるだけか | `knowledge/docs/lexicon.md` |
 | 個別業務の進行状態、実行ログ、監査ログか | `output/Biz-001-業務名/` |
 | このrepoの作業規約や現在地として毎回読む必要があるか | root |
 

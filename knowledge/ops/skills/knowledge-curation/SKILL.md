@@ -59,7 +59,7 @@ description: Biz-compiler repo内の知識候補を、Markdownルール化、Hel
 | agentの振る舞い | `SOUL.md` |
 | ユーザーとの進め方 | `USER.md` |
 | 状態、配置、brief、phase意味などの上位ルール | `knowledge/docs/meta/` |
-| 用語境界 | `knowledge/docs/lexicon/` |
+| 用語境界 | `knowledge/docs/lexicon.md` |
 | IR、schema、manifest、contractの意味 | `knowledge/docs/ir/` |
 
 ### 3. repo-local gateに寄せられるか
