@@ -32,20 +32,20 @@
 
 | ID | メタ土台 | 役割 | 状態 | 正本/置き場 | 併読 | 更新時に触る | 依存 | 次アクション |
 |---|---|---|---|---|---|---|---|---|
-| hello-world | 現在地モデル | repoの現在地を返す | 整備済み | `Hello,world.md` | `AGENTS.md`, `MEMORY.md` | `Hello,world.md` | なし | gate運用で維持 |
-| compass | 判断方位 | 作業者の思考prior、疑うもの、価値順位 | 整備済み | `COMPASS.md` | `SOUL.md`, `USER.md`, `knowledge/docs/README.md` | `COMPASS.md`, `knowledge/docs/README.md`, `MEMORY.md` | なし | 必要時だけ圧縮更新 |
-| soul | 対話姿勢 | agentの振る舞い、聞き取り姿勢、避ける失敗 | 整備済み | `SOUL.md` | `USER.md`, `COMPASS.md` | `SOUL.md`, `MEMORY.md` | なし | 維持 |
-| user-model | ユーザー作業モデル | 主利用者の進め方、嫌う混同、会話前提 | 整備済み | `USER.md` | `SOUL.md`, `COMPASS.md` | `USER.md`, `MEMORY.md` | なし | 維持 |
-| memory | 開発運用メモリ | 常時効く決定済み事項と現在構成 | 整備済み | `MEMORY.md` | `knowledge/docs/meta/README.md`, `knowledge/ops/skills/knowledge-curation/` | `MEMORY.md`, 必要なら `knowledge/docs/decisions/` | なし | 肥大化時にdocsへ退避 |
-| read-routing | Read routing | 作業種別ごとの追加読み込み先 | 整備済み | `knowledge/docs/README.md` | `COMPASS.md`, `AGENTS.md` | `knowledge/docs/README.md`, `AGENTS.md`, `MEMORY.md` | compass | 新しい知識区分追加時に更新 |
-| gate-workflow | Gate workflow | Hello World更新、commit/push、対象なし判定 | 整備済み | `knowledge/ops/skills/hello-world-gate/` | `Hello,world.md`, `MEMORY.md` | `Hello,world.md`, `AGENTS.md`, `MEMORY.md` | hello-world | 維持 |
-| phase-catalog | Phase catalog | 00〜80が何の工程で、何を決めるか | 整備済み | `knowledge/docs/meta/phase-catalog.md` | `template/phase-local-missing.md`, `knowledge/docs/requirements/Biz-compiler_要求定義.md` | `knowledge/docs/meta/README.md`, `knowledge/docs/README.md`, `MEMORY.md` | read-routing | phase-local README作成時に参照 |
-| state-model | State model | 整備状態、主張状態、pending運用状態を分ける | 整備済み | `knowledge/docs/meta/state-model.md` | `MEMORY.md`, `knowledge/ops/skills/pending-memory/` | `knowledge/docs/meta/README.md`, `MEMORY.md` | なし | 台帳/Memory/pending運用で維持 |
-| lexicon-v0 | Lexicon v0 | 全工程共通語彙の意味と境界 | 整備済み | `knowledge/docs/lexicon.md` | `COMPASS.md`, `knowledge/docs/requirements/Biz-compiler_要求定義.md`, `state-model.md` | `knowledge/docs/meta/README.md`, `knowledge/docs/README.md`, `MEMORY.md` | state-model | 用語追加時に更新 |
-| session-brief | Session brief型 | 今回の仮ゴール、scope、読むもの、完了条件 | 整備済み | `knowledge/docs/meta/session-brief.md` | `Hello,world.md`, `COMPASS.md`, `USER.md` | `knowledge/docs/meta/README.md`, `AGENTS.md`, `MEMORY.md` | state-model | 通常作業の開始時に使う |
-| subagent-brief | Subagent brief型 | 委譲先の仮ゴール、Compass、必要資料、成果物契約 | 整備済み | `knowledge/docs/meta/subagent-brief.md` | `COMPASS.md`, `knowledge/docs/README.md`, `session-brief.md` | `knowledge/docs/meta/README.md`, `AGENTS.md`, `MEMORY.md` | session-brief, read-routing | 委譲時に使う |
-| completion-criteria | Meta completion criteria | メタ土台が一旦使えると言える条件 | 整備済み | `knowledge/docs/meta/completion-criteria.md` | `phase-catalog.md`, `state-model.md`, `knowledge/docs/lexicon.md` | `knowledge/docs/meta/README.md`, `MEMORY.md` | phase-catalog, state-model, lexicon-v0 | メタ土台評価時に使う |
-| artifact-placement | Artifact placement rule整理版 | root、template、_shared、knowledge、outputの配置判断 | 整備済み | `knowledge/docs/meta/artifact-placement.md` | `AGENTS.md`, `MEMORY.md`, `template/phase-local-missing.md` | `knowledge/docs/meta/README.md`, `AGENTS.md`, `MEMORY.md`, `Hello,world.md` | phase-catalog | 新規ファイル追加時に参照 |
+| hello-world | 現在地モデル | repoの現在地を返す | 整備済み | `Hello,world.md` | `AGENTS.md` | `Hello,world.md` | なし | gate運用で維持 |
+| compass | 判断方位 | 作業者の思考prior、疑うもの、価値順位 | 整備済み | `COMPASS.md` | `SOUL.md`, `USER.md`, `knowledge/docs/README.md` | `COMPASS.md`, `knowledge/docs/README.md` | なし | 必要時だけ圧縮更新 |
+| soul | 対話姿勢 | agentの振る舞い、聞き取り姿勢、避ける失敗 | 整備済み | `SOUL.md` | `USER.md`, `COMPASS.md` | `SOUL.md` | なし | 維持 |
+| user-model | ユーザー作業モデル | 主利用者の進め方、嫌う混同、会話前提 | 整備済み | `USER.md` | `SOUL.md`, `COMPASS.md` | `USER.md` | なし | 維持 |
+| memory | 開発運用メモリ | 正本化前の短い常時注意。現在構成や決定履歴は持たない | 整備済み | `MEMORY.md` | `Hello,world.md`, `AGENTS.md`, `knowledge/docs/decisions/`, `knowledge/ops/skills/knowledge-curation/` | `MEMORY.md`, 必要なら `knowledge/docs/decisions/` | なし | 正本重複が出たら削除 |
+| read-routing | Read routing | 作業種別ごとの追加読み込み先 | 整備済み | `knowledge/docs/README.md` | `COMPASS.md`, `AGENTS.md` | `knowledge/docs/README.md`, `AGENTS.md` | compass | 新しい知識区分追加時に更新 |
+| gate-workflow | Gate workflow | Hello World更新、commit/push、対象なし判定 | 整備済み | `knowledge/ops/skills/hello-world-gate/` | `Hello,world.md`, `AGENTS.md` | `Hello,world.md`, `AGENTS.md` | hello-world | 維持 |
+| phase-catalog | Phase catalog | 00〜80が何の工程で、何を決めるか | 整備済み | `knowledge/docs/meta/phase-catalog.md` | `template/phase-local-missing.md`, `knowledge/docs/requirements/Biz-compiler_要求定義.md` | `knowledge/docs/meta/README.md`, `knowledge/docs/README.md` | read-routing | phase-local README作成時に参照 |
+| state-model | State model | 整備状態、主張状態、pending運用状態を分ける | 整備済み | `knowledge/docs/meta/state-model.md` | `knowledge/ops/skills/pending-memory/` | `knowledge/docs/meta/README.md` | なし | 台帳/pending運用で維持 |
+| lexicon-v0 | Lexicon v0 | 全工程共通語彙の意味と境界 | 整備済み | `knowledge/docs/lexicon.md` | `COMPASS.md`, `knowledge/docs/requirements/Biz-compiler_要求定義.md`, `state-model.md` | `knowledge/docs/meta/README.md`, `knowledge/docs/README.md` | state-model | 用語追加時に更新 |
+| session-brief | Session brief型 | 今回の仮ゴール、scope、読むもの、完了条件 | 整備済み | `knowledge/docs/meta/session-brief.md` | `Hello,world.md`, `COMPASS.md`, `USER.md` | `knowledge/docs/meta/README.md`, `AGENTS.md` | state-model | 通常作業の開始時に使う |
+| subagent-brief | Subagent brief型 | 委譲先の仮ゴール、Compass、必要資料、成果物契約 | 整備済み | `knowledge/docs/meta/subagent-brief.md` | `COMPASS.md`, `knowledge/docs/README.md`, `session-brief.md` | `knowledge/docs/meta/README.md`, `AGENTS.md` | session-brief, read-routing | 委譲時に使う |
+| completion-criteria | Meta completion criteria | メタ土台が一旦使えると言える条件 | 整備済み | `knowledge/docs/meta/completion-criteria.md` | `phase-catalog.md`, `state-model.md`, `knowledge/docs/lexicon.md` | `knowledge/docs/meta/README.md` | phase-catalog, state-model, lexicon-v0 | メタ土台評価時に使う |
+| artifact-placement | Artifact placement rule整理版 | root、template、_shared、knowledge、outputの配置判断 | 整備済み | `knowledge/docs/meta/artifact-placement.md` | `AGENTS.md`, `template/phase-local-missing.md` | `knowledge/docs/meta/README.md`, `AGENTS.md`, `Hello,world.md` | phase-catalog | 新規ファイル追加時に参照 |
 
 ## ここに含めるもの
 

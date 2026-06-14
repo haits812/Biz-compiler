@@ -33,7 +33,7 @@
 - `knowledge/docs/meta/README.md` の未整備メタ土台7件が `整備済み` になっている。
 - 新規メタdocを読めば、数字工程に入る前の配置・状態・brief・完了条件が分かる。
 - `knowledge/docs/README.md` から `knowledge/docs/meta/` と `knowledge/docs/lexicon.md` を辿れる。
-- `MEMORY.md` に常時参照が必要な最小情報だけが残り、詳細は各docに分かれている。
+- `MEMORY.md` に現在構成、決定履歴、次アクション台帳などの正本重複がなく、正本化前の短い常時注意だけが残っている。
 - `template/phase-local-missing.md` に残すべきphase-local不足物を、meta台帳へ混ぜていない。
 - `git diff --check` が通る。
 - ハロワゲートを実行し、`Hello,world.md`、commit、push、post-checkが通る。
@@ -51,4 +51,4 @@
 
 ## 更新ルール
 
-この完了条件を変える場合は、`knowledge/docs/meta/README.md` の台帳、`MEMORY.md` の次候補、`knowledge/docs/README.md` のread routingを確認する。
+この完了条件を変える場合は、`knowledge/docs/meta/README.md` の台帳、`MEMORY.md` の境界、`knowledge/docs/README.md` のread routingを確認する。

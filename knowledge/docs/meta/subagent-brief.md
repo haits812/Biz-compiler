@@ -87,4 +87,4 @@ subagentが断定してはいけないことを書く。
 
 ## 更新ルール
 
-subagent委譲の型を変える場合は、`COMPASS.md` のDelegation Rule、`knowledge/docs/README.md` のSubagent Delegation、`session-brief.md`、`knowledge/docs/meta/README.md`、`MEMORY.md` を確認する。
+subagent委譲の型を変える場合は、`COMPASS.md` のDelegation Rule、`knowledge/docs/README.md` のSubagent Delegation、`session-brief.md`、`knowledge/docs/meta/README.md` を確認する。`MEMORY.md` は正本重複を増やしていないかだけ確認する。

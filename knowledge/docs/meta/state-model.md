@@ -34,7 +34,7 @@
 | 状態 | 意味 | 使い方 |
 |---|---|---|
 | `仮説` | まだ観測・検証されていない判断 | 業務理解、蒸留物、To-Be案の初期値 |
-| `決定済み` | このrepoの運用上、いったん採用した判断 | Compass、Memory、Decision、IR draftなど |
+| `決定済み` | このrepoの運用上、いったん採用した判断 | Compass、Decision、IR draftなど。Memoryは決定履歴の置き場にしない |
 | `検証済み` | fresh executor、shadow run、運用ログ、evalなどで確認された判断 | 昇格、gate緩和、正式IRに近い扱い |
 | `却下` | 採用しないと決めた判断 | Decisionやjournalに理由を残す |
 
@@ -89,4 +89,4 @@ approved -> rejected
 
 ## 更新ルール
 
-状態語彙を増やす場合は、先にこのファイルへ追加し、`knowledge/docs/meta/README.md` と `MEMORY.md` の常時参照に影響するか確認する。
+状態語彙を増やす場合は、先にこのファイルへ追加し、`knowledge/docs/meta/README.md` に影響するか確認する。`MEMORY.md` には状態語彙の重複を増やさない。

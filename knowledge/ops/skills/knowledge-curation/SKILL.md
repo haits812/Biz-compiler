@@ -1,6 +1,6 @@
 ---
 name: knowledge-curation
-description: Biz-compiler repo内の知識候補を、Markdownルール化、Hello World Gate、将来phase script候補、MEMORY、pending、journal、decisions、廃棄へ振り分けるrepo-local Skill。外部hook/denyは扱わない。
+description: Biz-compiler repo内の知識候補とMEMORY重複を、Markdownルール化、Hello World Gate、将来phase script候補、pending、journal、decisions、廃棄へ振り分けるrepo-local Skill。外部hook/denyは扱わない。
 ---
 
 # Knowledge Curation
@@ -9,7 +9,7 @@ description: Biz-compiler repo内の知識候補を、Markdownルール化、Hel
 
 これは Biz-compiler リポジトリ専用の repo-local Skill。グローバルSkillにはしない。
 
-目的は、会話や作業で出た知識候補を「どこへ格上げするか、保留するか、退避するか、捨てるか」判断すること。
+目的は、会話や作業で出た知識候補を「どこへ格上げするか、保留するか、退避するか、捨てるか」判断し、`MEMORY.md` に混ざった正本重複も削ること。
 
 外部hook、deny rule、グローバル設定、他リポジトリへ影響する仕組み化は、このSkillの対象外。
 
@@ -24,12 +24,13 @@ description: Biz-compiler repo内の知識候補を、Markdownルール化、Hel
 - `pending見て`
 - `journalから拾うものある？`
 - `knowledge curation`
+- `MEMORY.md` が重い / 汚い / 重複している
 
 ## 対象
 
 | 対象 | 見るもの |
 |---|---|
-| 常時読む正本 | `AGENTS.md`, `Hello,world.md`, `SOUL.md`, `USER.md`, `COMPASS.md`, `MEMORY.md` |
+| 常時読む正本/整理対象 | `AGENTS.md`, `Hello,world.md`, `SOUL.md`, `USER.md`, `COMPASS.md`, `MEMORY.md` |
 | メタ土台 | `knowledge/docs/meta/` |
 | 用語・方法・IRなど | `knowledge/docs/README.md` のread routing先 |
 | 未承認候補 | `knowledge/pending/` |
@@ -43,6 +44,14 @@ description: Biz-compiler repo内の知識候補を、Markdownルール化、Hel
 ### 1. 実態確認
 
 候補が指している問題や制約が今も生きているかを確認する。
+
+`MEMORY.md` は格上げ先である前に整理対象である。次を見つけたら、Memoryから削るか正本へ移す。
+
+- `Hello,world.md` が持つ現在構成、root tree、pending件数の重複
+- `AGENTS.md` が持つ読み込み順、禁止事項、配置ルール、gate運用の重複
+- `knowledge/docs/decisions/` が持つ決定履歴や採用理由の重複
+- `knowledge/docs/meta/README.md` が持つメタ土台の状態、依存、次アクションの重複
+- `knowledge/docs/README.md` が持つread routingの重複
 
 - 既に正本にあるなら重複として捨てる。
 - 既に解決済みなら、記憶として増やさない。
@@ -83,7 +92,8 @@ description: Biz-compiler repo内の知識候補を、Markdownルール化、Hel
 | `rule-md` | Markdown正本へルール化する | `AGENTS.md` / `COMPASS.md` / `SOUL.md` / `USER.md` / `knowledge/docs/*` |
 | `gate` | repo-local gateで扱う | `knowledge/ops/skills/hello-world-gate/` |
 | `phase-script-candidate` | 将来のphase処理でscript化する | `template/<phase>/` / `template/_shared/` / pending |
-| `memory` | ルールではないが常時参照すべき現在地 | `MEMORY.md` |
+| `memory` | 正本化前だが初期読み込みで落とすと困る短い注意 | `MEMORY.md` |
+| `memory-prune` | `MEMORY.md` から正本重複や古い状態を削る | `MEMORY.md` |
 | `pending` | 未承認、判断に迷う | `knowledge/pending/` |
 | `journal` | 作業過程、試行錯誤、長いログ | `knowledge/journal/` |
 | `decision` | 背景理由つきの設計判断 | `knowledge/docs/decisions/` |
@@ -93,8 +103,8 @@ description: Biz-compiler repo内の知識候補を、Markdownルール化、Hel
 ## 禁止事項
 
 - 外部hook、deny rule、グローバル設定をこのSkillで作らない。
-- `MEMORY.md` を恒久ルールの墓場にしない。
-- 既に正本化された内容をpending、journal、MEMORYへ二重保持しない。
+- `MEMORY.md` を恒久ルール、現在構成、決定済み一覧、次アクション台帳の墓場にしない。
+- 既に正本化された内容をpending、journal、MEMORYへ二重保持しない。Memoryに見つけたら整理対象として削る。
 - `decision-workflow`、`memory-workflow`、`registry-management` を新しいメタ土台として増やさない。
 - `output/` 直下にサンプル業務やプレースホルダ業務フォルダを作らない。
 - `knowledge/ops/` 直下に `.ps1` を置かない。
@@ -109,6 +119,7 @@ description: Biz-compiler repo内の知識候補を、Markdownルール化、Hel
 - gate: N件
 - phase-script-candidate: N件
 - memory: N件
+- memory-prune: N件
 - pending: N件
 - journal: N件
 - decision: N件
