@@ -39,7 +39,7 @@
 ## 決定済み
 
 - このリポジトリはBiz-compilerを実装していく作業場として扱う。
-- 読み込み順は `AGENTS.md` → `Hello,world.md` → `SOUL.md` → `USER.md` → `COMPASS.md` → `knowledge/docs/lexicon.md` → `MEMORY.md` → 要求定義 → 必要なテンプレート/Decision とする。
+- 初期読み込み順は `AGENTS.md` → `Hello,world.md` → `SOUL.md` → `USER.md` → `COMPASS.md` → `knowledge/docs/lexicon.md` → `MEMORY.md` とする。要求定義は通常作業の初期読み込みには含めない。
 - `SOUL.md` は、汎用コンサルではなく、Biz-compilerを一緒に作る聞き取り型の共同設計者としての姿勢を置く。
 - `USER.md` は、主に話しかけてくる相手の作業モデルを置く。個人プロフィールではない。
 - Compassはルートの `COMPASS.md` に置き、作業者やsubagentに思考の指向性を渡すdirection packetとして扱う。
@@ -47,7 +47,7 @@
 - メタ土台v0は `knowledge/docs/meta/README.md` をMarkdown正本台帳として維持する。メタ土台は急増しない前提なので、JSON台帳化は現時点では不要。
 - メタ土台v0として、`state-model.md`、`phase-catalog.md`、`artifact-placement.md`、`session-brief.md`、`subagent-brief.md`、`completion-criteria.md`、`knowledge/docs/lexicon.md` を整備済みとして扱う。
 - 知識候補の格上げ/保留/退避/廃棄は、メタ台帳ではなくrepo-local `knowledge-curation` Skillで扱う。常時効く禁止・配置・読み順・運用制約は、先にMarkdown正本へルール化できるかを見る。repo外へ影響し得るHook/denyは現時点では導入せず、まずMDルール化とrepo-local `hello-world-gate` へ寄せる。数字phase処理が固まった後にscript化を候補に入れる。
-- 要求定義は `knowledge/docs/requirements/` に置く。
+- 要求定義は `knowledge/docs/requirements/` に置く。要求全体確認、要求変更、要求定義との照合が必要な時だけ追加で読む。
 - 決定記録、未承認候補、作業ログは `knowledge/` 配下でグループ化し、`docs` / `pending` / `journal` の役割は混ぜない。
 - フェーズ50のフローチャートHTMLは `template/50-consent/pipeline-flowchart/` に置く。`samples/` には置かない。
 - 実行時に業務フォルダへコピーされる横断部品は `template/_shared/` に置く。

@@ -26,11 +26,11 @@ Compassに残すもの:
 
 Compassから逃がすもの:
 
-- 用語定義: `knowledge/docs/lexicon/`
+- 用語定義: `knowledge/docs/lexicon.md`
 - IR、contract、schema、manifest: `knowledge/docs/ir/`
 - 業務設計手順、phase方法論、検証ループ: `knowledge/docs/method/`
-- 判断例、反例、良い/悪い設計例: `knowledge/docs/casebook/`
-- fresh executor、shadow run、eval、受け入れ条件: `knowledge/docs/evaluation/`
+- 判断例、反例、良い/悪い設計例: `knowledge/docs/casebook.md`
+- fresh executor、shadow run、eval、受け入れ条件: `knowledge/docs/evaluation.md`
 - 決定理由: `knowledge/docs/decisions/`
 - 要求本体: `knowledge/docs/requirements/`
 
@@ -38,26 +38,29 @@ Compassから逃がすもの:
 
 ## Read Routing
 
-全作業で最初に読むもの:
+常時読むもの:
 
 1. `AGENTS.md`
 2. `Hello,world.md`
 3. `SOUL.md`
 4. `USER.md`
 5. `COMPASS.md`
-6. `MEMORY.md`
-7. `knowledge/docs/requirements/Biz-compiler_要求定義.md`
+6. `knowledge/docs/lexicon.md`
+7. `MEMORY.md`
+
+要求定義は常時読む対象ではない。要求全体確認、要求変更、要求定義との照合が必要な時だけ `knowledge/docs/requirements/` を追加で読む。
 
 その後、作業種別で追加読み込みする。
 
 | 作業 | 追加で読む場所 |
 |---|---|
-| 用語・概念境界 | `knowledge/docs/lexicon/` |
+| 用語・概念境界 | `knowledge/docs/lexicon.md` |
 | IR / schema / manifest / contract | `knowledge/docs/ir/` |
 | phase設計 / ENCRS / 検証ループ | `knowledge/docs/method/` |
-| 判断例・反例が必要 | `knowledge/docs/casebook/` |
-| eval / fresh executor / shadow run | `knowledge/docs/evaluation/` |
+| 判断例・反例が必要 | `knowledge/docs/casebook.md` |
+| eval / fresh executor / shadow run | `knowledge/docs/evaluation.md` |
 | 背景理由が必要 | `knowledge/docs/decisions/` |
+| 要求全体、要求変更、要求定義との照合 | `knowledge/docs/requirements/` |
 
 ## Subagent Delegation Rule
 
@@ -69,6 +72,7 @@ subagentや別作業者へ重い作業を渡す時、全量の知識を渡さな
 - `SOUL.md`
 - `USER.md`
 - `COMPASS.md`
+- `knowledge/docs/lexicon.md`
 - `MEMORY.md`
 
 追加で渡すもの:

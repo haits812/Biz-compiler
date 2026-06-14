@@ -22,13 +22,14 @@ Biz-compilerでは、今後の数字phase作業をmain agentがsubagentへ委譲
 5. `COMPASS.md`
 6. `knowledge/docs/lexicon.md`
 7. `MEMORY.md`
-8. `knowledge/docs/requirements/Biz-compiler_要求定義.md`
 
-subagentや別作業者へ重い作業を渡す時も、`knowledge/docs/lexicon.md` を必須セットに含める。
+`knowledge/docs/requirements/` は初期読み込みに含めない。要求全体確認、要求変更、要求定義との照合が必要な時だけ追加で読む。
+
+subagentや別作業者へ重い作業を渡す時も、`knowledge/docs/lexicon.md` を必須セットに含める。要求定義はsubagent基本セットに含めず、作業範囲上必要な時だけ追加で渡す。
 
 ## Consequences
 
 - main agentがsubagent briefを書く前に、語彙境界を揃えられる。
 - `approval` と `validation`、`contract` と `manifest`、`IR` と consent view JSON などの混同を早い段階で防げる。
-- 初期読み込みトークンは増えるが、phase作業やIR/schema作業での手戻りを減らすための固定コストとして扱う。
+- 初期読み込みトークンは `lexicon.md` 分だけ増えるが、要求定義は常時読まないため固定コストには含めない。
 - 詳細なIR/schema構造は引き続き `knowledge/docs/ir/` に置き、`lexicon.md` へ詰め込まない。

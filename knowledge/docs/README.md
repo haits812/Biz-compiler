@@ -15,7 +15,8 @@
 5. `COMPASS.md`
 6. `knowledge/docs/lexicon.md`
 7. `MEMORY.md`
-8. `knowledge/docs/requirements/Biz-compiler_要求定義.md`
+
+`knowledge/docs/requirements/` は常時読む対象ではない。要求全体確認、要求変更、要求定義との照合が必要な時だけ追加で読む。
 
 ## Conditional Read Routing
 

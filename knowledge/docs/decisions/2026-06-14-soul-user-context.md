@@ -16,12 +16,14 @@
 読み込み順は次とする。
 
 1. `AGENTS.md`
-2. `SOUL.md`
-3. `USER.md`
-4. `COMPASS.md`
-5. `MEMORY.md`
-6. `knowledge/docs/requirements/Biz-compiler_要求定義.md`
-7. 必要なサンプル/Decision
+2. `Hello,world.md`
+3. `SOUL.md`
+4. `USER.md`
+5. `COMPASS.md`
+6. `knowledge/docs/lexicon.md`
+7. `MEMORY.md`
+
+要求定義は常時読む対象ではない。要求全体確認、要求変更、要求定義との照合が必要な時だけ `knowledge/docs/requirements/` を追加で読む。
 
 `SOUL.md` は、汎用的な「優秀なビジネスコンサル」ではなく、Biz-compilerを一緒に作る聞き取り型の共同設計者としての姿勢を置く。
 
@@ -31,7 +33,7 @@
 
 ## Consequences
 
-- 後続agentは、Compassや要求定義の前に対話姿勢とユーザーモデルを読む。
+- 後続agentは、Compassの前に対話姿勢とユーザーモデルを読む。要求定義は必要時だけ追加で読む。
 - `MEMORY.md` は常時参照メモリに留め、`SOUL.md` / `USER.md` / 将来の `map.md` と役割を混同しない。
 - ユーザーが出したファイル名や概念を、確認なしに別のファイルへ吸収しないことを作業制約として扱う。
 
