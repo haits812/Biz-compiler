@@ -1,27 +1,33 @@
 # MEMORY.md
 
-> このファイルは、初期読み込みで落とすと困る短い注意だけを置く常時メモリである。正本の索引、現在構成の一覧、決定履歴、次アクション台帳ではない。
+> このファイルは、普段の会話で出た「覚えといて」をまず置くメモである。定期的に `knowledge-curation` で掃除し、正本化・移動・削除する。
 
-## 役割境界
+## 役割
 
-- 現在構成、root tree、template、output、knowledge、pending件数は `Hello,world.md` が正本。
-- 読み込み順、禁止事項、配置ルール、gate運用は `AGENTS.md` が正本。
-- 判断の背景、採用理由、却下理由は `knowledge/docs/decisions/` が正本。
-- メタ土台の状態、併読、依存、次アクションは `knowledge/docs/meta/README.md` が正本。
-- 作業種別ごとの追加読み込みは `knowledge/docs/README.md` が正本。
-- 用語境界は `knowledge/docs/lexicon.md` が正本。
+- 会話中に次回以降も効きそうなことが出たら、まずここに短く置いてよい。
+- ここは未整理メモを含む。書いた時点では正式なルール、決定、ユーザーモデルではない。
+- 現在構成、読み込み順、禁止事項、決定履歴、メタ台帳の正本にはしない。
+- 長い会話履歴を丸ごと残す場合は `knowledge/journal/` に置く。
+- 背景理由つきで採用/却下が決まった判断は `knowledge/docs/decisions/` に移す。
 
-## 常時注意
+## 未整理メモ
 
-- `MEMORY.md` に正本の要約を増やさない。ここへ入れる前に、既存正本へ入れるべきか、Decisionへ残すべきか、pendingへ置くべきかを先に判断する。
-- 正本化した内容は、同じターンでここから削る。
-- ここに残すのは、正本化するほどではないが次回の初動で落とすと困る短い注意だけ。
-- 現時点で、他の初期読み込み正本に追加して常時保持すべきプロジェクト状態はない。
+現時点で未整理メモはない。
 
-## 一時メモの逃がし先
+## 掃除ルール
 
-- 迷う候補: `knowledge/pending/`
-- 背景理由: `knowledge/docs/decisions/`
-- 作業過程: `knowledge/journal/`
-- メタ土台の状態や次候補: `knowledge/docs/meta/README.md`
-- phase-localな不足物: `template/phase-local-missing.md` または該当 `template/<phase>/`
+`knowledge-curation` で定期的にこのファイルを見直し、各メモを次のどれかへ振り分ける。
+
+| 行き先 | 使う時 |
+|---|---|
+| `AGENTS.md` | 作業規約、読み込み順、禁止事項、配置ルール |
+| `USER.md` | ユーザーの作業モデル、嫌う混同、会話上の好み |
+| `SOUL.md` | agentの対話姿勢、避ける振る舞い |
+| `COMPASS.md` | 判断prior、思考の向き、疑うもの |
+| `knowledge/docs/decisions/` | 背景理由つきで採用/却下した判断 |
+| `knowledge/pending/` | まだ確定できない候補 |
+| `knowledge/journal/` | 長い会話履歴、作業ログ、試行錯誤 |
+| `knowledge/docs/*` | 用語、IR、method、metaなどの正本文書 |
+| 削除 | 重複、解決済み、誤り、もう効かない内容 |
+
+掃除後、ここには「まだ整理していない短いメモ」だけを残す。

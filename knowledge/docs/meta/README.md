@@ -36,7 +36,7 @@
 | compass | 判断方位 | 作業者の思考prior、疑うもの、価値順位 | 整備済み | `COMPASS.md` | `SOUL.md`, `USER.md`, `knowledge/docs/README.md` | `COMPASS.md`, `knowledge/docs/README.md` | なし | 必要時だけ圧縮更新 |
 | soul | 対話姿勢 | agentの振る舞い、聞き取り姿勢、避ける失敗 | 整備済み | `SOUL.md` | `USER.md`, `COMPASS.md` | `SOUL.md` | なし | 維持 |
 | user-model | ユーザー作業モデル | 主利用者の進め方、嫌う混同、会話前提 | 整備済み | `USER.md` | `SOUL.md`, `COMPASS.md` | `USER.md` | なし | 維持 |
-| memory | 開発運用メモリ | 正本化前の短い常時注意。現在構成や決定履歴は持たない | 整備済み | `MEMORY.md` | `Hello,world.md`, `AGENTS.md`, `knowledge/docs/decisions/`, `knowledge/ops/skills/knowledge-curation/` | `MEMORY.md`, 必要なら `knowledge/docs/decisions/` | なし | 正本重複が出たら削除 |
+| memory | 開発運用メモリ | 普段の「覚えといて」メモをまず置き、定期的に整理する | 整備済み | `MEMORY.md` | `Hello,world.md`, `AGENTS.md`, `knowledge/docs/decisions/`, `knowledge/ops/skills/knowledge-curation/` | `MEMORY.md`, 必要なら `knowledge/docs/decisions/` | なし | knowledge-curationで定期掃除 |
 | read-routing | Read routing | 作業種別ごとの追加読み込み先 | 整備済み | `knowledge/docs/README.md` | `COMPASS.md`, `AGENTS.md` | `knowledge/docs/README.md`, `AGENTS.md` | compass | 新しい知識区分追加時に更新 |
 | gate-workflow | Gate workflow | Hello World更新、commit/push、対象なし判定 | 整備済み | `knowledge/ops/skills/hello-world-gate/` | `Hello,world.md`, `AGENTS.md` | `Hello,world.md`, `AGENTS.md` | hello-world | 維持 |
 | phase-catalog | Phase catalog | 00〜80が何の工程で、何を決めるか | 整備済み | `knowledge/docs/meta/phase-catalog.md` | `template/phase-local-missing.md`, `knowledge/docs/requirements/Biz-compiler_要求定義.md` | `knowledge/docs/meta/README.md`, `knowledge/docs/README.md` | read-routing | phase-local README作成時に参照 |

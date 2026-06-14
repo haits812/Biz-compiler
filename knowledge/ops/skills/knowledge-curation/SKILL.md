@@ -1,6 +1,6 @@
 ---
 name: knowledge-curation
-description: Biz-compiler repo内の知識候補とMEMORY重複を、Markdownルール化、Hello World Gate、将来phase script候補、pending、journal、decisions、廃棄へ振り分けるrepo-local Skill。外部hook/denyは扱わない。
+description: Biz-compiler repo内のMEMORYメモと知識候補を、Markdownルール化、Hello World Gate、将来phase script候補、pending、journal、decisions、廃棄へ振り分けるrepo-local Skill。外部hook/denyは扱わない。
 ---
 
 # Knowledge Curation
@@ -9,7 +9,7 @@ description: Biz-compiler repo内の知識候補とMEMORY重複を、Markdownル
 
 これは Biz-compiler リポジトリ専用の repo-local Skill。グローバルSkillにはしない。
 
-目的は、会話や作業で出た知識候補を「どこへ格上げするか、保留するか、退避するか、捨てるか」判断し、`MEMORY.md` に混ざった正本重複も削ること。
+目的は、普段 `MEMORY.md` に置いたメモや会話・作業で出た知識候補を「どこへ格上げするか、保留するか、退避するか、捨てるか」判断し、`MEMORY.md` を掃除すること。
 
 外部hook、deny rule、グローバル設定、他リポジトリへ影響する仕組み化は、このSkillの対象外。
 
@@ -19,10 +19,12 @@ description: Biz-compiler repo内の知識候補とMEMORY重複を、Markdownル
 
 - `知識整理して`
 - `メモリ整理して`
+- `MEMORY.md` を整理して
 - `格上げ判断して`
 - `これルール化できる？`
 - `pending見て`
 - `journalから拾うものある？`
+- `この会話どこに残す？`
 - `knowledge curation`
 - `MEMORY.md` が重い / 汚い / 重複している
 
@@ -30,11 +32,12 @@ description: Biz-compiler repo内の知識候補とMEMORY重複を、Markdownル
 
 | 対象 | 見るもの |
 |---|---|
-| 常時読む正本/整理対象 | `AGENTS.md`, `Hello,world.md`, `SOUL.md`, `USER.md`, `COMPASS.md`, `MEMORY.md` |
+| 普段メモ/整理対象 | `MEMORY.md` |
+| 常時読む正本 | `AGENTS.md`, `Hello,world.md`, `SOUL.md`, `USER.md`, `COMPASS.md` |
 | メタ土台 | `knowledge/docs/meta/` |
 | 用語・方法・IRなど | `knowledge/docs/README.md` のread routing先 |
 | 未承認候補 | `knowledge/pending/` |
-| 作業ログ | `knowledge/journal/` |
+| 会話履歴/作業ログ | `knowledge/journal/` |
 | 決定理由 | `knowledge/docs/decisions/` |
 | repo-local gate | `knowledge/ops/skills/hello-world-gate/` |
 | 将来のphase-local実行候補 | `template/<phase>/`, `template/_shared/` |
@@ -45,7 +48,9 @@ description: Biz-compiler repo内の知識候補とMEMORY重複を、Markdownル
 
 候補が指している問題や制約が今も生きているかを確認する。
 
-`MEMORY.md` は格上げ先である前に整理対象である。次を見つけたら、Memoryから削るか正本へ移す。
+分類に迷う短いメモは、最初から `MEMORY.md` に置いてよい。整理時にここから各正本へ振り分ける。
+
+`MEMORY.md` は普段メモの入口であり、同時に整理対象である。次を見つけたら、Memoryから削るか正本へ移す。
 
 - `Hello,world.md` が持つ現在構成、root tree、pending件数の重複
 - `AGENTS.md` が持つ読み込み順、禁止事項、配置ルール、gate運用の重複
@@ -92,10 +97,10 @@ description: Biz-compiler repo内の知識候補とMEMORY重複を、Markdownル
 | `rule-md` | Markdown正本へルール化する | `AGENTS.md` / `COMPASS.md` / `SOUL.md` / `USER.md` / `knowledge/docs/*` |
 | `gate` | repo-local gateで扱う | `knowledge/ops/skills/hello-world-gate/` |
 | `phase-script-candidate` | 将来のphase処理でscript化する | `template/<phase>/` / `template/_shared/` / pending |
-| `memory` | 正本化前だが初期読み込みで落とすと困る短い注意 | `MEMORY.md` |
-| `memory-prune` | `MEMORY.md` から正本重複や古い状態を削る | `MEMORY.md` |
+| `memory` | まだ分類しきれない短い普段メモとして残す | `MEMORY.md` |
+| `memory-prune` | `MEMORY.md` から正本化済み、重複、古い状態を削る | `MEMORY.md` |
 | `pending` | 未承認、判断に迷う | `knowledge/pending/` |
-| `journal` | 作業過程、試行錯誤、長いログ | `knowledge/journal/` |
+| `journal` | 会話履歴、作業過程、試行錯誤、長いログ | `knowledge/journal/` |
 | `decision` | 背景理由つきの設計判断 | `knowledge/docs/decisions/` |
 | `prune` | 重複、解決済み、誤り、もう効かない | 削除、またはrejected記録 |
 | `keep` | ownerや扱いがまだ見えない | そのまま残す |
@@ -103,7 +108,7 @@ description: Biz-compiler repo内の知識候補とMEMORY重複を、Markdownル
 ## 禁止事項
 
 - 外部hook、deny rule、グローバル設定をこのSkillで作らない。
-- `MEMORY.md` を恒久ルール、現在構成、決定済み一覧、次アクション台帳の墓場にしない。
+- `MEMORY.md` を普段メモの入口として使ってよい。ただし恒久ルール、現在構成、決定済み一覧、次アクション台帳の正本にはしない。
 - 既に正本化された内容をpending、journal、MEMORYへ二重保持しない。Memoryに見つけたら整理対象として削る。
 - `decision-workflow`、`memory-workflow`、`registry-management` を新しいメタ土台として増やさない。
 - `output/` 直下にサンプル業務やプレースホルダ業務フォルダを作らない。

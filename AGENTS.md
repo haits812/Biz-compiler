@@ -55,7 +55,7 @@ gitのstage / commit / push結果は、通常の文章またはbacktick付きコ
 - `USER.md`: このリポジトリで主に話しかけてくる相手の作業モデル。個人プロフィールの保存場所ではなく、会話・設計・実装の進め方を合わせるための前提を置く。
 - `COMPASS.md`: 作業者やsubagentへ思考の指向性を渡す direction packet。テンプレート、asset、具体例より先に読む。
 - `knowledge/docs/lexicon.md`: 用語定義と概念境界。`IR` / `contract` / `manifest` / `gate` / `approval` / `validation` などを混同しないため、通常作業の初期に読む。
-- `MEMORY.md`: 正本化前の短い常時注意だけを置く開発運用メモリ。現在構成、決定履歴、次アクション台帳は置かない。
+- `MEMORY.md`: 普段の会話で出た「覚えといて」をまず置くメモ。定期的に `knowledge-curation` で掃除する。現在構成、決定履歴、次アクション台帳の正本にはしない。
 - `knowledge/docs/requirements/Biz-compiler_要求定義.md`: 必要時だけ読む現時点の要求定義本体。通常作業の初期読み込みには含めない。
 - `template/50-consent/pipeline-flowchart/pipeline-flowchart.html`: 同意ビューの再利用サンプル。
 
@@ -165,18 +165,18 @@ knowledge/
 
 このリポジトリでは、開発中の学びを次の層に分ける。
 
-- `MEMORY.md`: 正本化前の短い常時注意。現在構成、決定済み一覧、次アクション台帳、正本の要約は置かない。
+- `MEMORY.md`: 普段の短い「覚えといて」メモ。未整理メモを含んでよいが、定期的に `knowledge-curation` で掃除する。現在構成、決定済み一覧、次アクション台帳、正本の要約は置かない。
 - `knowledge/docs/decisions/`: 背景と理由を含む設計・運用上の決定記録。
-- `knowledge/journal/`: セッションログ、試行錯誤、未整理メモ。
+- `knowledge/journal/`: 会話履歴、セッションログ、試行錯誤、未整理メモ。
 - `knowledge/pending/`: AIや作業者が提案したが、まだ正式反映していない更新。
 
-`MEMORY.md` を肥大化させない。現在構成は `Hello,world.md`、作業規約は `AGENTS.md`、決定履歴は `knowledge/docs/decisions/`、メタ台帳は `knowledge/docs/meta/README.md` を正本にする。正本化した内容は同じターンで `MEMORY.md` から削る。
+`MEMORY.md` は普段メモとして使ってよいが、肥大化させない。現在構成は `Hello,world.md`、作業規約は `AGENTS.md`、決定履歴は `knowledge/docs/decisions/`、メタ台帳は `knowledge/docs/meta/README.md` を正本にする。正本化した内容は `knowledge-curation` で `MEMORY.md` から削る。
 
 ### 即時メモを主機構にする
 
 会話や作業が長くなると、セッション終盤で初期の重要点を正確に保持できないことがある。したがって、開発運用メモリは「最後にまとめて思い出す」方式に依存しない。
 
-次回以降も効く決定・制約・配置・ユーザーの訂正・採用/却下された方針が出たら、その場で該当する正本へ反映する。作業規約なら `AGENTS.md`、判断方位なら `COMPASS.md`、背景理由なら `knowledge/docs/decisions/`、作業過程なら `knowledge/journal/`、判断に迷うものは `knowledge/pending/` に置く。`MEMORY.md` は、正本化前の短い常時注意が必要な場合だけ使う。
+次回以降も効きそうだが、その場で分類判断が重い内容は、まず `MEMORY.md` に短く置いてよい。明らかな会話履歴や作業過程そのものは `knowledge/journal/`、判断に迷う候補は `knowledge/pending/`、背景理由つきの採用/却下は `knowledge/docs/decisions/`、作業規約は `AGENTS.md`、判断方位は `COMPASS.md`、ユーザーの作業モデルは `USER.md` に置く。後で `knowledge-curation` が `MEMORY.md` を整理する。
 
 即時メモのトリガー:
 
@@ -184,7 +184,7 @@ knowledge/
 - 今後の実装順序、配置、読み込み順、禁止事項が決まった。
 - 同じ失敗を避けるための制約や注意が出た。
 - Compass、Decision、AGENTSなどの正本に昇格しそうな判断priorや設計理由が出た。
-- 長い会話で後から忘れそうだが、次回以降も効く内容が出た。
+- 長い会話で後から忘れそうだが、次回以降も効く内容が出た。分類に迷う場合は、まず `MEMORY.md` に短く置く。
 
 final前の更新要否確認は保険であり、主機構ではない。
 
@@ -238,7 +238,7 @@ final前の更新要否確認は保険であり、主機構ではない。
 - ユーザーが出した言葉、ファイル名、概念の区別を勝手に潰さない。補完が必要な場合は推測として扱う。
 - 作業中に即時メモのトリガーが出たら、終盤を待たずに該当する記憶レイヤーへ反映する。
 - メタ土台を整備・追加・分割・廃止したら、同じターンで `knowledge/docs/meta/README.md` を更新する。
-- 作業後、`MEMORY.md` に重複を増やしていないか、`knowledge/docs/decisions/`、`knowledge/journal/`、`knowledge/pending/` の更新漏れがないか確認する。
+- 作業後、`MEMORY.md` に重複や古いメモを溜めすぎていないか、`knowledge/docs/decisions/`、`knowledge/journal/`、`knowledge/pending/` の更新漏れがないか確認する。
 
 ## `template/50-consent/pipeline-flowchart/pipeline-flowchart.html` 編集
 
