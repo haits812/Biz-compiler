@@ -12,6 +12,7 @@
 - `MEMORY.md`: このリポジトリを作るための開発運用メモリ。
 - `knowledge/docs/requirements/Biz-compiler_要求定義.md`: 現時点の要求定義本体。
 - `knowledge/docs/README.md`: Compassから逃がした詳細知識をいつ読むかのread routing。
+- `knowledge/docs/meta/`: 数字工程に入らない本当のメタ土台の棚卸し。整備済み/未整備の一覧と更新ルールを置く。
 - `knowledge/docs/decisions/`: 設計・運用上の決定記録。
 - `knowledge/docs/lexicon/`: 用語定義と概念境界。
 - `knowledge/docs/ir/`: IR、contract、schema、manifestの概念設計。
@@ -41,7 +42,7 @@
 - `SOUL.md` は、汎用コンサルではなく、Biz-compilerを一緒に作る聞き取り型の共同設計者としての姿勢を置く。
 - `USER.md` は、主に話しかけてくる相手の作業モデルを置く。個人プロフィールではない。
 - Compassはルートの `COMPASS.md` に置き、作業者やsubagentに思考の指向性を渡すdirection packetとして扱う。
-- Compassは短く保つ。用語、IR詳細、方法論、事例、評価条件、決定理由は `knowledge/docs/README.md` のread routingに従って分ける。
+- Compassは短く保つ。メタ土台の棚卸し、用語、IR詳細、方法論、事例、評価条件、決定理由は `knowledge/docs/README.md` のread routingに従って分ける。
 - 要求定義は `knowledge/docs/requirements/` に置く。
 - 決定記録、未承認候補、作業ログは `knowledge/` 配下でグループ化し、`docs` / `pending` / `journal` の役割は混ぜない。
 - フェーズ50のフローチャートHTMLは `template/50-consent/pipeline-flowchart/` に置く。`samples/` には置かない。
@@ -75,10 +76,12 @@
 - `output/` 直下にサンプル業務、`example-business-id`、`_business-id` などのプレースホルダ業務フォルダを作らない。業務IDフォルダは実業務作成時に `Biz-001-業務名` のように採番して作る。
 - リポジトリ直下に `docs/`、`pending/`、`journal/`、`samples/`、`internal/`、`scripts/`、`schemas/`、`runner/`、`tools/`、`validators/`、`phase-packs/` を増やさない。
 - 実行時に業務フォルダへコピーされるものは `template/` 配下に置く。知識管理だけに使うものは `knowledge/` 配下に置く。
+- メタ土台を整備・追加・分割・廃止したら、同じターンで `knowledge/docs/meta/README.md` を更新する。
 - ルート構成、読み込み順、`template/`、`knowledge/`、`output/` の業務ID生成ルールを変えたら、同じターンで `knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1` を実行する。
 
 ## 次に整える候補
 
+- `knowledge/docs/meta/` 内の未整備メタ土台: `phase-catalog.md`、`state-model.md`、`session-brief.md`、`subagent-brief.md`、`completion-criteria.md`、`artifact-placement.md`。
 - `knowledge/docs/lexicon/` v0: `provenance`、`confidence`、`gate`、`irreversible`、`N-interface` などの語彙定義。
 - `knowledge/docs/casebook/` v0: 良い判断/悪い判断の対比事例。
 - `knowledge/docs/evaluation/` v0: Compassあり/なしで業務設計出力差を見るシナリオ。
@@ -87,6 +90,7 @@
 - `map.md`: ファイルが増えてきたら、全体像・読み方・配置を把握するための地図として検討する。`MEMORY.md` とは役割を分ける。
 - Output repo template v0: `template/` をコピーして `output/Biz-001-業務名/` を作る初期化規約。
 - 開発運用メモリの自動/半自動レビュー: 会話長期化やコンテキスト圧縮に依存しないチェックポイント機構。
+
 
 
 

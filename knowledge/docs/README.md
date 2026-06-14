@@ -20,6 +20,7 @@
 
 | 読むタイミング | 読む場所 | 用途 |
 |---|---|---|
+| メタ土台の棚卸し、配置判断、session/subagent brief、状態分類を扱う時 | `knowledge/docs/meta/` | 数字工程に入らない上位ルールと未整備/整備済み一覧 |
 | 用語の意味・語彙境界を決める時 | `knowledge/docs/lexicon/` | `provenance`、`confidence`、`gate`、`N-interface` などの定義 |
 | IR、contract、schema、manifest、同意ビューJSONを触る時 | `knowledge/docs/ir/` | 契約データと機械可読仕様の読み方 |
 | phase設計、業務設計手順、検証ループ、ENCRS運用を考える時 | `knowledge/docs/method/` | 業務をどう読んで進めるかの方法論 |
@@ -49,4 +50,5 @@
 
 `COMPASS.md` に残すものは、作業者の思考の向き、価値順位、疑うもの、判断の倒し方である。
 
-`knowledge/docs/` に逃がすものは、用語定義、IR詳細、方法論、事例、評価条件、決定理由である。
+`knowledge/docs/` に逃がすものは、メタ土台の棚卸し、用語定義、IR詳細、方法論、事例、評価条件、決定理由である。
+

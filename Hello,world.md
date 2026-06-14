@@ -15,7 +15,7 @@
 
 ## Last Verified
 
-- Verified at: 2026-06-14 JST
+- Verified at: 2026-06-15 JST
 - Verified by: hello-world-gate.ps1
 - Scope: Biz-compiler repo self-description only
 - Excludes: 実際にコンパイルしている個別業務の状態

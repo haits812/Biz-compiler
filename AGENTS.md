@@ -62,6 +62,7 @@ gitのstage / commit / push結果は、通常の文章またはbacktick付きコ
 
 | 作業種別 | 追加で読む場所 |
 |---|---|
+| メタ土台、配置判断、状態分類、session/subagent briefを扱う | `knowledge/docs/meta/` |
 | 用語・概念境界を扱う | `knowledge/docs/lexicon/` |
 | IR / schema / manifest / contract を触る | `knowledge/docs/ir/` |
 | phase設計 / ENCRS / 検証ループを扱う | `knowledge/docs/method/` |
@@ -226,6 +227,7 @@ final前の更新要否確認は保険であり、主機構ではない。
 - リスク指摘を「単なる未実装」として流さない。意図的な未固定領域か、安全制約として今すぐ固定すべき領域かを分ける。
 - ユーザーが出した言葉、ファイル名、概念の区別を勝手に潰さない。補完が必要な場合は推測として扱う。
 - 作業中に即時メモのトリガーが出たら、終盤を待たずに該当する記憶レイヤーへ反映する。
+- メタ土台を整備・追加・分割・廃止したら、同じターンで `knowledge/docs/meta/README.md` を更新する。
 - 作業後、`MEMORY.md`、`knowledge/docs/decisions/`、`knowledge/journal/`、`knowledge/pending/` の更新漏れがないか確認する。
 
 ## `template/50-consent/pipeline-flowchart/pipeline-flowchart.html` 編集
@@ -239,6 +241,7 @@ final前の更新要否確認は保険であり、主機構ではない。
 ## 完了報告
 
 作業後は、変更したファイル、確認したこと、未確認のリスクを短く報告する。テストや表示確認をしていない場合は、していないと明示する。
+
 
 
 
