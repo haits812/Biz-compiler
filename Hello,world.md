@@ -88,6 +88,7 @@ template/
 
 Known template assets:
 - template/50-consent/pipeline-flowchart/pipeline-flowchart.html
+- template/phase-local-missing.md
 
 ## Output
 
