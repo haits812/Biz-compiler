@@ -118,6 +118,7 @@ git status --short --branch
 - `AGENTS.md`、`SOUL.md`、`USER.md`、`COMPASS.md`、`knowledge/docs/lexicon.md`、`MEMORY.md`
 - `template/` のphase構成、Hello Worldに載るtemplate asset
 - `knowledge/` の構成、pending/approved件数、Hello Worldに載るops asset
+- repo-local Skillの追加・改名・削除、`SKILL.md` frontmatter、同居 `.ps1`、`knowledge/ops/README.md`
 - `output/` の業務IDルール、実際の `output/` 配下ディレクトリ
 - このSkill自身、または `hello-world-gate.ps1`
 - GitHubへ変更をpushする時。ただし対象なしなら実行しない

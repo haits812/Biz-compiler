@@ -4,6 +4,18 @@
 
 `knowledge/ops/` 直下に `.ps1` は置かない。実行スクリプトは、それを使うSkillのフォルダに `SKILL.md` と同居させる。
 
+## Repo-local Skill 同期ルール
+
+repo-local Skillを追加・改名・削除した場合は、このREADMEを同じターンで更新する。
+
+同期するもの:
+
+- `knowledge/ops/skills/<skill-name>/SKILL.md` の `name` と `description`
+- 同居する `.ps1` コマンドの一覧と使い方
+- `Hello,world.md` の `Repo-local Skills` 一覧。これは手編集せず、最後に `hello-world-gate.ps1` で再生成する。
+
+似た役割のSkillがある場合は、別Skillを増やさず既存Skillへ統合する。
+
 ## skills/hello-world-gate/
 
 `Hello,world.md` を現在状態に同期・検査し、GitHubへ上げる時もこのgateでcommit/pushする。

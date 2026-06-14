@@ -461,6 +461,7 @@ function New-HelloWorldContent {
     "## Repo-local Skills",
     "",
     "初期読み込みでは、既存Skillを確認してから新しいSkillを作る。似た役割のSkillがあるなら、まず既存Skillへ統合する。",
+    "repo-local Skillを追加・改名・削除したら、SKILL.mdのname/description、knowledge/ops/README.md、Hello Worldの一覧を同じターンで同期する。",
     ""
   )
   $lines += $repoLocalSkillLines
@@ -498,6 +499,7 @@ function New-HelloWorldContent {
     "- knowledge/ の構成",
     "- output/ の業務ID生成ルール",
     "- pending / approved の状態をこのファイルで数える場合",
+    "- repo-local Skillを追加・改名・削除した場合",
     "- knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1 が失敗した場合",
     "",
     "## Smoke Test",

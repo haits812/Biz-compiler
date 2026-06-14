@@ -80,7 +80,15 @@ gitのstage / commit / push結果は、通常の文章またはbacktick付きコ
 
 subagentや別作業者へ重い作業を渡す時は、`Hello,world.md`、`SOUL.md`、`USER.md`、`COMPASS.md`、`knowledge/docs/lexicon.md`、`MEMORY.md` に加え、作業種別に該当する追加読み込み先だけを渡す。
 
+## Repo-local Skill の確認
+
 新しいrepo-local Skillを作る前に、必ず `Hello,world.md` の `Repo-local Skills` と `knowledge/ops/README.md` を確認する。似た役割がある場合は、別Skillを増やさず既存Skillへ統合する。
+
+repo-local Skillを追加・改名・削除した場合は、同じターンで次を同期する。
+
+- 対象Skillの `SKILL.md` frontmatter: `name` と `description`
+- `knowledge/ops/README.md` のSkill説明とコマンド例
+- `Hello,world.md` の `Repo-local Skills`: 手編集せず `hello-world-gate.ps1` で再生成する
 
 ## 実装方針
 

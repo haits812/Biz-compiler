@@ -140,6 +140,7 @@ Known knowledge ops assets:
 ## Repo-local Skills
 
 初期読み込みでは、既存Skillを確認してから新しいSkillを作る。似た役割のSkillがあるなら、まず既存Skillへ統合する。
+repo-local Skillを追加・改名・削除したら、SKILL.mdのname/description、knowledge/ops/README.md、Hello Worldの一覧を同じターンで同期する。
 
 - hello-world-gate: Use when Biz-compilerでハロワやっといて/ハロワ見て/ハロワ更新しといて/githubあげといて/GitHub上げて/pushして等の依頼が出た時。
   - path: knowledge/ops/skills/hello-world-gate/
@@ -180,6 +181,7 @@ Current pending state at last verification:
 - knowledge/ の構成
 - output/ の業務ID生成ルール
 - pending / approved の状態をこのファイルで数える場合
+- repo-local Skillを追加・改名・削除した場合
 - knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1 が失敗した場合
 
 ## Smoke Test
