@@ -23,6 +23,7 @@
 - いつ `sync` を実行するか
 - いつ `check` を実行するか
 - `check` 失敗時に完了扱いしないこと
+- GitHubへ上げる時は `publish` で日本語commit/pushまで行うこと
 
 ## Timing Rule
 
@@ -34,4 +35,5 @@
 
 - ハロワゲートは、単なるコマンドではなく作業規律として扱える。
 - Biz-compiler外の作業へ誤爆しない。
-- 後続agentは、`AGENTS.md` とrepo-local Skillを読めば、最新状態更新のタイミングを判断できる。
+- 後続agentは、`AGENTS.md` とrepo-local Skillを読めば、最新状態更新とpublishのタイミングを判断できる。
+

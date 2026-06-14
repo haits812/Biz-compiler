@@ -21,7 +21,8 @@
 PowerShellで次のように作れる。
 
 ```powershell
-.\knowledge\ops\new-pending-memory.ps1 -Title "即時メモのタイトル" -Evidence "どの発話・作業から出たか" -ProposedChange "残したい内容"
+.\knowledge\ops\skills\pending-memory\new-pending-memory.ps1 -Title "即時メモのタイトル" -Evidence "どの発話・作業から出たか" -ProposedChange "残したい内容"
 ```
+
 
 

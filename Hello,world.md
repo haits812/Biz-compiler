@@ -22,12 +22,13 @@
 
 ## Gate Command
 
-このファイルは knowledge/ops/hello-world-gate.ps1 で同期・検査する。
+このファイルは knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1 で同期・検査・publishする。
 
 ~~~powershell
-.\knowledge\ops\hello-world-gate.ps1 sync   # 現在地を再生成する
-.\knowledge\ops\hello-world-gate.ps1 check  # stale / 嘘を検出して失敗する
-.\knowledge\ops\hello-world-gate.ps1 gate   # check の別名
+.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 sync   # 現在地を再生成する
+.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 check  # stale / 嘘を検出して失敗する
+.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 gate   # check の別名
+.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 publish   # sync/checkして日本語commit/push
 ~~~
 
 ## What This Repo Is
@@ -53,6 +54,7 @@ D:\local\Biz-compiler
 ├─ template/  業務フォルダの原型
 ├─ output/  業務ごとの成果物置き場。実業務作成まで空
 ├─ knowledge/  確定知識・pending・journal・管理ops
+├─ README.md  GitHub入口。正本はHello World
 ├─ AGENTS.md  作業規約と読み込み順
 ├─ Hello,world.md  現在地。このファイル
 ├─ COMPASS.md  direction packet / heading
@@ -123,11 +125,12 @@ knowledge/
 ~~~
 
 Known knowledge ops assets:
-- knowledge/ops/hello-world-gate.ps1
-- knowledge/ops/new-pending-memory.ps1
-- knowledge/ops/pending-review.ps1
 - knowledge/ops/README.md
+- knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1
 - knowledge/ops/skills/hello-world-gate/SKILL.md
+- knowledge/ops/skills/pending-memory/new-pending-memory.ps1
+- knowledge/ops/skills/pending-memory/pending-review.ps1
+- knowledge/ops/skills/pending-memory/SKILL.md
 
 Current pending state at last verification:
 
@@ -137,7 +140,7 @@ Current pending state at last verification:
 確認コマンド:
 
 ~~~powershell
-.\knowledge\ops\pending-review.ps1 list -Stage all
+.\knowledge\ops\skills\pending-memory\pending-review.ps1 list -Stage all
 ~~~
 
 ## What Hello World Must Not Include
@@ -156,7 +159,7 @@ Current pending state at last verification:
 - knowledge/ の構成
 - output/ の業務ID生成ルール
 - pending / approved の状態をこのファイルで数える場合
-- knowledge/ops/hello-world-gate.ps1 check が失敗した場合
+- knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1 check が失敗した場合
 
 ## Smoke Test
 

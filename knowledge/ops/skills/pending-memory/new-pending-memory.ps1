@@ -14,7 +14,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-$knowledgeRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
+$knowledgeRoot = Resolve-Path (Join-Path $PSScriptRoot "..\..\..")
 $targetDir = Join-Path $knowledgeRoot "pending\memory"
 New-Item -ItemType Directory -Force -Path $targetDir | Out-Null
 
@@ -47,3 +47,4 @@ $Risk
 
 Set-Content -LiteralPath $path -Value $content -Encoding UTF8
 Write-Output $path
+

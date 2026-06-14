@@ -1,69 +1,129 @@
 ---
 name: hello-world-gate
-description: Use when working in the Biz-compiler repository and a change may affect Hello,world.md, repo current-state self-description, root/template/knowledge/output layout, read order, pending counts, or before completing such work.
+description: Use when Biz-compiler repository work may affect Hello,world.md, current-state self-description, root/template/knowledge/output layout, pending counts, or when publishing repo changes through the Hello World gate.
 ---
 
 # Hello World Gate
 
-## Scope
+## 範囲
 
-This is a Biz-compiler repo-local skill. Do not install it globally. Use it only inside `D:\local\Biz-compiler`.
+これは Biz-compiler リポジトリ専用の repo-local Skill。グローバルSkillにはしない。
 
-The executable gate is `knowledge/ops/hello-world-gate.ps1`.
+実行体はこのSkillフォルダ内に置く。
 
-## Purpose
+```powershell
+.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1
+```
 
-Keep `Hello,world.md` true.
+## 役割
 
-`Hello,world.md` is the repo position file. This skill decides when to regenerate it and when to block progress because it is stale.
+`Hello,world.md` を嘘にしない。
 
-## Trigger
+さらに、GitHubへ上げる時もこのgateを通す。Biz-compilerでは `commit-push-gate` という別Skill名を作らない。commit/pushまで含めて `hello-world-gate` が担当する。
 
-Use this skill when any work touches or may affect:
+## コマンド
 
-- root layout or root file descriptions
-- read order or first-read files
+```powershell
+.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 check
+.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 sync
+.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 gate
+.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 publish `
+  -Type "運用" `
+  -Subject "何を変えたか" `
+  -Reason "なぜ必要だったか" `
+  -Verified "何を確認したか" `
+  -Risks "残っている注意点"
+```
+
+- `check`: 現在の `Hello,world.md` が実際の構成と一致するか検査する。
+- `sync`: 現在の構成から `Hello,world.md` を再生成する。
+- `gate`: `check` の別名。
+- `publish`: `sync`、`check`、`git add -A`、日本語commit、`git push`、post-checkを順番に実行する。
+
+## いつ使うか
+
+次に触る、または影響しそうな時は使う。
+
+- ルート構成、ルートファイル説明
+- 読み込み順、first-read files
 - `Hello,world.md`
-- `AGENTS.md`, `SOUL.md`, `USER.md`, `COMPASS.md`, or `MEMORY.md`
-- `template/` phase layout or template assets listed by Hello World
-- `knowledge/` top-level layout, pending counts, approved counts, or ops assets listed by Hello World
-- `output/` business-folder naming rules or actual `output/` directories
-- `knowledge/ops/hello-world-gate.ps1` itself
+- `AGENTS.md`、`SOUL.md`、`USER.md`、`COMPASS.md`、`MEMORY.md`
+- `template/` のphase構成、Hello Worldに載るtemplate asset
+- `knowledge/` の構成、pending/approved件数、Hello Worldに載るops asset
+- `output/` の業務IDルール、実際の `output/` 配下ディレクトリ
+- このSkill自身、または `hello-world-gate.ps1`
+- GitHubへ変更をpushする時
 
-## Required Workflow
+## 必須の流れ
 
-1. Start in repo root: `D:\local\Biz-compiler`.
-2. Run `.\knowledge\ops\hello-world-gate.ps1 check` before relying on `Hello,world.md` if current-state accuracy matters.
-3. Make the requested repo change.
-4. If the change affects any trigger item, run `.\knowledge\ops\hello-world-gate.ps1 sync` in the same turn.
-5. Always run `.\knowledge\ops\hello-world-gate.ps1 check` after `sync` and before reporting completion.
-6. If `check` fails, do not continue as if complete. Fix the stale/mismatched state or report the blocker.
+通常作業:
 
-## When Sync Runs
+1. リポジトリルート `D:\local\Biz-compiler` で作業する。
+2. 現在地を信じる必要があるなら先に `check` する。
+3. 変更する。
+4. `Hello,world.md` に載る状態を変えたなら同じターンで `sync` する。
+5. 完了前に必ず `check` を通す。
 
-Run `sync` after the change, not before, because it regenerates `Hello,world.md` from the current filesystem state.
+GitHubへ上げる時:
 
-Run `sync` in the same turn as the change when:
+1. 変更を終える。
+2. `publish` を使う。
+3. commit messageは日本語で、`理由`、`確認`、`残リスク` を含める。
+4. `publish` が失敗したら完了扱いにしない。
 
-- adding, moving, renaming, or deleting directories under root, `template/`, `knowledge/`, or `output/`
-- changing the meaning or description of first-read files
-- changing pending/approved state with `pending-review.ps1`
-- changing `COMPASS.md` role text or read routing
-- changing `hello-world-gate.ps1` generation logic
+## publish のcommit message
 
-For read-only explanation work, run `check` only. If `check` fails, run `sync` only when the mismatch is a legitimate stale Hello World state and not a structural violation.
+必須形:
 
-## What The Gate Enforces
+```text
+<種別>: <何を変えたか>
 
-`check` fails when:
+理由:
+- なぜ必要だったか
 
-- required root dirs/files are missing
-- forbidden root dirs exist
-- required `template/` phase dirs are missing
-- the consent flowchart asset is missing
-- `output/` contains placeholders or wrongly named business folders
-- generated current-state content differs from `Hello,world.md`
+確認:
+- 何を確認したか
+- hello-world-gate: pass
 
-## Reporting
+残リスク:
+- 未確認のこと
+- 残っている注意点
+```
 
-In the final response, state whether `sync` ran and whether `check` passed. If tests or UI checks were not relevant, do not invent them.
+英語の技術語、ファイルパス、`git`、`IR`、`schema` などは混ざってよい。ただし文章としては日本語で読む前提にする。
+
+## syncするタイミング
+
+`sync` は変更後に実行する。先に実行しても意味がない。
+
+同じターンで `sync` する例:
+
+- root、`template/`、`knowledge/`、`output/` 配下の追加・移動・削除
+- first-read filesの意味や説明の変更
+- pending/approved状態の変更
+- `COMPASS.md` の役割説明やread routingの変更
+- `hello-world-gate.ps1` の生成ロジック変更
+
+説明だけのread-only作業なら通常は `check` のみ。`check` がstaleで落ちた時だけ、構造違反でないことを確認して `sync` する。
+
+## gateが止めるもの
+
+`check` は次を検出したら失敗する。
+
+- 必須ルートディレクトリ/ファイルの欠落
+- 禁止ルートディレクトリの存在
+- `template/` の必須phase欠落
+- 同意ビューassetの欠落
+- `output/` のプレースホルダ、または命名違反の業務フォルダ
+- 実際の現在状態と `Hello,world.md` の差分
+
+## やらないこと
+
+- Biz-compiler側に `commit-push-gate` Skillを作らない。
+- `knowledge/ops/` 直下に `.ps1` を置かない。
+- `publish` 前の日記ファイルを必須にしない。必要な記録は日本語commit messageへ集約する。
+- Codex Desktopの `::git-*` directive は出さない。
+
+## 報告
+
+完了報告では、`sync` 実行有無、`check` 結果、pushした場合はcommit hashとbranch、残リスクだけを短く書く。

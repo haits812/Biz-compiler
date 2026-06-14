@@ -16,7 +16,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-$knowledgeRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
+$knowledgeRoot = Resolve-Path (Join-Path $PSScriptRoot "..\..\..")
 $pendingRoot = Join-Path $knowledgeRoot "pending"
 $journalRoot = Join-Path $knowledgeRoot "journal"
 
@@ -167,7 +167,7 @@ switch ($Action) {
     Set-Content -LiteralPath $dest -Value $approved -Encoding UTF8
     Remove-Item -LiteralPath $item.Path
     Write-Output "Approved: $($item.Id) -> $dest"
-    Write-Output "Next: reflect the approved content into its formal target, then run: .\knowledge\ops\pending-review.ps1 applied -Id 'approved/$($item.Category)/$(Split-Path -Leaf $dest)'"
+    Write-Output "Next: reflect the approved content into its formal target, then run: .\knowledge\ops\skills\pending-memory\pending-review.ps1 applied -Id 'approved/$($item.Category)/$(Split-Path -Leaf $dest)'"
   }
 
   "reject" {
@@ -196,5 +196,6 @@ switch ($Action) {
     Write-Output "Applied: $($item.Id) -> $dest"
   }
 }
+
 
 

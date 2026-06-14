@@ -21,10 +21,13 @@
 - `knowledge/pending/`: AIまたは作業者が提案した、未承認のMemory/Compass/Decision更新。
 - `knowledge/pending/approved/`: 人間が正式反映を認めたが、まだ対象ファイルへ反映済みとは限らない候補。
 - `knowledge/journal/`: 作業セッションのログ、検討過程、未整理メモ、pendingの適用/却下ログ。
-- `knowledge/ops/`: 開発運用メモリを操作する管理コマンド。業務フォルダへコピーする実行スクリプトではない。
-- `knowledge/ops/hello-world-gate.ps1`: `Hello,world.md` を現在状態から `sync` し、`check` / `gate` で嘘やstaleを検出する。
+- `knowledge/ops/`: 開発運用メモリを操作するrepo-local Skill置き場。`.ps1` は直下に置かず、各 `skills/<skill-name>/` に `SKILL.md` と同居させる。
+- `knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1`: `Hello,world.md` を現在状態から `sync` し、`check` / `gate` で嘘やstaleを検出する。
 - `knowledge/ops/skills/`: Biz-compilerリポジトリ内だけで効くrepo-local運用Skill。グローバルSkill置き場ではない。
-- `knowledge/ops/skills/hello-world-gate/SKILL.md`: ハロワゲートをいつ `sync/check` するかを定義するrepo-local Skill。
+- `knowledge/ops/skills/hello-world-gate/SKILL.md`: ハロワゲートをいつ `sync/check/publish` するかを定義するrepo-local Skill。
+- `knowledge/ops/skills/pending-memory/SKILL.md`: 未承認Memory/Compass/Decision候補の作成、確認、承認、却下、適用済み処理を定義するrepo-local Skill。
+- `knowledge/ops/skills/pending-memory/new-pending-memory.ps1`: 即時メモ候補を `knowledge/pending/memory/` に作る。
+- `knowledge/ops/skills/pending-memory/pending-review.ps1`: pending候補を `list`、`show`、`approve`、`reject`、`applied` する。
 - `template/`: 業務フォルダの原型。数字phaseごとの雛形と、業務フォルダへコピーされる `_shared/` を置く。
 - `template/_shared/`: phase横断で業務フォルダ内から使う内部部品、runner、validator、tool、実行スクリプトの置き場。
 - `template/50-consent/pipeline-flowchart/pipeline-flowchart.html`: フェーズ50同意ビューのテンプレート資産。
@@ -45,7 +48,7 @@
 - 実行時に業務フォルダへコピーされる横断部品は `template/_shared/` に置く。
 - 開発運用上の記憶はBiz-compiler本体の業務メモリとは分ける。
 - 開発運用メモリは会話終盤レビューに依存しない。重要点が出たら即時に `knowledge/pending/`、`MEMORY.md`、`knowledge/docs/decisions/`、または `knowledge/journal/` へ反映する。
-- `knowledge/ops/pending-review.ps1` でpending候補を `list`、`show`、`approve`、`reject`、`applied` できる。
+- `knowledge/ops/skills/pending-memory/pending-review.ps1` でpending候補を `list`、`show`、`approve`、`reject`、`applied` できる。
 - `approved` は正式反映済みではなく、正式ファイルへ文脈込みで反映してから `applied` とする。
 - このリポジトリには個別業務ごとのSkillを溜め込まない。個別Skill、workflow、adapterはBiz-compilerが作る成果物リポジトリ側の資産として扱う。
 - Curator/棚卸しはcompiler repoとoutput repoで分ける。このrepoでは設計資産とpending、出力先では生成された業務資産を対象にする。
@@ -55,13 +58,15 @@
 - `60` は初回構築時の検証、`70/80` は運用後の改善で作り直した成果物の再検証として扱う。検証対象はログそのものではなく改善後成果物。
 - ディレクトリ構成は、人間が数字phaseで追える `template/<数字phase>` と、業務作成時に採番される `output/Biz-001-業務名/<数字phase>` を基本形にする。`output/` 直下に見本の業務フォルダは置かない。
 - `Hello,world.md` は read の入口であり、decide / act の入口ではない。実際にコンパイルしている個別業務の状態は含めない。
-- `knowledge/ops/hello-world-gate.ps1` で `Hello,world.md` を `sync/check/gate` する。`check` が失敗したら次の作業へ進まない。
-- ハロワゲートは `knowledge/ops/skills/hello-world-gate/SKILL.md` としてrepo-local Skill化済み。グローバルSkillにはしない。
+- `knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1` で `Hello,world.md` を `sync/check/gate` する。`check` が失敗したら次の作業へ進まない。
+- ハロワゲートは `knowledge/ops/skills/hello-world-gate/SKILL.md` としてrepo-local Skill化済み。グローバルSkillにはしない。commit/pushも `publish` として同じハロワゲートに含める。
 
 ## 常に守る制約
 
 - `apply_patch` は使わない。Windows絶対パスでハングする既知リスクがある。
 - Codex Desktop向けの未文書化 `::git-*` directive は出さない。
+- commit/push結果はCodex Desktop directiveではなく通常の文章で報告する。commit messageは日本語で書き、作業の意味・検証・残リスクを残す。
+- Biz-compiler側に `commit-push-gate` Skillを作らない。commit/push込みの公開処理は `hello-world-gate publish` が担当する。
 - UIやサンプルより先に、契約データ、IR、安全制約、運用ループへの接続を確認する。
 - `MEMORY.md` は小さく保つ。詳細化した内容は `knowledge/docs/decisions/` または `knowledge/journal/` に移す。
 - 迷う記憶更新は正式ファイルに直書きせず、まず `knowledge/pending/` に置く。
@@ -69,7 +74,7 @@
 - `output/` 直下にサンプル業務、`example-business-id`、`_business-id` などのプレースホルダ業務フォルダを作らない。業務IDフォルダは実業務作成時に `Biz-001-業務名` のように採番して作る。
 - リポジトリ直下に `docs/`、`pending/`、`journal/`、`samples/`、`internal/`、`scripts/`、`schemas/`、`runner/`、`tools/`、`validators/`、`phase-packs/` を増やさない。
 - 実行時に業務フォルダへコピーされるものは `template/` 配下に置く。知識管理だけに使うものは `knowledge/` 配下に置く。
-- ルート構成、読み込み順、`template/`、`knowledge/`、`output/` の業務ID生成ルールを変えたら、同じターンで `knowledge/ops/hello-world-gate.ps1 sync` を実行し、`check` を通す。
+- ルート構成、読み込み順、`template/`、`knowledge/`、`output/` の業務ID生成ルールを変えたら、同じターンで `knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1 sync` を実行し、`check` を通す。
 
 ## 次に整える候補
 
@@ -81,6 +86,9 @@
 - `map.md`: ファイルが増えてきたら、全体像・読み方・配置を把握するための地図として検討する。`MEMORY.md` とは役割を分ける。
 - Output repo template v0: `template/` をコピーして `output/Biz-001-業務名/` を作る初期化規約。
 - 開発運用メモリの自動/半自動レビュー: 会話長期化やコンテキスト圧縮に依存しないチェックポイント機構。
+
+
+
 
 
 

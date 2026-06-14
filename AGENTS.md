@@ -88,17 +88,20 @@ Biz-compilerは、業務をそのままAIへ丸投げするツールではない
 Curatorや棚卸しの発想も、compiler repoとoutput repoで分ける。このリポジトリでは設計資産、要求、Compass、IR、サンプル、pending候補を棚卸しする。出力先リポジトリでは、生成されたSkill、workflow、adapter、業務固有テンプレートを棚卸しする。
 
 Hermesのnarrow waistはそのまま移植しない。Biz-compilerにおける細い腰は、core toolの少なさではなく、10番台以降のphaseごとに凍結される契約とIRである。工程の境界が安定していれば、結果的にcoreは細く保たれる。
-## Hello World ルール
+## Hello World Gate ルール
 
 - `Hello,world.md` は Biz-compiler の現在地を返すスモークテストである。
 - **Hello World は嘘をつかない。** ルート構成、読み込み順、`template/`、`knowledge/`、`output/` の業務ID生成ルールを変えたら同じターンで更新する。
 - ハロワゲート運用はrepo-local Skill `knowledge/ops/skills/hello-world-gate/SKILL.md` に従う。グローバルSkillとしてインストールしない。
-- `Hello,world.md` の更新は原則 `.\knowledge\ops\hello-world-gate.ps1 sync` で行い、完了前に `.\knowledge\ops\hello-world-gate.ps1 check` を通す。
+- 実行コマンドは `knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1` とする。
+- `Hello,world.md` の更新は原則 `.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 sync` で行い、完了前に `.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 check` を通す。
+- GitHubへcommit/pushする時も `.\knowledge\ops\skills\hello-world-gate\hello-world-gate.ps1 publish` を使う。commit message は日本語で、`理由`、`確認`、`残リスク` を含める。
+- Biz-compiler側に `commit-push-gate` Skillを作らない。DeckPilot側の名前と混ぜない。
+- `knowledge/ops/` 直下に `.ps1` を置かない。実行スクリプトは `knowledge/ops/skills/<skill-name>/` に `SKILL.md` と同居させる。
 - `sync` は、Hello Worldに載る状態を変えた後、同じターンで実行する。`check` は、現在地を信じる前と完了前に実行する。
 - `check` は、禁止ルートフォルダ、`template/` phase欠落、`output/` のプレースホルダ/命名違反、現在状態との差分を検出する。
 - `Hello,world.md` は read の入口であり、decide / act の入口ではない。判断は `COMPASS.md`、実行は phase command / template / output 側の責務とする。
 - 実際にコンパイルしている個別業務の状態は `Hello,world.md` に入れない。`output/Biz-001-業務名/` 側の ledger / artifact / event log に置く。
-
 ## ディレクトリ構成ルール
 
 人間が見る主要導線は、数字phaseを主語にした `template/` と `output/` に寄せる。確定/未承認/作業ログなどの知識系は `knowledge/` にまとめる。業務実行時に使う横断部品はリポジトリ直下へ散らさず、`template/_shared/` に入れる。
@@ -174,24 +177,24 @@ knowledge/
 
 final前の更新要否確認は保険であり、主機構ではない。
 
-即時メモ候補を作るときは、可能なら `knowledge/ops/new-pending-memory.ps1` を使う。
+即時メモ候補を作るときは、可能なら `knowledge/ops/skills/pending-memory/new-pending-memory.ps1` を使う。
 
 ### Pending approval workflow
 
-未確定のMemory、Compass、Decision更新は `knowledge/pending/` に置く。人間が確認して正式反映してよいと判断したものは、`knowledge/ops/pending-review.ps1 approve` で `knowledge/pending/approved/` へ移す。
+未確定のMemory、Compass、Decision更新は `knowledge/pending/` に置く。人間が確認して正式反映してよいと判断したものは、`knowledge/ops/skills/pending-memory/pending-review.ps1 approve` で `knowledge/pending/approved/` へ移す。
 
-`approved` は「正式ファイルへ反映済み」ではない。承認後、agentまたは作業者が文脈を読んで `MEMORY.md`、`COMPASS.md`、`knowledge/docs/decisions/` などへ反映する。反映後に `knowledge/ops/pending-review.ps1 applied` で `knowledge/journal/pending-applied/` へ移す。却下する場合は `knowledge/ops/pending-review.ps1 reject` で `knowledge/journal/pending-rejected/` へ移す。
+`approved` は「正式ファイルへ反映済み」ではない。承認後、agentまたは作業者が文脈を読んで `MEMORY.md`、`COMPASS.md`、`knowledge/docs/decisions/` などへ反映する。反映後に `knowledge/ops/skills/pending-memory/pending-review.ps1 applied` で `knowledge/journal/pending-applied/` へ移す。却下する場合は `knowledge/ops/skills/pending-memory/pending-review.ps1 reject` で `knowledge/journal/pending-rejected/` へ移す。
 
 機械的に `Proposed Change` を本文へ追記しない。正式反映では、既存ファイルの役割、重複、語彙の区別を確認してから編集する。
 
 よく使うコマンド:
 
 ```powershell
-.\knowledge\ops\pending-review.ps1 list -Stage all
-.\knowledge\ops\pending-review.ps1 show -Id "memory/<file>.md"
-.\knowledge\ops\pending-review.ps1 approve -Id "memory/<file>.md" -Reason "採用理由"
-.\knowledge\ops\pending-review.ps1 reject -Id "memory/<file>.md" -Reason "却下理由"
-.\knowledge\ops\pending-review.ps1 applied -Id "approved/memory/<file>.md" -Reason "MEMORY.mdへ反映済み"
+.\knowledge\ops\skills\pending-memory\pending-review.ps1 list -Stage all
+.\knowledge\ops\skills\pending-memory\pending-review.ps1 show -Id "memory/<file>.md"
+.\knowledge\ops\skills\pending-memory\pending-review.ps1 approve -Id "memory/<file>.md" -Reason "採用理由"
+.\knowledge\ops\skills\pending-memory\pending-review.ps1 reject -Id "memory/<file>.md" -Reason "却下理由"
+.\knowledge\ops\skills\pending-memory\pending-review.ps1 applied -Id "approved/memory/<file>.md" -Reason "MEMORY.mdへ反映済み"
 ```
 
 ## 設計原則
@@ -236,6 +239,10 @@ final前の更新要否確認は保険であり、主機構ではない。
 ## 完了報告
 
 作業後は、変更したファイル、確認したこと、未確認のリスクを短く報告する。テストや表示確認をしていない場合は、していないと明示する。
+
+
+
+
 
 
 
