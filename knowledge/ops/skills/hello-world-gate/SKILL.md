@@ -109,7 +109,7 @@ git status --short --branch
 - ルート構成、ルートファイル説明
 - 読み込み順、first-read files
 - `Hello,world.md`
-- `AGENTS.md`、`SOUL.md`、`USER.md`、`COMPASS.md`、`MEMORY.md`
+- `AGENTS.md`、`SOUL.md`、`USER.md`、`COMPASS.md`、`knowledge/docs/lexicon.md`、`MEMORY.md`
 - `template/` のphase構成、Hello Worldに載るtemplate asset
 - `knowledge/` の構成、pending/approved件数、Hello Worldに載るops asset
 - `output/` の業務IDルール、実際の `output/` 配下ディレクトリ

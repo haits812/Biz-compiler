@@ -39,11 +39,11 @@
 ## 決定済み
 
 - このリポジトリはBiz-compilerを実装していく作業場として扱う。
-- 読み込み順は `AGENTS.md` → `Hello,world.md` → `SOUL.md` → `USER.md` → `COMPASS.md` → `MEMORY.md` → 要求定義 → 必要なテンプレート/Decision とする。
+- 読み込み順は `AGENTS.md` → `Hello,world.md` → `SOUL.md` → `USER.md` → `COMPASS.md` → `knowledge/docs/lexicon.md` → `MEMORY.md` → 要求定義 → 必要なテンプレート/Decision とする。
 - `SOUL.md` は、汎用コンサルではなく、Biz-compilerを一緒に作る聞き取り型の共同設計者としての姿勢を置く。
 - `USER.md` は、主に話しかけてくる相手の作業モデルを置く。個人プロフィールではない。
 - Compassはルートの `COMPASS.md` に置き、作業者やsubagentに思考の指向性を渡すdirection packetとして扱う。
-- Compassは短く保つ。メタ土台の棚卸し、用語、IR詳細、方法論、事例、評価条件、決定理由は `knowledge/docs/README.md` のread routingに従って分ける。
+- Compassは短く保つ。用語境界は `knowledge/docs/lexicon.md` として通常作業の初期に読み、メタ土台の棚卸し、IR詳細、方法論、事例、評価条件、決定理由は `knowledge/docs/README.md` のread routingに従って分ける。
 - メタ土台v0は `knowledge/docs/meta/README.md` をMarkdown正本台帳として維持する。メタ土台は急増しない前提なので、JSON台帳化は現時点では不要。
 - メタ土台v0として、`state-model.md`、`phase-catalog.md`、`artifact-placement.md`、`session-brief.md`、`subagent-brief.md`、`completion-criteria.md`、`knowledge/docs/lexicon.md` を整備済みとして扱う。
 - 知識候補の格上げ/保留/退避/廃棄は、メタ台帳ではなくrepo-local `knowledge-curation` Skillで扱う。常時効く禁止・配置・読み順・運用制約は、先にMarkdown正本へルール化できるかを見る。repo外へ影響し得るHook/denyは現時点では導入せず、まずMDルール化とrepo-local `hello-world-gate` へ寄せる。数字phase処理が固まった後にscript化を候補に入れる。

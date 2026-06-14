@@ -1,6 +1,6 @@
 # AGENTS.md
 
-このリポジトリは Biz-compiler を実装していくための作業場である。作業者は、個別のUI・スキーマ・Skill・ランタイム実装に入る前に、必ず `Hello,world.md`、`SOUL.md`、`USER.md`、`COMPASS.md`、`MEMORY.md` を読み、Biz-compilerの判断順序と現在の開発状態に沿って設計すること。
+このリポジトリは Biz-compiler を実装していくための作業場である。作業者は、個別のUI・スキーマ・Skill・ランタイム実装に入る前に、必ず `Hello,world.md`、`SOUL.md`、`USER.md`、`COMPASS.md`、`knowledge/docs/lexicon.md`、`MEMORY.md` を読み、Biz-compilerの判断順序と現在の開発状態に沿って設計すること。
 
 ## Global Rules (Windows)
 
@@ -37,10 +37,11 @@ gitのstage / commit / push結果は、通常の文章またはbacktick付きコ
 3. `SOUL.md`
 4. `USER.md`
 5. `COMPASS.md`
-6. `MEMORY.md`
-7. `knowledge/docs/requirements/Biz-compiler_要求定義.md`
-8. UI同意ビュー・契約JSONを触る場合は `template/50-consent/pipeline-flowchart/pipeline-flowchart.html`
-9. 過去の決定理由が必要な場合は `knowledge/docs/decisions/`
+6. `knowledge/docs/lexicon.md`
+7. `MEMORY.md`
+8. `knowledge/docs/requirements/Biz-compiler_要求定義.md`
+9. UI同意ビュー・契約JSONを触る場合は `template/50-consent/pipeline-flowchart/pipeline-flowchart.html`
+10. 過去の決定理由が必要な場合は `knowledge/docs/decisions/`
 
 各ファイルの役割:
 
@@ -48,11 +49,12 @@ gitのstage / commit / push結果は、通常の文章またはbacktick付きコ
 - `SOUL.md`: このリポジトリで作業するagentの対話姿勢。汎用コンサル人格ではなく、Biz-compilerを一緒に作る聞き取り型の共同設計者としての振る舞いを定義する。
 - `USER.md`: このリポジトリで主に話しかけてくる相手の作業モデル。個人プロフィールの保存場所ではなく、会話・設計・実装の進め方を合わせるための前提を置く。
 - `COMPASS.md`: 作業者やsubagentへ思考の指向性を渡す direction packet。テンプレート、asset、具体例より先に読む。
+- `knowledge/docs/lexicon.md`: 用語定義と概念境界。`IR` / `contract` / `manifest` / `gate` / `approval` / `validation` などを混同しないため、通常作業の初期に読む。
 - `MEMORY.md`: このリポジトリを作るための開発運用メモリ。Biz-compiler本体が将来扱う業務メモリとは別物である。
 - `knowledge/docs/requirements/Biz-compiler_要求定義.md`: 現時点の要求定義本体。
 - `template/50-consent/pipeline-flowchart/pipeline-flowchart.html`: 同意ビューの再利用サンプル。
 
-`COMPASS.md` はL1、要求定義内のIPO/ENCRS/BPR等はL2、HTMLやJSONテンプレートはL3として扱う。L3を先に読んで業務設計を型にはめない。
+`COMPASS.md` はL1、`knowledge/docs/lexicon.md` と要求定義内のIPO/ENCRS/BPR等はL2、HTMLやJSONテンプレートはL3として扱う。L3を先に読んで業務設計を型にはめない。
 
 `map.md` を将来導入する場合、それは全体像・配置・読み方を理解するための地図であり、`MEMORY.md` とは別物として扱う。ユーザーが出したファイル名や概念を、確認なしに別の既存ファイルへ言い換えない。
 
@@ -70,7 +72,7 @@ gitのstage / commit / push結果は、通常の文章またはbacktick付きコ
 | eval / fresh executor / shadow run を設計する | `knowledge/docs/evaluation.md` |
 | 過去の決定理由が必要 | `knowledge/docs/decisions/` |
 
-subagentや別作業者へ重い作業を渡す時は、`Hello,world.md`、`SOUL.md`、`USER.md`、`COMPASS.md`、`MEMORY.md` に加え、作業種別に該当する追加読み込み先だけを渡す。
+subagentや別作業者へ重い作業を渡す時は、`Hello,world.md`、`SOUL.md`、`USER.md`、`COMPASS.md`、`knowledge/docs/lexicon.md`、`MEMORY.md` に加え、作業種別に該当する追加読み込み先だけを渡す。
 
 ## 実装方針
 
