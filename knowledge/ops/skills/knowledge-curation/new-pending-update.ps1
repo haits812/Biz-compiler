@@ -3,6 +3,10 @@ param(
   [string]$Title,
 
   [Parameter(Mandatory=$false)]
+  [ValidateSet("MEMORY.md", "COMPASS.md", "knowledge/docs/decisions")]
+  [string]$Target = "MEMORY.md",
+
+  [Parameter(Mandatory=$false)]
   [string]$Evidence = "",
 
   [Parameter(Mandatory=$false)]
@@ -15,14 +19,20 @@ param(
 $ErrorActionPreference = "Stop"
 
 $knowledgeRoot = Resolve-Path (Join-Path $PSScriptRoot "..\..\..")
-$targetDir = Join-Path $knowledgeRoot "pending\memory"
+$category = switch ($Target) {
+  "MEMORY.md" { "memory" }
+  "COMPASS.md" { "compass" }
+  "knowledge/docs/decisions" { "decisions" }
+}
+
+$targetDir = Join-Path $knowledgeRoot "pending\$category"
 New-Item -ItemType Directory -Force -Path $targetDir | Out-Null
 
 $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
 $slug = $Title.ToLowerInvariant() -replace '[^a-z0-9\p{IsHiragana}\p{IsKatakana}\p{IsCJKUnifiedIdeographs}]+', '-'
 $slug = $slug.Trim('-')
 if ([string]::IsNullOrWhiteSpace($slug)) {
-  $slug = "memo"
+  $slug = "pending-update"
 }
 if ($slug.Length -gt 48) {
   $slug = $slug.Substring(0, 48).Trim('-')
@@ -33,7 +43,7 @@ $content = @"
 # $Title
 
 ## Target
-MEMORY.md
+$Target
 
 ## Proposed Change
 $ProposedChange
@@ -47,4 +57,3 @@ $Risk
 
 Set-Content -LiteralPath $path -Value $content -Encoding UTF8
 Write-Output $path
-

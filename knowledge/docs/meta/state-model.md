@@ -10,7 +10,7 @@
 |---|---|---|---|
 | 整備状態 | artifactやメタ土台が使える状態か | `未整備` / `一部あり` / `整備済み` / `廃止` | `knowledge/docs/meta/README.md` |
 | 主張状態 | 設計判断や業務理解がどれだけ確からしいか | `仮説` / `決定済み` / `検証済み` / `却下` | `knowledge/docs/decisions/`, IR, ledger |
-| pending運用状態 | 未確定メモ候補が正式反映まで進んだか | `pending` / `approved` / `applied` / `rejected` | `knowledge/pending/`, `knowledge/journal/`, pending-memory skill |
+| pending運用状態 | 未確定メモ候補が正式反映まで進んだか | `pending` / `approved` / `applied` / `rejected` | `knowledge/pending/`, `knowledge/journal/`, `knowledge-curation` Skill |
 
 ## 整備状態
 

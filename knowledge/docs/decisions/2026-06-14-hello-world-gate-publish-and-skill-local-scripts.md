@@ -26,9 +26,9 @@ knowledge/ops/
     hello-world-gate/
       SKILL.md
       hello-world-gate.ps1
-    pending-memory/
+    knowledge-curation/
       SKILL.md
-      new-pending-memory.ps1
+      new-pending-update.ps1
       pending-review.ps1
 ```
 
@@ -40,4 +40,3 @@ knowledge/ops/
 - `commit-push-gate` というDeckPilot側の名前と混ざらない。
 - `.ps1` の所属がSkillフォルダから分かる。
 - GitHubへ上げる時の作業意味・確認・残リスクは、日本語commit messageへ残す。
-

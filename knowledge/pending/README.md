@@ -47,13 +47,9 @@ MEMORY.md / COMPASS.md / knowledge/docs/decisions
 ## レビュー補助
 
 ```powershell
-.\knowledge\ops\skills\pending-memory\pending-review.ps1 list -Stage all
-.\knowledge\ops\skills\pending-memory\pending-review.ps1 show -Id "memory/<file>.md"
-.\knowledge\ops\skills\pending-memory\pending-review.ps1 approve -Id "memory/<file>.md" -Reason "採用理由"
-.\knowledge\ops\skills\pending-memory\pending-review.ps1 reject -Id "memory/<file>.md" -Reason "却下理由"
-.\knowledge\ops\skills\pending-memory\pending-review.ps1 applied -Id "approved/memory/<file>.md" -Reason "正式ファイルへ反映済み"
+.\knowledge\ops\skills\knowledge-curation\pending-review.ps1 list -Stage all
+.\knowledge\ops\skills\knowledge-curation\pending-review.ps1 show -Id "memory/<file>.md"
+.\knowledge\ops\skills\knowledge-curation\pending-review.ps1 approve -Id "memory/<file>.md" -Reason "採用理由"
+.\knowledge\ops\skills\knowledge-curation\pending-review.ps1 reject -Id "memory/<file>.md" -Reason "却下理由"
+.\knowledge\ops\skills\knowledge-curation\pending-review.ps1 applied -Id "approved/memory/<file>.md" -Reason "正式ファイルへ反映済み"
 ```
-
-
-
-

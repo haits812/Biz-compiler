@@ -188,24 +188,24 @@ knowledge/
 
 final前の更新要否確認は保険であり、主機構ではない。
 
-即時メモ候補を作るときは、可能なら `knowledge/ops/skills/pending-memory/new-pending-memory.ps1` を使う。
+未承認のpending候補を作るときは、`knowledge/ops/skills/knowledge-curation/new-pending-update.ps1` を使う。分類に迷う短い普段メモは、まず `MEMORY.md` に置いてよい。
 
 ### Pending approval workflow
 
-未確定のMemory、Compass、Decision更新は `knowledge/pending/` に置く。人間が確認して正式反映してよいと判断したものは、`knowledge/ops/skills/pending-memory/pending-review.ps1 approve` で `knowledge/pending/approved/` へ移す。
+未確定のMemory、Compass、Decision更新は `knowledge/pending/` に置く。人間が確認して正式反映してよいと判断したものは、`knowledge/ops/skills/knowledge-curation/pending-review.ps1 approve` で `knowledge/pending/approved/` へ移す。
 
-`approved` は「正式ファイルへ反映済み」ではない。承認後、agentまたは作業者が文脈を読んで `MEMORY.md`、`COMPASS.md`、`knowledge/docs/decisions/` などへ反映する。反映後に `knowledge/ops/skills/pending-memory/pending-review.ps1 applied` で `knowledge/journal/pending-applied/` へ移す。却下する場合は `knowledge/ops/skills/pending-memory/pending-review.ps1 reject` で `knowledge/journal/pending-rejected/` へ移す。
+`approved` は「正式ファイルへ反映済み」ではない。承認後、agentまたは作業者が文脈を読んで `MEMORY.md`、`COMPASS.md`、`knowledge/docs/decisions/` などへ反映する。反映後に `knowledge/ops/skills/knowledge-curation/pending-review.ps1 applied` で `knowledge/journal/pending-applied/` へ移す。却下する場合は `knowledge/ops/skills/knowledge-curation/pending-review.ps1 reject` で `knowledge/journal/pending-rejected/` へ移す。
 
 機械的に `Proposed Change` を本文へ追記しない。正式反映では、既存ファイルの役割、重複、語彙の区別を確認してから編集する。
 
 よく使うコマンド:
 
 ```powershell
-.\knowledge\ops\skills\pending-memory\pending-review.ps1 list -Stage all
-.\knowledge\ops\skills\pending-memory\pending-review.ps1 show -Id "memory/<file>.md"
-.\knowledge\ops\skills\pending-memory\pending-review.ps1 approve -Id "memory/<file>.md" -Reason "採用理由"
-.\knowledge\ops\skills\pending-memory\pending-review.ps1 reject -Id "memory/<file>.md" -Reason "却下理由"
-.\knowledge\ops\skills\pending-memory\pending-review.ps1 applied -Id "approved/memory/<file>.md" -Reason "MEMORY.mdへ反映済み"
+.\knowledge\ops\skills\knowledge-curation\pending-review.ps1 list -Stage all
+.\knowledge\ops\skills\knowledge-curation\pending-review.ps1 show -Id "memory/<file>.md"
+.\knowledge\ops\skills\knowledge-curation\pending-review.ps1 approve -Id "memory/<file>.md" -Reason "採用理由"
+.\knowledge\ops\skills\knowledge-curation\pending-review.ps1 reject -Id "memory/<file>.md" -Reason "却下理由"
+.\knowledge\ops\skills\knowledge-curation\pending-review.ps1 applied -Id "approved/memory/<file>.md" -Reason "MEMORY.mdへ反映済み"
 ```
 
 ## 設計原則
