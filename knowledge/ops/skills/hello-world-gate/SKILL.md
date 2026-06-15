@@ -29,6 +29,8 @@ first-read files は `AGENTS.md`、`Hello-world.md`、`SOUL.md`、`USER.md`、`C
 
 `knowledge/docs/requirements/` は初期読み込みに含めない。要求全体確認、要求変更、要求定義との照合が必要な時だけ追加で読む。
 
+ops資産は、`Hello-world.md` では存在と入口だけを見る。実際に使う・変更する時は `knowledge/ops/registry.md` を読んだうえで、対象ownerの `README.md` / `SKILL.md` まで読む。`impact-orchestrator` を使う時は `knowledge/ops/orchestrators/impact-orchestrator/README.md` がowner説明である。
+
 ## 発話トリガー
 
 次のような言い方が出たら、このSkillを使う。
@@ -120,6 +122,7 @@ git status --short --branch
 - `knowledge/` の構成、pending/approved件数、Hello Worldに載るops asset
 - repo-local Skillの追加・改名・削除、`SKILL.md` frontmatter、同居 `.ps1`、`knowledge/ops/README.md`
 - `knowledge/ops/registry.md`、hooks、orchestrators、repo-local commands/tools、work locks、knowledge search indexルールの追加・変更
+- ops資産のowner説明ファイル、またはその読み導線の追加・変更
 - `output/` の業務IDルール、実際の `output/` 配下ディレクトリ
 - このSkill自身、または `hello-world-gate.ps1`
 - GitHubへ変更をpushする時。ただし対象なしなら実行しない

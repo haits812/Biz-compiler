@@ -86,7 +86,16 @@ subagentや別作業者へ重い作業を渡す時は、`Hello-world.md`、`SOUL
 
 新しい repo-local Skill、hook adapter、orchestrator、command、tool を作る前に、必ず `Hello-world.md` の `Ops Entrypoints` と `knowledge/ops/registry.md` を確認する。似た役割がある場合は、別資産を増やさず既存入口へ統合する。
 
-作業対象がコード、ドキュメント、Skill、ops、templateを変更する場合は、編集前に `impact-orchestrator` で作業の意図、影響、Markdown参照impact、読むもの、完了gateを切る。`-Files` を渡した場合はfile lockも取る。短い質問回答、読み取りだけ、対象なしのGitHub確認では不要。
+`knowledge/ops/registry.md` は目録であり、使い方の正本ではない。既存ops資産を使う、変更する、または同種の資産を追加する時は、registry確認後に対象ownerの説明ファイルまで読む。
+
+| 対象 | 必ず読むowner説明 |
+|---|---|
+| repo-local Skill | `knowledge/ops/skills/<skill-name>/SKILL.md` |
+| orchestrator | `knowledge/ops/orchestrators/<orchestrator-name>/README.md` |
+| hook adapter | `knowledge/ops/hooks/README.md` と、呼び出し先Skill/orchestratorのowner説明 |
+| command / script / tool | 所有フォルダの `README.md` または `SKILL.md` |
+
+作業対象がコード、ドキュメント、Skill、ops、templateを変更する場合は、編集前に `knowledge/ops/orchestrators/impact-orchestrator/README.md` を読み、`impact-orchestrator` で作業の意図、影響、Markdown参照impact、読むもの、完了gateを切る。`-Files` を渡した場合はfile lockも取る。短い質問回答、読み取りだけ、対象なしのGitHub確認では不要。
 
 clone直後や環境再構築時は `setup.md` を読み、必要ツール、hook接続、生成物、初期化コマンドを確認する。hook一覧は `setup.md` に複製せず、`knowledge/ops/registry.md` と `knowledge/ops/hooks/README.md` を正本にする。`setup.md`、依存、hook接続、生成物ルールを変えたら同じターンでハロワゲートを通す。
 

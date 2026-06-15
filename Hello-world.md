@@ -158,16 +158,24 @@ Known knowledge ops assets:
 
 ## Ops Entrypoints
 
-初期読み込みでは、ここで存在と入口だけを確認する。Skillを作る、hook/orchestrator/command/toolを触る、作業前impact、lock、knowledge searchを扱う時だけ knowledge/ops/registry.md を読む。
+初期読み込みでは、ここで存在と入口だけを確認する。Skillを作る、hook/orchestrator/command/toolを触る、作業前impact、lock、knowledge searchを扱う時は、まず knowledge/ops/registry.md を読み、その後対象ownerの README.md / SKILL.md を読む。
 
+- ops overview: knowledge/ops/README.md
 - registry: knowledge/ops/registry.md
+- owner docs rule: ops資産を使う/変更する時はregistryの後に対象のREADME.mdまたはSKILL.mdを読む
+- skills: knowledge/ops/skills/
+  - hello-world-gate docs: knowledge/ops/skills/hello-world-gate/SKILL.md
+  - hello-world-gate command: knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1
+  - knowledge-curation docs: knowledge/ops/skills/knowledge-curation/SKILL.md
 - hooks: knowledge/ops/hooks/README.md
   - codex-pre-work: knowledge/ops/hooks/codex-pre-work.ps1
   - claude-code-pre-work: knowledge/ops/hooks/claude-code-pre-work.ps1
   - pre-publish: knowledge/ops/hooks/pre-publish.ps1
 - orchestrators: knowledge/ops/orchestrators/
-  - impact-orchestrator: knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1
-  - knowledge-search: knowledge/ops/orchestrators/knowledge-search/knowledge-search.ps1
+  - impact-orchestrator docs: knowledge/ops/orchestrators/impact-orchestrator/README.md
+  - impact-orchestrator command: knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1
+  - knowledge-search docs: knowledge/ops/orchestrators/knowledge-search/README.md
+  - knowledge-search command: knowledge/ops/orchestrators/knowledge-search/knowledge-search.ps1
 - knowledge index: knowledge/.index/README.md (SQLite DBは生成物。commitしない)
 - work ledger: knowledge/journal/work/
   - active locks: knowledge/journal/work/locks.json
@@ -194,7 +202,7 @@ Known knowledge ops assets:
 ## Repo-local Skills
 
 初期読み込みでは、既存Skillの発火条件を確認してから新しいSkillを作る。似た役割のSkillがあるなら、まず既存Skillへ統合する。
-repo-local Skillを追加・改名・削除したら、SKILL.mdのname/description、knowledge/ops/README.md、Hello Worldの一覧を同じターンで同期する。
+repo-local Skillを追加・改名・削除したら、SKILL.mdのname/description、owner説明、knowledge/ops/README.md、Hello Worldの一覧を同じターンで同期する。
 
 - hello-world-gate: Use when Biz-compilerでハロワやっといて/ハロワ見て/ハロワ更新しといて/githubあげといて/GitHub上げて/pushして等の依頼が出た時。
   - path: knowledge/ops/skills/hello-world-gate/
@@ -238,6 +246,7 @@ Current pending state at last verification:
 - pending / approved の状態をこのファイルで数える場合
 - repo-local Skillを追加・改名・削除した場合
 - knowledge/ops/registry.md、hooks、orchestrators、repo-local commands/toolsを変更した場合
+- ops資産のowner説明ファイル、またはその読み導線を変更した場合
 - knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1 が失敗した場合
 
 ## Smoke Test

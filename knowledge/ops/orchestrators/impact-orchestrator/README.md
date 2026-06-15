@@ -58,6 +58,21 @@ lock衝突時は停止する。古いlockを意図的に上書きする場合だ
 
 Markdownにリンクをベタ書きしている場合も影響として扱う。
 
+## Impactを書く時の観点
+
+`-Impact` は「なんとなく影響あり」と書く欄ではない。変更前に、少なくとも次を見て該当有無を切る。
+
+- rootの読み込み順、`AGENTS.md`、`Hello-world.md`、`setup.md` に効くか
+- `knowledge/ops/registry.md`、ops owner README/SKILL、hook adapter、orchestrator、command一覧に効くか
+- `knowledge/docs/README.md` のread routing、meta台帳、lexicon、IR、method、evaluation、casebookに効くか
+- `template/<phase>/` のphase-local成果物か、`template/_shared/` の横断部品か
+- `output/Biz-001-*` 側に生成される業務成果物、ledger、artifact、event logに効くか
+- Markdown内の相対リンク、ファイル名ベタ書き、自然言語トリガー、コマンド例に効くか
+- `.gitignore`、`knowledge/.index/`、`__pycache__/` など生成物・除外物ルールに効くか
+- GitHub反映、Hello World Gate、commit message、post-checkに効くか
+
+書いたREADMEやSKILLが読まれない実装を作らない。ops資産を触る時は、`registry.md` だけでなく対象ownerの `README.md` / `SKILL.md` へ読む導線があるかをImpactに含める。
+
 ## やらないこと
 
 - branch / PR stateの正本管理はまだしない。

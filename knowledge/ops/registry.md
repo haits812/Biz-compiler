@@ -23,6 +23,34 @@
 - 作業前に `impact-orchestrator` で影響範囲を切る時
 - `knowledge/ops/` 配下を変更する時
 
+## 読み導線
+
+この台帳は「何があるか」を引く目録であり、各資産の運用詳細を読む場所ではない。
+
+既存ops資産を使う、変更する、または同種の資産を追加する時は、次の順で読む。
+
+1. `Hello-world.md` の `Ops Entrypoints` で存在と入口を確認する。
+2. この `knowledge/ops/registry.md` で重複と所有者を確認する。
+3. 対象ownerの説明ファイルを読む。
+
+| 対象 | owner説明 |
+|---|---|
+| repo-local Skill | `knowledge/ops/skills/<skill-name>/SKILL.md` |
+| orchestrator | `knowledge/ops/orchestrators/<orchestrator-name>/README.md` |
+| hook adapter | `knowledge/ops/hooks/README.md` |
+| hookの呼び出し先 | 呼び出し先Skillの `SKILL.md` またはorchestratorの `README.md` |
+| command / script / tool | 所有フォルダの `README.md` または `SKILL.md` |
+
+現行owner説明:
+
+- `knowledge/ops/skills/hello-world-gate/SKILL.md`
+- `knowledge/ops/skills/knowledge-curation/SKILL.md`
+- `knowledge/ops/hooks/README.md`
+- `knowledge/ops/orchestrators/impact-orchestrator/README.md`
+- `knowledge/ops/orchestrators/knowledge-search/README.md`
+
+owner説明が無いops資産は未整備として扱う。新規追加時は、実行体だけでなくowner説明とこの台帳の読み導線を同じターンで更新する。
+
 ## Skills
 
 | id | 状態 | 役割 | path | command |

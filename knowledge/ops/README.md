@@ -16,6 +16,20 @@ Get-Content -Raw .\knowledge\ops\registry.md
 
 似た役割がある場合は、別資産を増やさず既存入口へ統合する。
 
+## Owner Docs
+
+`knowledge/ops/registry.md` は棚卸し正本、このREADMEはops全体の入口である。各資産を実際に使う・変更する時は、owner説明を読む。
+
+| owner | 読むファイル | 使う時 |
+|---|---|---|
+| `hello-world-gate` | `knowledge/ops/skills/hello-world-gate/SKILL.md` | ハロワ更新、GitHub反映、出口gateを扱う時 |
+| `knowledge-curation` | `knowledge/ops/skills/knowledge-curation/SKILL.md` | MEMORY、pending、journal、decisionsの整理を扱う時 |
+| `impact-orchestrator` | `knowledge/ops/orchestrators/impact-orchestrator/README.md` | 編集前impact、work card、lock、completionを扱う時 |
+| `knowledge-search` | `knowledge/ops/orchestrators/knowledge-search/README.md` | 過去会話・作業メモ・決定の検索、SQLite indexを扱う時 |
+| `hooks` | `knowledge/ops/hooks/README.md` | Codex / Claude Code など環境別hook adapterを扱う時 |
+
+hook adapterは薄い入口なので、呼び出し先のowner説明も読む。例: `codex-pre-work.ps1` を触るなら `hooks/README.md` と `impact-orchestrator/README.md` の両方を読む。
+
 ## Sync Rule
 
 次を追加・改名・削除した場合は、このREADMEと `knowledge/ops/registry.md` を同じターンで更新する。
