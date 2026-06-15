@@ -58,7 +58,7 @@ owner説明が無いops資産は未整備として扱う。新規追加時は、
 |---|---|---|---|---|
 | `hello-world-gate` | 整備済み | `Hello-world.md` の再生成、検査、日本語commit、GitHub push、post-checkを一気通貫で行う | `knowledge/ops/skills/hello-world-gate/` | `knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1` |
 | `knowledge-curation` | 整備済み | `MEMORY.md`、pending、journal、decisionsなどの知識候補を整理し、格上げ/保留/退避/廃棄へ振り分ける | `knowledge/ops/skills/knowledge-curation/` | `new-pending-update.ps1`, `pending-review.ps1` |
-| `skill-creator-gate` | 整備済み | OpenSquillaの`meta-skill-creator`作法を流用し、repo-local Skillのproposal、衝突確認、trigger設計、作成、登録、検査を段階的に行う | `knowledge/ops/skills/skill-creator-gate/` | `new-skill-proposal.ps1`, `validate-repo-skill.ps1` |
+| `skill-creator-gate` | 整備済み | ユーザーのやりたいことを起点にSkill化対象を整理し、多工程Skill設計、標準skill-creator作法での実装、proposal、衝突確認、trigger設計、登録、検査を段階的に行う | `knowledge/ops/skills/skill-creator-gate/` | `new-skill-proposal.ps1`, `validate-repo-skill.ps1` |
 
 ## Orchestrators
 

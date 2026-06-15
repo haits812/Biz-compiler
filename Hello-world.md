@@ -216,7 +216,7 @@ repo-local Skillを追加・改名・削除したら、SKILL.mdのname/descripti
 - knowledge-curation: Biz-compiler repo内のMEMORYメモと知識候補を、Markdownルール化、Hello World Gate、将来phase script候補、pending、journal、decisions、廃棄へ振り分けるrepo-local Skill。pending候補の作成・承認・却下・適用もこのSkillで扱う。
   - path: knowledge/ops/skills/knowledge-curation/
   - commands: knowledge/ops/skills/knowledge-curation/new-pending-update.ps1, knowledge/ops/skills/knowledge-curation/pending-review.ps1
-- skill-creator-gate: Use when Biz-compiler repoで新しいrepo-local Skillを作る、既存Skillを改修する、作業をSkill化する、スキル作って/Skill作って/この流れをSkillにして/creator gate/skill-creator-gate/meta-skill-creator流用と言われた時。OpenSquillaのmeta-skill-creator作法を、repo-local Skillのproposal、衝突確認、trigger設計、作成、登録、検査へ移植する。
+- skill-creator-gate: Use when Biz-compiler repoで新しいrepo-local Skillを作る、既存Skillを改修する、作業をSkill化する、やりたいことを元にどれをSkill化するか組み立てる、スキル作って/Skill作って/この流れをSkillにして/この仕事をSkill化できるか/creator gate/skill-creator-gate/meta-skill-creator流用と言われた時。やりたいことの聞き取り、Skill候補整理、多工程Skill設計、標準skill-creator作法による実装、repo-local登録、検査まで行う。
   - path: knowledge/ops/skills/skill-creator-gate/
   - commands: knowledge/ops/skills/skill-creator-gate/new-skill-proposal.ps1, knowledge/ops/skills/skill-creator-gate/validate-repo-skill.ps1
 

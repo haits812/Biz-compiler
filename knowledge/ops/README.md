@@ -24,7 +24,7 @@ Get-Content -Raw .\knowledge\ops\registry.md
 |---|---|---|
 | `hello-world-gate` | `knowledge/ops/skills/hello-world-gate/SKILL.md` | ハロワ更新、GitHub反映、出口gateを扱う時 |
 | `knowledge-curation` | `knowledge/ops/skills/knowledge-curation/SKILL.md` | MEMORY、pending、journal、decisionsの整理を扱う時 |
-| `skill-creator-gate` | `knowledge/ops/skills/skill-creator-gate/SKILL.md` | repo-local Skillの作成、改修、Skill化、trigger設計、proposalを扱う時 |
+| `skill-creator-gate` | `knowledge/ops/skills/skill-creator-gate/SKILL.md` | やりたいことを元にSkill化対象を整理し、repo-local Skillの作成、改修、多工程Skill設計、trigger設計、proposalを扱う時 |
 | `impact-orchestrator` | `knowledge/ops/orchestrators/impact-orchestrator/README.md` | 編集前impact、work card、lock、completionを扱う時 |
 | `knowledge-search` | `knowledge/ops/orchestrators/knowledge-search/README.md` | 過去会話・作業メモ・決定の検索、SQLite indexを扱う時 |
 | `hooks` | `knowledge/ops/hooks/README.md` | Codex / Claude Code など環境別hook adapterを扱う時 |

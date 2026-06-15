@@ -86,7 +86,7 @@ subagentや別作業者へ重い作業を渡す時は、`Hello-world.md`、`SOUL
 
 新しい repo-local Skill、hook adapter、orchestrator、command、tool を作る前に、必ず `Hello-world.md` の `Ops Entrypoints` と `knowledge/ops/registry.md` を確認する。似た役割がある場合は、別資産を増やさず既存入口へ統合する。
 
-repo-local Skillを作る・改修する・作業をSkill化する場合は、`knowledge/ops/skills/skill-creator-gate/SKILL.md` を使う。これはOpenSquillaの `meta-skill-creator` のproposal-first、trigger設計、collision check、validation gateの作法を、Biz-compilerのrepo-local Skill作成へ移植した入口である。
+repo-local Skillを作る・改修する・作業をSkill化する場合は、`knowledge/ops/skills/skill-creator-gate/SKILL.md` を使う。これはユーザーのやりたいことを起点にSkill化対象を整理し、多工程Skillを標準 `skill-creator` の作法で実装しつつ、OpenSquillaの `meta-skill-creator` 由来のproposal-first、trigger設計、collision check、validation gateも通す入口である。
 
 `knowledge/ops/registry.md` は目録であり、使い方の正本ではない。既存ops資産を使う、変更する、または同種の資産を追加する時は、registry確認後に対象ownerの説明ファイルまで読む。
 
