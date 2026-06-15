@@ -24,6 +24,7 @@ Get-Content -Raw .\knowledge\ops\registry.md
 |---|---|---|
 | `hello-world-gate` | `knowledge/ops/skills/hello-world-gate/SKILL.md` | ハロワ更新、GitHub反映、出口gateを扱う時 |
 | `knowledge-curation` | `knowledge/ops/skills/knowledge-curation/SKILL.md` | MEMORY、pending、journal、decisionsの整理を扱う時 |
+| `empirical-prompt-tuning` | `knowledge/ops/skills/empirical-prompt-tuning/SKILL.md` | Skill、SKILL.md、agent向けprompt、subagent briefを白紙実行者で評価して直す時 |
 | `paper-write` | `knowledge/ops/skills/paper-write/SKILL.md` | 論文、研究稿、LaTeX原稿、引用付きpaper draftを扱う時 |
 | `skill-creator-gate` | `knowledge/ops/skills/skill-creator-gate/SKILL.md` | やりたいことを元にSkill化対象を整理し、repo-local Skillの作成、改修、多工程Skill設計、trigger設計、proposalを扱う時 |
 | `web-research-to-report` | `knowledge/ops/skills/web-research-to-report/SKILL.md` | Web調査を出典付きレポート、ブリーフ、意思決定メモにする時 |
@@ -80,6 +81,11 @@ hook adapterは薄い入口なので、呼び出し先のowner説明も読む。
 
 `approve` は候補を `knowledge/pending/approved/` へ移すだけで、正式ファイルを自動編集しない。正式反映では、対象ファイルの役割と既存記述を読んでから文脈込みで編集する。
 
+## skills/empirical-prompt-tuning/
+
+mizchi/skills の `empirical-prompt-tuning` を原文のまま置く。`SKILL.md` と `SKILL-ja.md` の両方を同居させ、repo-local Skillとしての読まれ方は通常どおり `SKILL.md` に従う。
+
+Skill、SKILL.md、agent向けprompt、subagent brief、phase promptを、白紙実行者に読ませて評価し、description/body整合、critical要件、失敗パターン台帳、反復改善で直すために使う。`skill-creator-gate` はSkillを作る入口、これは作った/直したSkillを検査して直す入口として分ける。
 ## skills/paper-write/
 
 OpenSquillaの `meta-paper-write` から `meta-` とruntimeを外し、論文、研究稿、LaTeX原稿向けの通常repo-local Skillとして移植した。

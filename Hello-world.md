@@ -150,6 +150,8 @@ Known knowledge ops assets:
 - knowledge/ops/orchestrators/knowledge-search/README.md
 - knowledge/ops/README.md
 - knowledge/ops/registry.md
+- knowledge/ops/skills/empirical-prompt-tuning/SKILL-ja.md
+- knowledge/ops/skills/empirical-prompt-tuning/SKILL.md
 - knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1
 - knowledge/ops/skills/hello-world-gate/SKILL.md
 - knowledge/ops/skills/knowledge-curation/new-pending-update.ps1
@@ -172,6 +174,7 @@ Known knowledge ops assets:
   - hello-world-gate docs: knowledge/ops/skills/hello-world-gate/SKILL.md
   - hello-world-gate command: knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1
   - knowledge-curation docs: knowledge/ops/skills/knowledge-curation/SKILL.md
+  - empirical-prompt-tuning docs: knowledge/ops/skills/empirical-prompt-tuning/SKILL.md
   - paper-write docs: knowledge/ops/skills/paper-write/SKILL.md
   - skill-creator-gate docs: knowledge/ops/skills/skill-creator-gate/SKILL.md
   - skill-creator-gate proposal command: knowledge/ops/skills/skill-creator-gate/new-skill-proposal.ps1
@@ -214,6 +217,8 @@ Known knowledge ops assets:
 初期読み込みでは、既存Skillの発火条件を確認してから新しいSkillを作る。似た役割のSkillがあるなら、まず既存Skillへ統合する。
 repo-local Skillを追加・改名・削除したら、SKILL.mdのname/description、owner説明、knowledge/ops/README.md、Hello Worldの一覧を同じターンで同期する。
 
+- empirical-prompt-tuning: Methodology for iteratively improving agent-facing instructions (skills / slash commands / CLAUDE.md / code-gen prompts) via bias-free executor + two-sided evaluation (self-report + instruction-side metrics). Meta-skill, invoke ONLY when the user explicitly asks for an "empirical" eval of a prompt or skill, or for the Iter-0 description / body consistency check. Do NOT auto-invoke after every skill edit; this loop is operator-triggered by name.
+  - path: knowledge/ops/skills/empirical-prompt-tuning/
 - hello-world-gate: Use when Biz-compilerでハロワやっといて/ハロワ見て/ハロワ更新しといて/githubあげといて/GitHub上げて/pushして等の依頼が出た時。
   - path: knowledge/ops/skills/hello-world-gate/
   - commands: knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1

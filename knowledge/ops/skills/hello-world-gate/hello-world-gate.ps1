@@ -233,6 +233,7 @@ function Get-OpsEntrypointLines {
     "  - hello-world-gate docs: knowledge/ops/skills/hello-world-gate/SKILL.md",
     "  - hello-world-gate command: knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1",
     "  - knowledge-curation docs: knowledge/ops/skills/knowledge-curation/SKILL.md",
+    "  - empirical-prompt-tuning docs: knowledge/ops/skills/empirical-prompt-tuning/SKILL.md",
     "  - paper-write docs: knowledge/ops/skills/paper-write/SKILL.md",
     "  - skill-creator-gate docs: knowledge/ops/skills/skill-creator-gate/SKILL.md",
     "  - skill-creator-gate proposal command: knowledge/ops/skills/skill-creator-gate/new-skill-proposal.ps1",
