@@ -48,6 +48,9 @@
 | subagent-brief | Subagent brief型 | 委譲先の仮ゴール、Compass、必要資料、成果物契約 | 整備済み | `knowledge/docs/meta/subagent-brief.md` | `COMPASS.md`, `knowledge/docs/README.md`, `session-brief.md` | `knowledge/docs/meta/README.md`, `AGENTS.md` | session-brief, read-routing | 委譲時に使う |
 | completion-criteria | Meta completion criteria | メタ土台が一旦使えると言える条件 | 整備済み | `knowledge/docs/meta/completion-criteria.md` | `phase-catalog.md`, `state-model.md`, `knowledge/docs/lexicon.md` | `knowledge/docs/meta/README.md` | phase-catalog, state-model, lexicon-v0 | メタ土台評価時に使う |
 | artifact-placement | Artifact placement rule整理版 | root、template、_shared、knowledge、outputの配置判断 | 整備済み | `knowledge/docs/meta/artifact-placement.md` | `AGENTS.md`, `template/phase-local-missing.md` | `knowledge/docs/meta/README.md`, `AGENTS.md`, `Hello-world.md` | phase-catalog | 新規ファイル追加時に参照 |
+| gate-policy-matrix | Gate policy matrix | scope、不可逆性、executor、autonomy、data、confidenceから最低gateを決める | 整備済み | `knowledge/docs/ir/gate-policy-matrix.md` | `knowledge/docs/lexicon.md`, `knowledge/docs/ir/minimum-ir-attributes.md`, `phase-handoff-contract-gate` | `knowledge/docs/ir/README.md`, `knowledge/docs/meta/README.md`, 将来のIR schema | lexicon-v0, phase-catalog | phase-local contract/checks作成時に使う |
+| evidence-confidence-model | Evidence / confidence model | provenance、evidence、counter_evidence、confidenceの扱いと上げ下げを決める | 整備済み | `knowledge/docs/ir/evidence-confidence-model.md` | `knowledge/docs/ir/minimum-ir-attributes.md`, `knowledge/docs/method/empirical-business-design-loop.md` | `knowledge/docs/ir/README.md`, `knowledge/docs/meta/README.md`, 将来のvalidation/ledger設計 | lexicon-v0, state-model | 10/40/60の雛形作成時に使う |
+| phase-handoff-contract-gate | Phase handoff / Contract Gate | 各phase末尾の出口チェック、handoff packet、差戻し先を揃える | 整備済み | `knowledge/docs/method/phase-handoff-and-contract-gate.md` | `knowledge/docs/meta/phase-catalog.md`, `gate-policy-matrix`, `evidence-confidence-model` | `knowledge/docs/method/README.md`, `knowledge/docs/meta/README.md`, `template/<phase>/README.md` | phase-catalog, gate-policy-matrix, evidence-confidence-model | phase-local README v0作成時に使う |
 
 ## ここに含めるもの
 
@@ -90,3 +93,4 @@
 2. `knowledge/docs/ir/` で同意ビューJSONと実行IRの関係を固定する。
 3. `knowledge/docs/evaluation.md` でfresh executor / shadow run / evalのv0観点を作る。
 4. `knowledge/docs/casebook.md` で良い判断/悪い判断の比較例を作る。
+5. Revision/Recompile Modelは、70/80の運用・改善ループに到達してから整備する。

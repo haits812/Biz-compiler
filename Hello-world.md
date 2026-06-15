@@ -158,6 +158,11 @@ Known knowledge ops assets:
 - knowledge/ops/skills/knowledge-curation/pending-review.ps1
 - knowledge/ops/skills/knowledge-curation/SKILL.md
 - knowledge/ops/skills/paper-write/SKILL.md
+- knowledge/ops/skills/review-agent-essence/reference/agent-essence.md
+- knowledge/ops/skills/review-agent-essence/SKILL.md
+- knowledge/ops/skills/review-harness/diagnosis-report-template.md
+- knowledge/ops/skills/review-harness/diagnosis-rubric.md
+- knowledge/ops/skills/review-harness/SKILL.md
 - knowledge/ops/skills/skill-creator-gate/new-skill-proposal.ps1
 - knowledge/ops/skills/skill-creator-gate/SKILL.md
 - knowledge/ops/skills/skill-creator-gate/validate-repo-skill.ps1
@@ -227,6 +232,10 @@ repo-local Skillを追加・改名・削除したら、SKILL.mdのname/descripti
   - commands: knowledge/ops/skills/knowledge-curation/new-pending-update.ps1, knowledge/ops/skills/knowledge-curation/pending-review.ps1
 - paper-write: Use when Biz-compiler repoでpaper-write、論文を書いて、研究論文ドラフト、academic/research paper、LaTeX manuscript、論文骨子、研究稿、引用付き論文、PDF/LaTeX原稿の作成・修復・コンパイルを依頼された時。普通の業務文書、Web調査レポート、ブログ、要約、スライド、意思決定メモには使わない。OpenSquillaのmeta-paper-writeからmeta-とruntimeを外し、論文/研究稿向けのcontract、citation、figure/table placeholder、length/citation gate作法を移植する。
   - path: knowledge/ops/skills/paper-write/
+- review-agent-essence: Use only when the user explicitly asks for review-agent-essence、agent-essence原則レビュー、エッセンスレビュー、原則チェック、またはSkill/ハーネス設計をagent-essenceに照らして見てと言われた時。Do NOT auto-invoke for generic review requests.
+  - path: knowledge/ops/skills/review-agent-essence/
+- review-harness: Use only when the user explicitly asks for review-harness、ハーネス診断、harness診断、ハーネスの健康診断、またはClaude Code/Codex系ハーネス構成を25指標で診断してと言われた時。Do NOT auto-invoke for generic 診断して or review requests.
+  - path: knowledge/ops/skills/review-harness/
 - skill-creator-gate: Use when Biz-compiler repoで新しいrepo-local Skillを作る、既存Skillを改修する、作業をSkill化する、やりたいことを元にどれをSkill化するか組み立てる、スキル作って/Skill作って/この流れをSkillにして/この仕事をSkill化できるか/creator gate/skill-creator-gate/meta-skill-creator流用と言われた時。やりたいことの聞き取り、Skill候補整理、多工程Skill設計、標準skill-creator作法による実装、repo-local登録、検査まで行う。
   - path: knowledge/ops/skills/skill-creator-gate/
   - commands: knowledge/ops/skills/skill-creator-gate/new-skill-proposal.ps1, knowledge/ops/skills/skill-creator-gate/validate-repo-skill.ps1

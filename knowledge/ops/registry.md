@@ -47,6 +47,8 @@
 - `knowledge/ops/skills/knowledge-curation/SKILL.md`
 - `knowledge/ops/skills/empirical-prompt-tuning/SKILL.md`
 - `knowledge/ops/skills/paper-write/SKILL.md`
+- `knowledge/ops/skills/review-agent-essence/SKILL.md`
+- `knowledge/ops/skills/review-harness/SKILL.md`
 - `knowledge/ops/skills/skill-creator-gate/SKILL.md`
 - `knowledge/ops/skills/web-research-to-report/SKILL.md`
 - `knowledge/ops/hooks/README.md`
@@ -63,6 +65,8 @@ owner説明が無いops資産は未整備として扱う。新規追加時は、
 | `knowledge-curation` | 整備済み | `MEMORY.md`、pending、journal、decisionsなどの知識候補を整理し、格上げ/保留/退避/廃棄へ振り分ける | `knowledge/ops/skills/knowledge-curation/` | `new-pending-update.ps1`, `pending-review.ps1` |
 | `empirical-prompt-tuning` | 整備済み | mizchi/skillsの`empirical-prompt-tuning`を原文のまま置く。Skill、SKILL.md、agent向けpromptを白紙実行者で評価し、description/body整合、critical要件、失敗パターン台帳で改善する | `knowledge/ops/skills/empirical-prompt-tuning/` | - |
 | `paper-write` | 整備済み | OpenSquillaの`meta-paper-write`からmeta/runtimeを外し、論文・研究稿・LaTeX原稿向けにcontract、source/citation、figure/table placeholder、length/citation gateの作法を使う | `knowledge/ops/skills/paper-write/` | - |
+| `review-agent-essence` | 整備済み | 明示依頼時だけ、Skill/ハーネス/設計文書をagent-essence原則に照らしてレビューし、標準出力レポートを返す | `knowledge/ops/skills/review-agent-essence/` | - |
+| `review-harness` | 整備済み | 明示依頼時だけ、Claude Code/Codex系ハーネス構成を25のアンチパターン指標で診断し、標準出力レポートを返す | `knowledge/ops/skills/review-harness/` | - |
 | `skill-creator-gate` | 整備済み | ユーザーのやりたいことを起点にSkill化対象を整理し、多工程Skill設計、標準skill-creator作法での実装、proposal、衝突確認、trigger設計、登録、検査を段階的に行う | `knowledge/ops/skills/skill-creator-gate/` | `new-skill-proposal.ps1`, `validate-repo-skill.ps1` |
 | `web-research-to-report` | 整備済み | OpenSquillaの`meta-web-research-to-report`からmeta/runtimeを外し、Web調査を出典付きレポート、ブリーフ、意思決定メモへ変換する | `knowledge/ops/skills/web-research-to-report/` | - |
 

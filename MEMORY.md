@@ -14,6 +14,8 @@
 
 - Contract Gate は独立した大きなgateというより、数字phase末尾に入る完了処理/出口チェックとして設計する候補。各phaseで次へ進める契約条件、検収条件、実行者、scope、rollbackなどが揃ったかを確認する処理として後で整理する。
 
+- Revision/Recompile Model（manifest revision、contract patch、approval再取得、gate降格など）は、70/80の運用・改善ループに到達してから整備する。現時点の先行メタ土台からは外し、phase handoff、gate policy、evidence/confidenceを先に扱う。
+
 ## 掃除ルール
 
 `knowledge-curation` で定期的にこのファイルを見直し、各メモを次のどれかへ振り分ける。

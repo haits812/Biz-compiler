@@ -26,6 +26,8 @@ Get-Content -Raw .\knowledge\ops\registry.md
 | `knowledge-curation` | `knowledge/ops/skills/knowledge-curation/SKILL.md` | MEMORY、pending、journal、decisionsの整理を扱う時 |
 | `empirical-prompt-tuning` | `knowledge/ops/skills/empirical-prompt-tuning/SKILL.md` | Skill、SKILL.md、agent向けprompt、subagent briefを白紙実行者で評価して直す時 |
 | `paper-write` | `knowledge/ops/skills/paper-write/SKILL.md` | 論文、研究稿、LaTeX原稿、引用付きpaper draftを扱う時 |
+| `review-agent-essence` | `knowledge/ops/skills/review-agent-essence/SKILL.md` | review-agent-essence、agent-essence原則レビュー、エッセンスレビュー、原則チェックを明示された時 |
+| `review-harness` | `knowledge/ops/skills/review-harness/SKILL.md` | review-harness、ハーネス診断、harness診断、ハーネス健康診断を明示された時 |
 | `skill-creator-gate` | `knowledge/ops/skills/skill-creator-gate/SKILL.md` | やりたいことを元にSkill化対象を整理し、repo-local Skillの作成、改修、多工程Skill設計、trigger設計、proposalを扱う時 |
 | `web-research-to-report` | `knowledge/ops/skills/web-research-to-report/SKILL.md` | Web調査を出典付きレポート、ブリーフ、意思決定メモにする時 |
 | `impact-orchestrator` | `knowledge/ops/orchestrators/impact-orchestrator/README.md` | 編集前impact、work card、lock、completionを扱う時 |
@@ -91,6 +93,18 @@ Skill、SKILL.md、agent向けprompt、subagent brief、phase promptを、白紙
 OpenSquillaの `meta-paper-write` から `meta-` とruntimeを外し、論文、研究稿、LaTeX原稿向けの通常repo-local Skillとして移植した。
 
 普通の業務文書には使わない。論文/academic paper/LaTeX/PDF/研究稿が明示された時に、paper contract、source/citation、figure/table placeholder、length/citation gateを通して書く。
+
+## skills/review-agent-essence/
+
+Skill、ハーネス、設計文書を `agent-essence` の原則に照らしてレビューする明示呼び出し専用Skillである。
+
+通常のレビュー依頼では自動発火しない。`review-agent-essence`、agent-essence原則レビュー、エッセンスレビュー、原則チェック、またはSkill/ハーネス設計をagent-essenceに照らして見る依頼がある時だけ使う。出力は標準出力のレビュー・レポートで、対象ファイルは直接修正しない。
+
+## skills/review-harness/
+
+Claude Code / Codex 系のハーネス構成を25のアンチパターン指標で診断する明示呼び出し専用Skillである。
+
+通常の「診断して」や一般レビューでは自動発火しない。`review-harness`、ハーネス診断、harness診断、ハーネス健康診断、25指標診断を明示された時だけ使う。出力は標準出力の診断レポートで、画像生成、SNS投稿提案、ファイル生成は行わない。
 
 ## skills/skill-creator-gate/
 
