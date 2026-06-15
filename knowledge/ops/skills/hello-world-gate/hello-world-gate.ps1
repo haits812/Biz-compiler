@@ -373,7 +373,14 @@ function New-HelloWorldContent {
   $opsPath = Join-Path $repoRoot "knowledge\ops"
   $opsAssetLines = @()
   if (Test-Path -LiteralPath $opsPath -PathType Container) {
-    $opsFiles = @(Get-ChildItem -LiteralPath $opsPath -File -Recurse -Force | Sort-Object FullName)
+    $opsFiles = @(
+      Get-ChildItem -LiteralPath $opsPath -File -Recurse -Force |
+        Where-Object {
+          $_.FullName -notmatch "[\\/]__pycache__[\\/]" -and
+          $_.Extension -notin @(".pyc", ".pyo", ".pyd")
+        } |
+        Sort-Object FullName
+    )
     foreach ($file in $opsFiles) {
       $opsAssetLines += "- $(Get-RelativePath -Path $file.FullName)"
     }

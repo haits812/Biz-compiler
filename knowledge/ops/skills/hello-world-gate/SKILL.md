@@ -143,7 +143,7 @@ git status --short --branch
 - GitHub/push依頼で対象がない時に、確認目的だけでgate本体を実行しない。
 - Biz-compiler側に `commit-push-gate` Skillを作らない。
 - `knowledge/ops/` 直下に `.ps1` を置かない。Skill実行体は `knowledge/ops/skills/<skill-name>/`、hook adapterは `knowledge/ops/hooks/`、orchestrator実行体は `knowledge/ops/orchestrators/<orchestrator-name>/` に同居させる。
-- `knowledge/.index/*.sqlite` をcommitしない。Markdown正本から再生成する検索indexとして扱う。
+- `knowledge/.index/*.sqlite` と `__pycache__/`、`*.pyc` をcommitしない。Markdown正本やPython sourceから再生成する生成物として扱う。
 - GitHub反映前の日記ファイルを必須にしない。必要な記録は日本語commit messageへ集約する。
 - Codex Desktopの `::git-*` directive は出さない。
 

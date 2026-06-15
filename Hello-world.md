@@ -138,7 +138,6 @@ Known knowledge ops assets:
 - knowledge/ops/hooks/README.md
 - knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1
 - knowledge/ops/orchestrators/impact-orchestrator/README.md
-- knowledge/ops/orchestrators/knowledge-search/__pycache__/knowledge_search.cpython-312.pyc
 - knowledge/ops/orchestrators/knowledge-search/knowledge_search.py
 - knowledge/ops/orchestrators/knowledge-search/knowledge-search.ps1
 - knowledge/ops/orchestrators/knowledge-search/README.md
