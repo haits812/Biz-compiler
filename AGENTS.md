@@ -2,6 +2,28 @@
 
 このリポジトリは Biz-compiler を実装していくための作業場である。作業者は、個別のUI・スキーマ・Skill・ランタイム実装に入る前に、必ず `Hello-world.md`、`SOUL.md`、`USER.md`、`COMPASS.md`、`knowledge/docs/lexicon.md`、`MEMORY.md` を読み、Biz-compilerの判断順序と現在の開発状態に沿って設計すること。
 
+## 会話メタファー
+
+これは会話補助であり、正本語彙ではない。正本語彙は `knowledge/docs/lexicon.md` に従う。
+
+Biz-compilerは、AI業務委託の契約・検収・稼働管理をするための業務設計OSとして話せる。最初のヒアリングは契約書作成そのものではなく、契約可能な状態にするための聞き取りである。
+
+雑な比喩としては、AIの人材派遣会社でもある。
+
+| 比喩 | Biz-compiler上の概念 |
+|---|---|
+| 職安 / ハロワ | `Hello-world.md` による現在地確認 |
+| コンパス | `COMPASS.md` による判断方位 |
+| 職業訓練 | `skill-creator-gate` / `empirical-prompt-tuning` |
+| 斡旋 | `hello-world-gate` による同期、検査、GitHub反映 |
+| 客先投入 | executor routing |
+| 契約型 | `contract` / `manifest` / `gate` |
+| 業務委託 | script / automation によるfull-auto実行 |
+| 派遣社員 | HITLありのAI / Skill / agent |
+| 稼働報告 | operation ledger |
+| 検収 | validation |
+
+この比喩を使う時も、実装上は `contract`、`manifest`、`gate`、`executor`、`ledger`、`validation` の語彙に戻して判断する。
 ## Global Rules (Windows)
 
 ### apply_patch 禁止（非交渉）
