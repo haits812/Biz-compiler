@@ -17,7 +17,7 @@
 | `knowledge/docs/casebook.md` | 判断例、反例、比較ケース | 正本schema、運用ログ | 判断に迷う時の事例か |
 | `knowledge/docs/evaluation.md` | fresh executor、shadow run、eval、受け入れ条件 | 実業務の検証結果そのもの | 検証の設計・観点か |
 | `knowledge/docs/decisions/` | 採用/却下の背景理由 | 常時読む短い現在地 | なぜそう決めたかを残す必要があるか |
-| `knowledge/ops/` | knowledgeを操作するrepo-local Skillと管理コマンド | 業務実行用の個別Skill、直下の野良`.ps1` | このrepoの知識運用を操作するか |
+| `knowledge/ops/` | repo-local Skill、hook adapter、orchestrator、ops registry、管理コマンド | 業務実行用の個別Skill、直下の野良`.ps1` | このrepoの知識運用や作業前gateを操作するか |
 | `template/<数字phase>/` | 業務フォルダへコピーされるphase-local雛形 | 全phase共通の思想や用語本文 | 特定phaseで作業者が使う雛形か |
 | `template/_shared/` | 業務フォルダ内から使う横断runner、validator、schema、script、tool | 開発運用メモ、要求定義 | outputへコピーされる横断部品か |
 | `output/Biz-001-業務名/` | 実際にコンパイルしている個別業務のartifact、ledger、event log | サンプル、プレースホルダ、compiler repoの知識 | 実業務作成時に採番された成果物か |
@@ -41,7 +41,7 @@
 2. 実業務の成果物なら、実業務作成時に `output/Biz-001-業務名/` 配下へ置く。現時点でプレースホルダは作らない。
 3. 業務フォルダへコピーして使う原型なら、`template/<phase>/` か `template/_shared/` へ置く。
 4. repoを作るための知識なら、`knowledge/docs/` のread routingに従う。
-5. knowledgeを操作するスクリプトなら、`knowledge/ops/skills/<skill-name>/` に `SKILL.md` と同居させる。
+5. knowledgeを操作するSkillなら、`knowledge/ops/skills/<skill-name>/` に `SKILL.md` と同居させる。作業前gateなどの固定手順なら、`knowledge/ops/orchestrators/<orchestrator-name>/` に説明ファイルと同居させる。
 6. どれにも当てはまらない場合だけ、rootに置く理由があるか確認する。
 
 ## 禁止
@@ -54,4 +54,4 @@
 
 ## 更新ルール
 
-新しい置き場を作る場合は、`AGENTS.md`、`Hello,world.md`、`knowledge/docs/README.md`、`knowledge/docs/meta/README.md` のどれへ影響するかを確認する。`MEMORY.md` へ配置情報を写さない。root構成、`template/`、`knowledge/`、`output/` の生成ルールを変えた場合は、同じターンでハロワゲートを通す。
+新しい置き場を作る場合は、`AGENTS.md`、`Hello,world.md`、`knowledge/ops/registry.md`、`knowledge/docs/README.md`、`knowledge/docs/meta/README.md` のどれへ影響するかを確認する。`MEMORY.md` へ配置情報を写さない。root構成、`template/`、`knowledge/`、`output/` の生成ルールを変えた場合は、同じターンでハロワゲートを通す。

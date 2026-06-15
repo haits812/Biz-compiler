@@ -119,6 +119,7 @@ git status --short --branch
 - `template/` のphase構成、Hello Worldに載るtemplate asset
 - `knowledge/` の構成、pending/approved件数、Hello Worldに載るops asset
 - repo-local Skillの追加・改名・削除、`SKILL.md` frontmatter、同居 `.ps1`、`knowledge/ops/README.md`
+- `knowledge/ops/registry.md`、hooks、orchestrators、repo-local commands/tools の追加・変更
 - `output/` の業務IDルール、実際の `output/` 配下ディレクトリ
 - このSkill自身、または `hello-world-gate.ps1`
 - GitHubへ変更をpushする時。ただし対象なしなら実行しない
@@ -141,7 +142,7 @@ git status --short --branch
 - 外向けに `check`、`sync`、`publish` の複数コマンドを分けない。
 - GitHub/push依頼で対象がない時に、確認目的だけでgate本体を実行しない。
 - Biz-compiler側に `commit-push-gate` Skillを作らない。
-- `knowledge/ops/` 直下に `.ps1` を置かない。
+- `knowledge/ops/` 直下に `.ps1` を置かない。Skill実行体は `knowledge/ops/skills/<skill-name>/`、orchestrator実行体は `knowledge/ops/orchestrators/<orchestrator-name>/` に同居させる。
 - GitHub反映前の日記ファイルを必須にしない。必要な記録は日本語commit messageへ集約する。
 - Codex Desktopの `::git-*` directive は出さない。
 

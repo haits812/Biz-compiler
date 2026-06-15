@@ -1,4 +1,4 @@
-param(
+﻿param(
   [Parameter(Mandatory=$false)]
   [string]$Subject = "",
 
@@ -74,7 +74,7 @@ $knowledgeDescriptions = @{
   "docs" = "確定済み要求・決定"
   "pending" = "未承認候補"
   "journal" = "作業ログ・適用/却下ログ"
-  "ops" = "knowledgeを操作する管理コマンドとrepo-local skills"
+  "ops" = "repo-local skills / hooks / orchestrators / registry"
 }
 
 function Sort-ByPreferredOrder {
@@ -218,6 +218,16 @@ function Get-RepoLocalSkillLines {
 
   return $skillLines
 }
+
+function Get-OpsEntrypointLines {
+  return @(
+    "- registry: knowledge/ops/registry.md",
+    "- hooks: knowledge/ops/hooks/README.md",
+    "- orchestrators: knowledge/ops/orchestrators/",
+    "  - impact-orchestrator: knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1"
+  )
+}
+
 function Assert-HelloWorldStructure {
   $errors = New-Object System.Collections.Generic.List[string]
 
@@ -272,6 +282,27 @@ function Assert-HelloWorldStructure {
     $errors.Add("Required consent view asset is missing: template/50-consent/pipeline-flowchart/pipeline-flowchart.html")
   }
 
+  $requiredOpsFiles = @(
+    "knowledge\ops\README.md",
+    "knowledge\ops\registry.md",
+    "knowledge\ops\hooks\README.md",
+    "knowledge\ops\orchestrators\impact-orchestrator\README.md",
+    "knowledge\ops\orchestrators\impact-orchestrator\impact-orchestrator.ps1"
+  )
+  foreach ($relativePath in $requiredOpsFiles) {
+    $filePath = Join-Path $repoRoot $relativePath
+    if (-not (Test-Path -LiteralPath $filePath -PathType Leaf)) {
+      $errors.Add("Required ops file is missing: $($relativePath.Replace("\", "/"))")
+    }
+  }
+
+  $opsRootPath = Join-Path $repoRoot "knowledge\ops"
+  if (Test-Path -LiteralPath $opsRootPath -PathType Container) {
+    $directOpsScripts = @(Get-ChildItem -LiteralPath $opsRootPath -File -Filter "*.ps1" -Force)
+    foreach ($script in $directOpsScripts) {
+      $errors.Add("Do not place .ps1 directly under knowledge/ops: $(Get-RelativePath -Path $script.FullName)")
+    }
+  }
   if ($errors.Count -gt 0) {
     throw ($errors -join [Environment]::NewLine)
   }
@@ -281,6 +312,7 @@ function New-HelloWorldContent {
   $date = Get-Date -Format "yyyy-MM-dd"
   $pendingCounts = Get-PendingCounts
   $repoLocalSkillLines = Get-RepoLocalSkillLines
+  $opsEntrypointLines = Get-OpsEntrypointLines
 
   $rootDirs = Sort-ByPreferredOrder -Items @(Get-ChildItem -LiteralPath $repoRoot -Directory -Force | Where-Object { $_.Name -ne ".git" }) -PreferredOrder $rootDirOrder
   $rootFiles = Sort-ByPreferredOrder -Items @(Get-ChildItem -LiteralPath $repoRoot -File -Force) -PreferredOrder $rootFileOrder
@@ -458,9 +490,17 @@ function New-HelloWorldContent {
   $lines += $opsAssetLines
   $lines += @(
     "",
+    "## Ops Entrypoints",
+    "",
+    "初期読み込みでは、ここで存在と入口だけを確認する。Skillを作る、hook/orchestrator/command/toolを触る、作業前impactを切る時だけ knowledge/ops/registry.md を読む。",
+    ""
+  )
+  $lines += $opsEntrypointLines
+  $lines += @(
+    "",
     "## Repo-local Skills",
     "",
-    "初期読み込みでは、既存Skillを確認してから新しいSkillを作る。似た役割のSkillがあるなら、まず既存Skillへ統合する。",
+    "初期読み込みでは、既存Skillの発火条件を確認してから新しいSkillを作る。似た役割のSkillがあるなら、まず既存Skillへ統合する。",
     "repo-local Skillを追加・改名・削除したら、SKILL.mdのname/description、knowledge/ops/README.md、Hello Worldの一覧を同じターンで同期する。",
     ""
   )
@@ -500,6 +540,7 @@ function New-HelloWorldContent {
     "- output/ の業務ID生成ルール",
     "- pending / approved の状態をこのファイルで数える場合",
     "- repo-local Skillを追加・改名・削除した場合",
+    "- knowledge/ops/registry.md、hooks、orchestrators、repo-local commands/toolsを変更した場合",
     "- knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1 が失敗した場合",
     "",
     "## Smoke Test",
@@ -762,10 +803,3 @@ function Invoke-HelloWorldGate {
 }
 
 Invoke-HelloWorldGate
-
-
-
-
-
-
-

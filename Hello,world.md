@@ -126,20 +126,33 @@ knowledge/
 ├─ docs/  確定済み要求・決定
 ├─ pending/  未承認候補
 ├─ journal/  作業ログ・適用/却下ログ
-└─ ops/  knowledgeを操作する管理コマンドとrepo-local skills
+└─ ops/  repo-local skills / hooks / orchestrators / registry
 ~~~
 
 Known knowledge ops assets:
+- knowledge/ops/hooks/README.md
+- knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1
+- knowledge/ops/orchestrators/impact-orchestrator/README.md
 - knowledge/ops/README.md
+- knowledge/ops/registry.md
 - knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1
 - knowledge/ops/skills/hello-world-gate/SKILL.md
 - knowledge/ops/skills/knowledge-curation/new-pending-update.ps1
 - knowledge/ops/skills/knowledge-curation/pending-review.ps1
 - knowledge/ops/skills/knowledge-curation/SKILL.md
 
+## Ops Entrypoints
+
+初期読み込みでは、ここで存在と入口だけを確認する。Skillを作る、hook/orchestrator/command/toolを触る、作業前impactを切る時だけ knowledge/ops/registry.md を読む。
+
+- registry: knowledge/ops/registry.md
+- hooks: knowledge/ops/hooks/README.md
+- orchestrators: knowledge/ops/orchestrators/
+  - impact-orchestrator: knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1
+
 ## Repo-local Skills
 
-初期読み込みでは、既存Skillを確認してから新しいSkillを作る。似た役割のSkillがあるなら、まず既存Skillへ統合する。
+初期読み込みでは、既存Skillの発火条件を確認してから新しいSkillを作る。似た役割のSkillがあるなら、まず既存Skillへ統合する。
 repo-local Skillを追加・改名・削除したら、SKILL.mdのname/description、knowledge/ops/README.md、Hello Worldの一覧を同じターンで同期する。
 
 - hello-world-gate: Use when Biz-compilerでハロワやっといて/ハロワ見て/ハロワ更新しといて/githubあげといて/GitHub上げて/pushして等の依頼が出た時。
@@ -182,6 +195,7 @@ Current pending state at last verification:
 - output/ の業務ID生成ルール
 - pending / approved の状態をこのファイルで数える場合
 - repo-local Skillを追加・改名・削除した場合
+- knowledge/ops/registry.md、hooks、orchestrators、repo-local commands/toolsを変更した場合
 - knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1 が失敗した場合
 
 ## Smoke Test
