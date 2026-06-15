@@ -97,6 +97,14 @@ template/
 ~~~
 
 Known template assets:
+- template/10-source-intake/artifacts/fact-register.md
+- template/10-source-intake/artifacts/intake-log.md
+- template/10-source-intake/artifacts/source-inventory.md
+- template/10-source-intake/checks.md
+- template/10-source-intake/contract.md
+- template/10-source-intake/handoff.md
+- template/10-source-intake/questions.md
+- template/10-source-intake/README.md
 - template/50-consent/pipeline-flowchart/pipeline-flowchart.html
 - template/phase-local-missing.md
 

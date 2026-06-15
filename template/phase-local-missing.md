@@ -27,13 +27,24 @@
 
 ## 10-source-intake
 
-ソース取得で未整備:
+ソース取得のv0雛形は作成済み。
 
-- 観測対象一覧の雛形
-- ヒアリングログ/観測ログの雛形
-- 入力資料、メール、会議、手順書、既存ファイルのinventory
-- provenanceを付けるための記録欄
-- 事実、本人説明、推測、未確認を分けるメモ
+既存:
+
+- `template/10-source-intake/README.md`: phase目的、入力、出力、workflow、Contract Gate
+- `template/10-source-intake/contract.md`: source intake contract雛形
+- `template/10-source-intake/questions.md`: ヒアリング/観測質問票
+- `template/10-source-intake/checks.md`: phase出口チェック
+- `template/10-source-intake/handoff.md`: 20-decompose-encrsへのhandoff packet
+- `template/10-source-intake/artifacts/source-inventory.md`: 観測対象一覧
+- `template/10-source-intake/artifacts/intake-log.md`: ヒアリング/観測ログ
+- `template/10-source-intake/artifacts/fact-register.md`: 事実、本人説明、推測、未確認の主張台帳
+
+今後の候補:
+
+- source inventory / fact register のschema化
+- 10-source-intake完了判定validator
+- 実業務作成時にoutput側へコピーするphase runner
 
 ## 20-decompose-encrs
 
