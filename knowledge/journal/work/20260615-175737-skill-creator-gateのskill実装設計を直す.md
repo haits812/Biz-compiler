@@ -224,4 +224,3 @@ Other active locks at registration:
 - verified: validate-repo-skill.ps1 -SkillName skill-creator-gate と git diff --check が通過。0ベース表現はSkill creator文脈から削除済み。
 - residual_risk: OpenSquilla runtimeやMetaSkill形式は導入していない。今後の実作成で不足があればskill-creator-gateを追加改善する。
 - released_locks: 5
-
