@@ -114,4 +114,3 @@ Other active locks at registration:
 - verified: git diff --checkを確認済み。MEMORY.mdの未整理メモ欄にContract Gate候補が入っていることを確認済み
 - residual_risk: 正式な設計・実装・配置先は未決定。後でknowledge-curation時にmeta/IR/ops側へ昇格判断が必要
 - released_locks: 1
-
