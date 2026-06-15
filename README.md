@@ -4,6 +4,8 @@
 
 ![Biz-compiler = AI派遣会社](knowledge/docs/assets/biz-compiler-ai-haken-company.png)
 
+![Biz-compilerの土台](knowledge/docs/assets/biz-compiler-foundation.png)
+
 Biz-compiler は、人間の業務をそのままAIへ丸投げする道具ではない。
 
 業務をphaseごとに読み、IPO / gate / scope / executor / artifact / evidence へ分け、AI、automation、human、approvalへ再配置し、運用しながら検証・再コンパイルするための業務設計OSである。
