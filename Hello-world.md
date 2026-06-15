@@ -227,7 +227,7 @@ repo-local Skillを追加・改名・削除したら、SKILL.mdのname/descripti
 - hello-world-gate: Use when Biz-compilerでハロワやっといて/ハロワ見て/ハロワ更新しといて/githubあげといて/GitHub上げて/pushして等の依頼が出た時。
   - path: knowledge/ops/skills/hello-world-gate/
   - commands: knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1
-- knowledge-curation: Biz-compiler repo内のMEMORYメモと知識候補を、Markdownルール化、Hello World Gate、将来phase script候補、pending、journal、decisions、廃棄へ振り分けるrepo-local Skill。pending候補の作成・承認・却下・適用もこのSkillで扱う。
+- knowledge-curation: Use when Biz-compiler repoで知識整理して、メモリ整理して、MEMORY.mdを整理して、格上げ判断して、pending見て、pending作って、journalから拾うものある？、この会話どこに残す？、knowledge curationと言われた時。MEMORYメモと知識候補を正本、pending、journal、decisions、廃棄へ振り分ける。
   - path: knowledge/ops/skills/knowledge-curation/
   - commands: knowledge/ops/skills/knowledge-curation/new-pending-update.ps1, knowledge/ops/skills/knowledge-curation/pending-review.ps1
 - paper-write: Use when Biz-compiler repoでpaper-write、論文を書いて、研究論文ドラフト、academic/research paper、LaTeX manuscript、論文骨子、研究稿、引用付き論文、PDF/LaTeX原稿の作成・修復・コンパイルを依頼された時。普通の業務文書、Web調査レポート、ブログ、要約、スライド、意思決定メモには使わない。OpenSquillaのmeta-paper-writeからmeta-とruntimeを外し、論文/研究稿向けのcontract、citation、figure/table placeholder、length/citation gate作法を移植する。

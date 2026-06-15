@@ -1,6 +1,6 @@
 ---
 name: knowledge-curation
-description: Biz-compiler repo内のMEMORYメモと知識候補を、Markdownルール化、Hello World Gate、将来phase script候補、pending、journal、decisions、廃棄へ振り分けるrepo-local Skill。pending候補の作成・承認・却下・適用もこのSkillで扱う。
+description: Use when Biz-compiler repoで知識整理して、メモリ整理して、MEMORY.mdを整理して、格上げ判断して、pending見て、pending作って、journalから拾うものある？、この会話どこに残す？、knowledge curationと言われた時。MEMORYメモと知識候補を正本、pending、journal、decisions、廃棄へ振り分ける。
 ---
 
 # Knowledge Curation

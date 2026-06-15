@@ -23,7 +23,7 @@ Get-Content -Raw .\knowledge\ops\registry.md
 | owner | 読むファイル | 使う時 |
 |---|---|---|
 | `hello-world-gate` | `knowledge/ops/skills/hello-world-gate/SKILL.md` | ハロワ更新、GitHub反映、出口gateを扱う時 |
-| `knowledge-curation` | `knowledge/ops/skills/knowledge-curation/SKILL.md` | MEMORY、pending、journal、decisionsの整理を扱う時 |
+| `knowledge-curation` | `knowledge/ops/skills/knowledge-curation/SKILL.md` | 知識整理、メモリ整理、MEMORY.md整理、pending確認、会話の残し先判断を明示された時 |
 | `empirical-prompt-tuning` | `knowledge/ops/skills/empirical-prompt-tuning/SKILL.md` | empirical-prompt-tuning、empirical eval、プロンプト実証評価、Iter-0整合チェックを明示された時 |
 | `paper-write` | `knowledge/ops/skills/paper-write/SKILL.md` | 論文、研究稿、LaTeX原稿、引用付きpaper draftを扱う時 |
 | `review-agent-essence` | `knowledge/ops/skills/review-agent-essence/SKILL.md` | review-agent-essence、agent-essence原則レビュー、エッセンスレビュー、原則チェックを明示された時 |
