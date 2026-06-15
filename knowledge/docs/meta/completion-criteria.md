@@ -36,7 +36,7 @@
 - `MEMORY.md` が普段メモの入口として使えるが、現在構成、決定履歴、次アクション台帳などの正本重複を溜めない掃除ルールを持っている。
 - `template/phase-local-missing.md` に残すべきphase-local不足物を、meta台帳へ混ぜていない。
 - `git diff --check` が通る。
-- ハロワゲートを実行し、`Hello,world.md`、commit、push、post-checkが通る。
+- ハロワゲートを実行し、`Hello-world.md`、commit、push、post-checkが通る。
 
 ## v0後の次候補
 

@@ -25,4 +25,4 @@
 - 判断prior。これは `COMPASS.md`。
 - ユーザーの作業モデル。これは `USER.md`。
 - 要求定義本文。これは `knowledge/docs/requirements/`。
-- 現在構成。これは `Hello,world.md`。
+- 現在構成。これは `Hello-world.md`。

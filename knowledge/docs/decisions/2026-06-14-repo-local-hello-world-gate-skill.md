@@ -5,7 +5,7 @@
 
 ## Context
 
-`hello-world-gate.ps1` は、`Hello,world.md` が現在状態を嘘なく返すための運用コマンドとして作られた。
+`hello-world-gate.ps1` は、`Hello-world.md` が現在状態を嘘なく返すための運用コマンドとして作られた。
 
 しかし、コマンドだけでは「いつ最新状態へ更新するのか」が作業者へ伝わらない。ユーザーは、ハロワゲートをSkillとして扱い、実行タイミングまで規律化することを求めた。
 
@@ -27,7 +27,7 @@
 
 ## Timing Rule
 
-- `Hello,world.md` に載る状態を変えたら、同じターンで `hello-world-gate.ps1` を実行する。
+- `Hello-world.md` に載る状態を変えたら、同じターンで `hello-world-gate.ps1` を実行する。
 - 現在地を信じる前と、完了報告前に、必要なら `hello-world-gate.ps1` を実行する。
 - read-only説明でも、ハロワが古い可能性を見つけた場合は同じgateで更新・検査する。
 - GitHubへ上げる時は、ハロワ更新を別工程にせず同じgateで行う。

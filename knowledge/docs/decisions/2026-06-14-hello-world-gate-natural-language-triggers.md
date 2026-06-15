@@ -22,7 +22,7 @@
 
 `githubあげといて` と言われても、Biz-compiler側に別の `commit-push-gate` を探したり作ったりしない。出口は `hello-world-gate.ps1` に一本化する。
 
-GitHubへ上げる依頼は、対象がある場合だけハロワ更新込みとして扱い、人間に `ハロワ更新してからgithubあげて` と二段で依頼させない。対象なしは正常系であり、確認目的だけで `Hello,world.md` を動かさない。
+GitHubへ上げる依頼は、対象がある場合だけハロワ更新込みとして扱い、人間に `ハロワ更新してからgithubあげて` と二段で依頼させない。対象なしは正常系であり、確認目的だけで `Hello-world.md` を動かさない。
 
 ## Consequences
 

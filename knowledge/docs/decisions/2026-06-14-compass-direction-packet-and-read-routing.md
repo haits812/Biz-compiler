@@ -41,7 +41,7 @@ Compassから逃がすもの:
 常時読むもの:
 
 1. `AGENTS.md`
-2. `Hello,world.md`
+2. `Hello-world.md`
 3. `SOUL.md`
 4. `USER.md`
 5. `COMPASS.md`
@@ -68,7 +68,7 @@ subagentや別作業者へ重い作業を渡す時、全量の知識を渡さな
 
 必ず渡すもの:
 
-- `Hello,world.md`
+- `Hello-world.md`
 - `SOUL.md`
 - `USER.md`
 - `COMPASS.md`

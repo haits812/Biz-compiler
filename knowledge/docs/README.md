@@ -9,7 +9,7 @@
 通常作業の入口では、次を読む。
 
 1. `AGENTS.md`
-2. `Hello,world.md`
+2. `Hello-world.md`
 3. `SOUL.md`
 4. `USER.md`
 5. `COMPASS.md`
@@ -37,7 +37,7 @@
 
 必ず渡すもの:
 
-- `Hello,world.md`
+- `Hello-world.md`
 - `SOUL.md`
 - `USER.md`
 - `COMPASS.md`

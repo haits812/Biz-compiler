@@ -16,7 +16,7 @@
 読み込み順は次とする。
 
 1. `AGENTS.md`
-2. `Hello,world.md`
+2. `Hello-world.md`
 3. `SOUL.md`
 4. `USER.md`
 5. `COMPASS.md`

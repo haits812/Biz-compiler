@@ -22,11 +22,11 @@ Hermes Agentの設計では、`SOUL.md`、project context、`MEMORY.md` / `USER.
 - `knowledge/journal/`: セッションログや未整理の検討過程。
 - `knowledge/pending/`: 未承認の更新提案。
 
-`MEMORY.md` は小さく保ち、正本化できる内容は `Hello,world.md`、`AGENTS.md`、`knowledge/docs/decisions/`、`knowledge/docs/meta/README.md`、`knowledge/journal/` へ移す。
+`MEMORY.md` は小さく保ち、正本化できる内容は `Hello-world.md`、`AGENTS.md`、`knowledge/docs/decisions/`、`knowledge/docs/meta/README.md`、`knowledge/journal/` へ移す。
 
 ## Consequences
 
-- 次回以降のagentは `MEMORY.md` で、普段の短い未整理メモを確認できる。現在構成は `Hello,world.md`、決定済み事項は `knowledge/docs/decisions/` を正本にする。
+- 次回以降のagentは `MEMORY.md` で、普段の短い未整理メモを確認できる。現在構成は `Hello-world.md`、決定済み事項は `knowledge/docs/decisions/` を正本にする。
 - Compassが肥大化しにくくなる。
 - 未承認の自動更新を `knowledge/pending/` に隔離できる。
 - 手動で更新しないと陳腐化するため、作業完了時に `MEMORY.md` の重複削除と `knowledge/docs/decisions/` の更新要否を確認する必要がある。

@@ -29,11 +29,11 @@ hookは正本ではない。正本は `knowledge/ops/registry.md` と repo-local
   -Kind "ops" `
   -Intent "何をしたいか" `
   -Impact "どこへ効くか" `
-  -Files "AGENTS.md;Hello,world.md" `
+  -Files "AGENTS.md;Hello-world.md" `
   -Risk "medium"
 ```
 
-`-Files` はセミコロン区切りにする。`Hello,world.md` のようにカンマを含むファイル名があるため、カンマ区切りは使わない。
+`-Files` はセミコロン区切りにする。複数ファイルを明示的に分けるため、カンマ区切りは使わない。
 
 環境変数でも渡せる。
 

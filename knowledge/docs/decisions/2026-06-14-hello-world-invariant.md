@@ -11,9 +11,9 @@ Biz-compiler は業務設計OSとして、AIが毎回全量探索せずに現在
 
 ## Decision
 
-ルートに `Hello,world.md` を置く。
+ルートに `Hello-world.md` を置く。
 
-`Hello,world.md` は、Biz-compiler が自分の現在地を返す最小自己記述であり、最初のスモークテストである。
+`Hello-world.md` は、Biz-compiler が自分の現在地を返す最小自己記述であり、最初のスモークテストである。
 
 - Compass は heading。
 - Hello World は position。
@@ -23,15 +23,15 @@ Biz-compiler は業務設計OSとして、AIが毎回全量探索せずに現在
 
 > Hello World は嘘をつかない。
 
-`Hello,world.md` は read の入口であり、decide / act の入口ではない。判断は `COMPASS.md`、実行は phase command / template / output 側の責務とする。
+`Hello-world.md` は read の入口であり、decide / act の入口ではない。判断は `COMPASS.md`、実行は phase command / template / output 側の責務とする。
 
 ## Rules
 
-- ルート構成、読み込み順、`template/`、`knowledge/`、`output/` の業務ID生成ルールを変えたら、同じターンで `Hello,world.md` を更新する。
-- `Hello,world.md` には、実際にコンパイルしている個別業務の進行状態を含めない。
+- ルート構成、読み込み順、`template/`、`knowledge/`、`output/` の業務ID生成ルールを変えたら、同じターンで `Hello-world.md` を更新する。
+- `Hello-world.md` には、実際にコンパイルしている個別業務の進行状態を含めない。
 - 個別業務の状態は `output/Biz-001-業務名/` 側の phase ledger / artifact / event log に置く。
 - 件数や状態を書く場合は、鮮度を明示する。
-- `Hello,world.md` が現在地を返せないなら、次の作業へ進まない。
+- `Hello-world.md` が現在地を返せないなら、次の作業へ進まない。
 
 ## Consequences
 

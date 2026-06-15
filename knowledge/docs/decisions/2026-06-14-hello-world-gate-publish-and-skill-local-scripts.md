@@ -5,7 +5,7 @@
 
 ## Context
 
-Biz-compilerには `Hello,world.md` を嘘にしないgateが必要である。
+Biz-compilerには `Hello-world.md` を嘘にしないgateが必要である。
 
 一方で、DeckPilot由来の `commit-push-gate` という名前をBiz-compiler側に持ち込むと、どのgateが正式な作業出口なのか分かりにくくなる。
 

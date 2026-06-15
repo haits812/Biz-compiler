@@ -1,4 +1,4 @@
-﻿param(
+param(
   [Parameter(Mandatory=$false)]
   [string]$Subject = "",
 
@@ -21,7 +21,7 @@
 $ErrorActionPreference = "Stop"
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..\..\..")).Path
-$helloPath = Join-Path $repoRoot "Hello,world.md"
+$helloPath = Join-Path $repoRoot "Hello-world.md"
 
 $forbiddenRootDirs = @(
   "docs",
@@ -38,9 +38,9 @@ $forbiddenRootDirs = @(
 )
 
 $requiredRootDirs = @("template", "output", "knowledge")
-$requiredRootFiles = @("README.md", "AGENTS.md", "Hello,world.md", "SOUL.md", "USER.md", "COMPASS.md", "MEMORY.md")
+$requiredRootFiles = @("README.md", "AGENTS.md", "Hello-world.md", "SOUL.md", "USER.md", "COMPASS.md", "MEMORY.md")
 $rootDirOrder = @("template", "output", "knowledge")
-$rootFileOrder = @("README.md", "AGENTS.md", "Hello,world.md", "COMPASS.md", "MEMORY.md", "SOUL.md", "USER.md")
+$rootFileOrder = @("README.md", "AGENTS.md", "Hello-world.md", "COMPASS.md", "MEMORY.md", "SOUL.md", "USER.md")
 $templateDirOrder = @("_shared", "00-entry", "10-source-intake", "20-decompose-encrs", "30-route-executor", "40-ir-freeze", "50-consent", "60-validation", "70-improvement", "80-operation")
 $knowledgeDirOrder = @("docs", "pending", "journal", "ops")
 
@@ -50,7 +50,7 @@ $rootDescriptions = @{
   "knowledge" = "確定知識・pending・journal・管理ops"
   "README.md" = "GitHub入口。正本はHello World"
   "AGENTS.md" = "作業規約と読み込み順"
-  "Hello,world.md" = "現在地。このファイル"
+  "Hello-world.md" = "現在地。このファイル"
   "COMPASS.md" = "direction packet / heading"
   "MEMORY.md" = "常時参照メモリ"
   "SOUL.md" = "agentの対話姿勢"
@@ -244,7 +244,7 @@ function Assert-HelloWorldStructure {
 
   foreach ($fileName in $requiredRootFiles) {
     $filePath = Join-Path $repoRoot $fileName
-    if ($fileName -eq "Hello,world.md" -and -not (Test-Path -LiteralPath $filePath -PathType Leaf)) {
+    if ($fileName -eq "Hello-world.md" -and -not (Test-Path -LiteralPath $filePath -PathType Leaf)) {
       continue
     }
     if (-not (Test-Path -LiteralPath $filePath -PathType Leaf)) {
@@ -419,7 +419,7 @@ function New-HelloWorldContent {
     "## Read First",
     "",
     "1. AGENTS.md - 作業規約と読み込み順",
-    "2. Hello,world.md - 現在地。このファイル",
+    "2. Hello-world.md - 現在地。このファイル",
     "3. SOUL.md - agentの対話姿勢",
     "4. USER.md - ユーザーの作業モデル",
     "5. COMPASS.md - direction packet / heading",
@@ -701,7 +701,7 @@ function Assert-HelloWorldMatches {
   param([Parameter(Mandatory=$true)][string]$ExpectedContent)
 
   if (-not (Test-Path -LiteralPath $helloPath -PathType Leaf)) {
-    throw "Hello,world.md is missing and could not be generated."
+    throw "Hello-world.md is missing and could not be generated."
   }
 
   $actual = Get-Content -LiteralPath $helloPath -Raw
@@ -731,7 +731,7 @@ function Invoke-HelloWorldGate {
   Assert-HelloWorldStructure
   $publishExpected = New-HelloWorldContent
   Set-Content -LiteralPath $helloPath -Value $publishExpected -Encoding UTF8
-  Write-Output "hello-world-gate: synced Hello,world.md"
+  Write-Output "hello-world-gate: synced Hello-world.md"
 
   Assert-HelloWorldMatches -ExpectedContent $publishExpected
   Write-Output "hello-world-gate: check passed"

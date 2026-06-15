@@ -1,4 +1,4 @@
-﻿[CmdletBinding()]
+[CmdletBinding()]
 param(
   [Parameter(Mandatory=$false)]
   [ValidateSet("register", "complete", "locks", "release-locks")]
@@ -161,7 +161,7 @@ function Markdown-List($Items) {
 
 function Get-RoutingHints($Blob, $TouchedFiles) {
   $hints = New-Object System.Collections.Generic.List[string]
-  Add-Unique $hints "AGENTS.md / Hello,world.md: 作業規約と現在地"
+  Add-Unique $hints "AGENTS.md / Hello-world.md: 作業規約と現在地"
   $target = "$Blob $($TouchedFiles -join ' ')"
   if ($target -match "knowledge[/\\]ops|\bops\b|Skill|hook|orchestrator|command|tool|registry|lock|completion") {
     Add-Unique $hints "knowledge/ops/registry.md: 既存Skill、hooks、orchestrators、commandsの棚卸し"
@@ -180,11 +180,11 @@ function Get-FinishHints($TouchedFiles) {
   $hints = New-Object System.Collections.Generic.List[string]
   Add-Unique $hints "git diff --check"
   $joined = $TouchedFiles -join " "
-  if ($joined -match "(^|\s)(AGENTS.md|Hello,world.md|SOUL.md|USER.md|COMPASS.md|MEMORY.md)|knowledge[/\\]ops|template[/\\]|output[/\\]|knowledge[/\\]") {
-    Add-Unique $hints "hello-world-gate.ps1 で Hello,world.md 同期、検査、commit/push"
+  if ($joined -match "(^|\s)(AGENTS.md|Hello-world.md|SOUL.md|USER.md|COMPASS.md|MEMORY.md)|knowledge[/\\]ops|template[/\\]|output[/\\]|knowledge[/\\]") {
+    Add-Unique $hints "hello-world-gate.ps1 で Hello-world.md 同期、検査、commit/push"
   }
   if ($joined -match "knowledge[/\\]ops[/\\]registry.md|knowledge[/\\]ops[/\\]skills|knowledge[/\\]ops[/\\]hooks|knowledge[/\\]ops[/\\]orchestrators") {
-    Add-Unique $hints "knowledge/ops/registry.md と Hello,world.md のops entrypoint同期"
+    Add-Unique $hints "knowledge/ops/registry.md と Hello-world.md のops entrypoint同期"
   }
   if ($joined -match "\.ps1") { Add-Unique $hints "対象PowerShellのスモークテスト" }
   if (@($TouchedFiles).Count -gt 0) { Add-Unique $hints "作業完了時に impact-orchestrator -Complete でwork cardを閉じ、lockを解放" }

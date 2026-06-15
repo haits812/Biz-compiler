@@ -16,7 +16,7 @@ Biz-compilerでは、今後の数字phase作業をmain agentがsubagentへ委譲
 読み込み順は次を基本にする。
 
 1. `AGENTS.md`
-2. `Hello,world.md`
+2. `Hello-world.md`
 3. `SOUL.md`
 4. `USER.md`
 5. `COMPASS.md`

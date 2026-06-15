@@ -14,7 +14,7 @@
 
 ## 初期読み込みでの扱い
 
-`Hello,world.md` には、存在と入口だけを載せる。
+`Hello-world.md` には、存在と入口だけを載せる。
 
 この台帳の全文を読むのは、次の時だけでよい。
 
@@ -27,7 +27,7 @@
 
 | id | 状態 | 役割 | path | command |
 |---|---|---|---|---|
-| `hello-world-gate` | 整備済み | `Hello,world.md` の再生成、検査、日本語commit、GitHub push、post-checkを一気通貫で行う | `knowledge/ops/skills/hello-world-gate/` | `knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1` |
+| `hello-world-gate` | 整備済み | `Hello-world.md` の再生成、検査、日本語commit、GitHub push、post-checkを一気通貫で行う | `knowledge/ops/skills/hello-world-gate/` | `knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1` |
 | `knowledge-curation` | 整備済み | `MEMORY.md`、pending、journal、decisionsなどの知識候補を整理し、格上げ/保留/退避/廃棄へ振り分ける | `knowledge/ops/skills/knowledge-curation/` | `new-pending-update.ps1`, `pending-review.ps1` |
 
 ## Orchestrators
@@ -88,6 +88,6 @@ repo開発運用に必要な道具は、まず Skill、hook adapter、orchestrat
 - hook adapter の追加、改名、削除
 - orchestrator の追加、改名、削除
 - `knowledge/ops/` 配下の command / script の追加、改名、削除
-- `Hello,world.md` に載せる ops entrypoint の変更
+- `Hello-world.md` に載せる ops entrypoint の変更
 
-この台帳を更新したら、最後に `hello-world-gate.ps1` を通して `Hello,world.md` も同期する。
+この台帳を更新したら、最後に `hello-world-gate.ps1` を通して `Hello-world.md` も同期する。

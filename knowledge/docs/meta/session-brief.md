@@ -52,7 +52,7 @@ Hello World、直近の差分、作業中ファイルなどから分かる現在
 | 項目 | 書き方 |
 |---|---|
 | 仮ゴール | 一文で書く。ゴールは変わってよい |
-| 現在地 | `Hello,world.md` を優先する。`MEMORY.md` は現在構成ではなく普段の未整理メモとして見る |
+| 現在地 | `Hello-world.md` を優先する。`MEMORY.md` は現在構成ではなく普段の未整理メモとして見る |
 | Scope | ファイル、ディレクトリ、phase、判断対象を具体化する |
 | Out of Scope | 今回やらないことを明示する |
 | 読むもの | `knowledge/docs/README.md` のread routingを使う |

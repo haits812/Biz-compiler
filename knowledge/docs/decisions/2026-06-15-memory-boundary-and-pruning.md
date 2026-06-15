@@ -5,7 +5,7 @@ Accepted
 
 ## Context
 
-`MEMORY.md` に現在構成、決定済み一覧、読み込み順、次アクション候補、各フォルダの役割が集まり、`Hello,world.md`、`AGENTS.md`、`knowledge/docs/decisions/`、`knowledge/docs/meta/README.md` と重複していた。
+`MEMORY.md` に現在構成、決定済み一覧、読み込み順、次アクション候補、各フォルダの役割が集まり、`Hello-world.md`、`AGENTS.md`、`knowledge/docs/decisions/`、`knowledge/docs/meta/README.md` と重複していた。
 
 一方で、会話のたびに `journal` / `pending` / `decision` / `USER` / `AGENTS` / `MEMORY` を厳密に振り分ける運用は重い。分類判断が重いと、そもそもメモが残らない。
 
@@ -21,7 +21,7 @@ Accepted
 - メタ土台の状態、依存、次アクション
 - 長い会話履歴や作業ログ
 
-これらはそれぞれ `Hello,world.md`、`AGENTS.md`、`knowledge/docs/decisions/`、`knowledge/docs/meta/README.md`、`knowledge/journal/` を正本にする。
+これらはそれぞれ `Hello-world.md`、`AGENTS.md`、`knowledge/docs/decisions/`、`knowledge/docs/meta/README.md`、`knowledge/journal/` を正本にする。
 
 `knowledge-curation` は、`MEMORY.md` を格上げ先としてだけでなく整理対象として扱う。Memoryに置いた普段メモは、定期的に `USER.md`、`SOUL.md`、`COMPASS.md`、`AGENTS.md`、`knowledge/docs/decisions/`、`knowledge/pending/`、`knowledge/journal/`、各 `knowledge/docs/*`、または廃棄へ振り分ける。
 

@@ -16,7 +16,7 @@ knowledge/ops, knowledge/journal/work, Hello World, AGENTS.md
 
 ## Touched Files
 - AGENTS.md
-- Hello,world.md
+- Hello-world.md
 - knowledge/ops/registry.md
 - knowledge/ops/hooks/README.md
 - knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1
@@ -29,7 +29,7 @@ knowledge/ops, knowledge/journal/work, Hello World, AGENTS.md
 - hooks: knowledge/ops/hooks/
 
 ## Read Routing
-- AGENTS.md / Hello,world.md: 作業規約と現在地
+- AGENTS.md / Hello-world.md: 作業規約と現在地
 - knowledge/ops/registry.md: 既存Skill、hooks、orchestrators、commandsの棚卸し
 - knowledge/ops/README.md: ops配置とコマンドの入口
 
@@ -40,8 +40,8 @@ knowledge/ops, knowledge/journal/work, Hello World, AGENTS.md
 
 ## Finish Gate
 - git diff --check
-- hello-world-gate.ps1 で Hello,world.md 同期、検査、commit/push
-- knowledge/ops/registry.md と Hello,world.md のops entrypoint同期
+- hello-world-gate.ps1 で Hello-world.md 同期、検査、commit/push
+- knowledge/ops/registry.md と Hello-world.md のops entrypoint同期
 - 対象PowerShellのスモークテスト
 
 ## MergeGate Mapping

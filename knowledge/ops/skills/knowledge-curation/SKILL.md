@@ -36,7 +36,7 @@ description: Biz-compiler repo内のMEMORYメモと知識候補を、Markdownル
 | 対象 | 見るもの |
 |---|---|
 | 普段メモ/整理対象 | `MEMORY.md` |
-| 常時読む正本 | `AGENTS.md`, `Hello,world.md`, `SOUL.md`, `USER.md`, `COMPASS.md`, `knowledge/docs/lexicon.md` |
+| 常時読む正本 | `AGENTS.md`, `Hello-world.md`, `SOUL.md`, `USER.md`, `COMPASS.md`, `knowledge/docs/lexicon.md` |
 | メタ土台 | `knowledge/docs/meta/` |
 | 用語・方法・IRなど | `knowledge/docs/README.md` のread routing先 |
 | 未承認候補 | `knowledge/pending/` |
@@ -77,7 +77,7 @@ description: Biz-compiler repo内のMEMORYメモと知識候補を、Markdownル
 
 `MEMORY.md` は普段メモの入口であり、同時に整理対象である。次を見つけたら、Memoryから削るか正本へ移す。
 
-- `Hello,world.md` が持つ現在構成、root tree、pending件数の重複
+- `Hello-world.md` が持つ現在構成、root tree、pending件数の重複
 - `AGENTS.md` が持つ読み込み順、禁止事項、配置ルール、gate運用の重複
 - `knowledge/docs/decisions/` が持つ決定履歴や採用理由の重複
 - `knowledge/docs/meta/README.md` が持つメタ土台の状態、依存、次アクションの重複
@@ -101,7 +101,7 @@ description: Biz-compiler repo内のMEMORYメモと知識候補を、Markdownル
 
 ### 3. repo-local gateに寄せられるか
 
-`Hello,world.md` の現在地、root構成、読み込み順、`template/`、`knowledge/`、`output/`、push前検査に関わるなら、`hello-world-gate` に寄せられるかを見る。
+`Hello-world.md` の現在地、root構成、読み込み順、`template/`、`knowledge/`、`output/`、push前検査に関わるなら、`hello-world-gate` に寄せられるかを見る。
 
 新しい外部hookやdeny ruleは作らない。現時点の自動化候補は、repo-local `knowledge/ops/skills/hello-world-gate/` の範囲に限る。
 

@@ -42,4 +42,4 @@
 
 ## 更新ルール
 
-phaseの意味、名前、handoffを変える場合は、このファイル、`knowledge/docs/meta/README.md`、`knowledge/docs/README.md` を確認する。`MEMORY.md` は正本重複を増やしていないかだけ確認する。`template/` の実ディレクトリ構成を変えた場合は、同じターンで `Hello,world.md` をハロワゲートで同期する。
+phaseの意味、名前、handoffを変える場合は、このファイル、`knowledge/docs/meta/README.md`、`knowledge/docs/README.md` を確認する。`MEMORY.md` は正本重複を増やしていないかだけ確認する。`template/` の実ディレクトリ構成を変えた場合は、同じターンで `Hello-world.md` をハロワゲートで同期する。

@@ -2,14 +2,14 @@
 Status: applied
 ResolvedAt: 2026-06-15T01:48:03+09:00
 SourceId: approved/memory/20260614-211736-ontology-world-model-layer-as-biz-compiler-map.md
-Reason: 自己記述レイヤーは Hello,world.md、MEMORY.md、knowledge/docs/README.md、meta docs の組み合わせとしてv0整備済み。
+Reason: 自己記述レイヤーは Hello-world.md、MEMORY.md、knowledge/docs/README.md、meta docs の組み合わせとしてv0整備済み。
 -->
 
 <!--
 Status: approved
 ResolvedAt: 2026-06-15T01:48:03+09:00
 SourceId: memory/20260614-211736-ontology-world-model-layer-as-biz-compiler-map.md
-Reason: 自己記述レイヤーは Hello,world.md、MEMORY.md、knowledge/docs/README.md、meta docs の組み合わせとしてv0整備済み。
+Reason: 自己記述レイヤーは Hello-world.md、MEMORY.md、knowledge/docs/README.md、meta docs の組み合わせとしてv0整備済み。
 -->
 
 # Biz-compiler self-description layer / world model candidate

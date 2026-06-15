@@ -54,4 +54,4 @@
 
 ## 更新ルール
 
-新しい置き場を作る場合は、`AGENTS.md`、`Hello,world.md`、`knowledge/ops/registry.md`、`knowledge/docs/README.md`、`knowledge/docs/meta/README.md` のどれへ影響するかを確認する。`MEMORY.md` へ配置情報を写さない。root構成、`template/`、`knowledge/`、`output/` の生成ルールを変えた場合は、同じターンでハロワゲートを通す。
+新しい置き場を作る場合は、`AGENTS.md`、`Hello-world.md`、`knowledge/ops/registry.md`、`knowledge/docs/README.md`、`knowledge/docs/meta/README.md` のどれへ影響するかを確認する。`MEMORY.md` へ配置情報を写さない。root構成、`template/`、`knowledge/`、`output/` の生成ルールを変えた場合は、同じターンでハロワゲートを通す。
