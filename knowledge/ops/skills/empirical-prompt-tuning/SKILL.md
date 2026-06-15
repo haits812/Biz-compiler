@@ -1,6 +1,6 @@
 ---
 name: empirical-prompt-tuning
-description: Methodology for iteratively improving agent-facing instructions (skills / slash commands / CLAUDE.md / code-gen prompts) via bias-free executor + two-sided evaluation (self-report + instruction-side metrics). Meta-skill, invoke ONLY when the user explicitly asks for an "empirical" eval of a prompt or skill, or for the Iter-0 description / body consistency check. Do NOT auto-invoke after every skill edit; this loop is operator-triggered by name.
+description: Use only when the user explicitly asks for empirical-prompt-tuning、empirical eval、プロンプト実証評価、SkillのIter-0 description/body整合チェック、またはagent向け指示を白紙実行者で評価して反復改善してと言われた時。Do NOT auto-invoke after every skill edit.
 ---
 
 # Empirical Prompt Tuning

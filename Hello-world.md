@@ -222,7 +222,7 @@ Known knowledge ops assets:
 初期読み込みでは、既存Skillの発火条件を確認してから新しいSkillを作る。似た役割のSkillがあるなら、まず既存Skillへ統合する。
 repo-local Skillを追加・改名・削除したら、SKILL.mdのname/description、owner説明、knowledge/ops/README.md、Hello Worldの一覧を同じターンで同期する。
 
-- empirical-prompt-tuning: Methodology for iteratively improving agent-facing instructions (skills / slash commands / CLAUDE.md / code-gen prompts) via bias-free executor + two-sided evaluation (self-report + instruction-side metrics). Meta-skill, invoke ONLY when the user explicitly asks for an "empirical" eval of a prompt or skill, or for the Iter-0 description / body consistency check. Do NOT auto-invoke after every skill edit; this loop is operator-triggered by name.
+- empirical-prompt-tuning: Use only when the user explicitly asks for empirical-prompt-tuning、empirical eval、プロンプト実証評価、SkillのIter-0 description/body整合チェック、またはagent向け指示を白紙実行者で評価して反復改善してと言われた時。Do NOT auto-invoke after every skill edit.
   - path: knowledge/ops/skills/empirical-prompt-tuning/
 - hello-world-gate: Use when Biz-compilerでハロワやっといて/ハロワ見て/ハロワ更新しといて/githubあげといて/GitHub上げて/pushして等の依頼が出た時。
   - path: knowledge/ops/skills/hello-world-gate/

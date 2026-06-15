@@ -24,7 +24,7 @@ Get-Content -Raw .\knowledge\ops\registry.md
 |---|---|---|
 | `hello-world-gate` | `knowledge/ops/skills/hello-world-gate/SKILL.md` | ハロワ更新、GitHub反映、出口gateを扱う時 |
 | `knowledge-curation` | `knowledge/ops/skills/knowledge-curation/SKILL.md` | MEMORY、pending、journal、decisionsの整理を扱う時 |
-| `empirical-prompt-tuning` | `knowledge/ops/skills/empirical-prompt-tuning/SKILL.md` | Skill、SKILL.md、agent向けprompt、subagent briefを白紙実行者で評価して直す時 |
+| `empirical-prompt-tuning` | `knowledge/ops/skills/empirical-prompt-tuning/SKILL.md` | empirical-prompt-tuning、empirical eval、プロンプト実証評価、Iter-0整合チェックを明示された時 |
 | `paper-write` | `knowledge/ops/skills/paper-write/SKILL.md` | 論文、研究稿、LaTeX原稿、引用付きpaper draftを扱う時 |
 | `review-agent-essence` | `knowledge/ops/skills/review-agent-essence/SKILL.md` | review-agent-essence、agent-essence原則レビュー、エッセンスレビュー、原則チェックを明示された時 |
 | `review-harness` | `knowledge/ops/skills/review-harness/SKILL.md` | review-harness、ハーネス診断、harness診断、ハーネス健康診断を明示された時 |
@@ -85,7 +85,7 @@ hook adapterは薄い入口なので、呼び出し先のowner説明も読む。
 
 ## skills/empirical-prompt-tuning/
 
-mizchi/skills の `empirical-prompt-tuning` を原文のまま置く。`SKILL.md` と `SKILL-ja.md` の両方を同居させ、repo-local Skillとしての読まれ方は通常どおり `SKILL.md` に従う。
+mizchi/skills の `empirical-prompt-tuning` をベースに置く。`SKILL.md` と `SKILL-ja.md` の両方を同居させ、repo-local Skillとしての読まれ方は通常どおり `SKILL.md` に従う。明示依頼時だけ使い、Skill作成・改修後に自動発火しない。
 
 Skill、SKILL.md、agent向けprompt、subagent brief、phase promptを、白紙実行者に読ませて評価し、description/body整合、critical要件、失敗パターン台帳、反復改善で直すために使う。`skill-creator-gate` はSkillを作る入口、これは作った/直したSkillを検査して直す入口として分ける。
 ## skills/paper-write/
