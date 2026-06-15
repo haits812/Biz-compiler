@@ -33,6 +33,7 @@
 | ID | メタ土台 | 役割 | 状態 | 正本/置き場 | 併読 | 更新時に触る | 依存 | 次アクション |
 |---|---|---|---|---|---|---|---|---|
 | hello-world | 現在地モデル | repoの現在地を返す | 整備済み | `Hello-world.md` | `AGENTS.md` | `Hello-world.md` | なし | gate運用で維持 |
+| setup | 初期セットアップ入口 | clone直後の必要ツール、hook接続、生成物、確認コマンドを示す | 整備済み | `setup.md` | `knowledge/ops/registry.md`, `knowledge/ops/hooks/README.md` | `setup.md`, `AGENTS.md`, `Hello-world.md`, `README.md` | hello-world, gate-workflow | 依存やhook接続を変えたら同期 |
 | compass | 判断方位 | 作業者の思考prior、疑うもの、価値順位 | 整備済み | `COMPASS.md` | `SOUL.md`, `USER.md`, `knowledge/docs/README.md` | `COMPASS.md`, `knowledge/docs/README.md` | なし | 必要時だけ圧縮更新 |
 | soul | 対話姿勢 | agentの振る舞い、聞き取り姿勢、避ける失敗 | 整備済み | `SOUL.md` | `USER.md`, `COMPASS.md` | `SOUL.md` | なし | 維持 |
 | user-model | ユーザー作業モデル | 主利用者の進め方、嫌う混同、会話前提 | 整備済み | `USER.md` | `SOUL.md`, `COMPASS.md` | `USER.md` | なし | 維持 |

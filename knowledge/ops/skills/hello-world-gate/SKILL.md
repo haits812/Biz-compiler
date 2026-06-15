@@ -112,10 +112,10 @@ git status --short --branch
 
 次に触る、または影響しそうな時は発火する。
 
-- ルート構成、ルートファイル説明
+- ルート構成、ルートファイル説明、setup.mdの環境前提
 - 読み込み順、first-read files
 - `Hello-world.md`
-- `AGENTS.md`、`SOUL.md`、`USER.md`、`COMPASS.md`、`knowledge/docs/lexicon.md`、`MEMORY.md`
+- `AGENTS.md`、`setup.md`、`SOUL.md`、`USER.md`、`COMPASS.md`、`knowledge/docs/lexicon.md`、`MEMORY.md`
 - `template/` のphase構成、Hello Worldに載るtemplate asset
 - `knowledge/` の構成、pending/approved件数、Hello Worldに載るops asset
 - repo-local Skillの追加・改名・削除、`SKILL.md` frontmatter、同居 `.ps1`、`knowledge/ops/README.md`
@@ -144,6 +144,7 @@ git status --short --branch
 - Biz-compiler側に `commit-push-gate` Skillを作らない。
 - `knowledge/ops/` 直下に `.ps1` を置かない。Skill実行体は `knowledge/ops/skills/<skill-name>/`、hook adapterは `knowledge/ops/hooks/`、orchestrator実行体は `knowledge/ops/orchestrators/<orchestrator-name>/` に同居させる。
 - `knowledge/.index/*.sqlite` と `__pycache__/`、`*.pyc` をcommitしない。Markdown正本やPython sourceから再生成する生成物として扱う。
+- hook一覧を `setup.md` に複製しない。setupは `knowledge/ops/registry.md` と `knowledge/ops/hooks/README.md` へ誘導する。
 - GitHub反映前の日記ファイルを必須にしない。必要な記録は日本語commit messageへ集約する。
 - Codex Desktopの `::git-*` directive は出さない。
 

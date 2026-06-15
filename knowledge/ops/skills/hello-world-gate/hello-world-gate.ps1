@@ -38,9 +38,9 @@ $forbiddenRootDirs = @(
 )
 
 $requiredRootDirs = @("template", "output", "knowledge")
-$requiredRootFiles = @("README.md", ".gitignore", "AGENTS.md", "Hello-world.md", "SOUL.md", "USER.md", "COMPASS.md", "MEMORY.md")
+$requiredRootFiles = @("README.md", "setup.md", ".gitignore", "AGENTS.md", "Hello-world.md", "SOUL.md", "USER.md", "COMPASS.md", "MEMORY.md")
 $rootDirOrder = @("template", "output", "knowledge")
-$rootFileOrder = @("README.md", ".gitignore", "AGENTS.md", "Hello-world.md", "COMPASS.md", "MEMORY.md", "SOUL.md", "USER.md")
+$rootFileOrder = @("README.md", "setup.md", ".gitignore", "AGENTS.md", "Hello-world.md", "COMPASS.md", "MEMORY.md", "SOUL.md", "USER.md")
 $templateDirOrder = @("_shared", "00-entry", "10-source-intake", "20-decompose-encrs", "30-route-executor", "40-ir-freeze", "50-consent", "60-validation", "70-improvement", "80-operation")
 $knowledgeDirOrder = @("docs", "pending", "journal", "ops", ".index")
 
@@ -49,6 +49,7 @@ $rootDescriptions = @{
   "output" = "業務ごとの成果物置き場。実業務作成まで空"
   "knowledge" = "確定知識・pending・journal・管理ops"
   "README.md" = "GitHub入口。正本はHello World"
+  "setup.md" = "clone後の初期セットアップ入口"
   ".gitignore" = "生成物除外"
   "AGENTS.md" = "作業規約と読み込み順"
   "Hello-world.md" = "現在地。このファイル"
@@ -443,6 +444,12 @@ function New-HelloWorldContent {
     "",
     "要求定義は、要求全体の確認・要求変更・要求定義との照合が必要な時だけ knowledge/docs/requirements/ から追加で読む。",
     "",
+    "## Setup",
+    "",
+    "clone直後や環境を作り直した時は setup.md を読む。",
+    "",
+    "setup.md は、必要ツール、hook接続、生成物、knowledge-search index、確認コマンドの入口である。hook一覧は複製せず、knowledge/ops/registry.md と knowledge/ops/hooks/README.md を正本にする。",
+    "",
     "## Current Root",
     "",
     "~~~text"
@@ -577,6 +584,7 @@ function New-HelloWorldContent {
     "次を変えたら、同じターンでこのファイルを更新する。",
     "",
     "- ルート直下の構成",
+    "- setup.md の環境前提、hook接続、生成物ルール",
     "- 読み込み順",
     "- template/ のphase構成",
     "- knowledge/ の構成",

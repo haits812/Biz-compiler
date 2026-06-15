@@ -8,7 +8,7 @@
 
 | 置き場 | 置くもの | 置かないもの | 判定規則 |
 |---|---|---|---|
-| root | 毎回読む入口、repo全体の現在地、作業規約、思考方位 | 個別phase成果物、script集、schema集、samples | 全作業者が最初に読むか、repo全体の入口か |
+| root | 毎回読む入口、repo全体の現在地、作業規約、思考方位、clone直後のsetup入口 | 個別phase成果物、script集、schema集、samples、hook一覧の複製 | 全作業者が最初に読むか、repo全体の入口か、環境構築の入口か |
 | `knowledge/docs/` | 確定知識、要求、決定、メタ土台、用語、IR設計、方法論、事例、評価 | 業務実行時にコピーされるasset、個別業務の運用ログ | このrepoを作るための知識か |
 | `knowledge/docs/meta/` | 数字工程に入らない本当のメタ土台 | phase-local雛形、個別業務artifact | 全phase、会話、委譲、配置判断にまたがるか |
 | `knowledge/docs/lexicon.md` | 用語定義と概念境界 | Compass本体、IR schemaの詳細 | 語の意味や似た語の違いを固定するか |
@@ -32,7 +32,7 @@
 | 全phaseの読み方、状態、配置、brief、完成条件を決めるか | `knowledge/docs/meta/` |
 | 用語の意味や境界を決めるだけか | `knowledge/docs/lexicon.md` |
 | 個別業務の進行状態、実行ログ、監査ログか | `output/Biz-001-業務名/` |
-| このrepoの作業規約や現在地として毎回読む必要があるか | root |
+| このrepoの作業規約、現在地、clone直後の環境構築入口か | root |
 
 本当のメタ土台は、数字工程の中身ではなく、数字工程をどう読むか、どう委譲するか、どこへ置くか、何を完成と呼ぶかを決める。
 
@@ -43,7 +43,8 @@
 3. 業務フォルダへコピーして使う原型なら、`template/<phase>/` か `template/_shared/` へ置く。
 4. repoを作るための知識なら、`knowledge/docs/` のread routingに従う。
 5. knowledgeを操作するSkillなら、`knowledge/ops/skills/<skill-name>/` に `SKILL.md` と同居させる。環境別hook adapterなら `knowledge/ops/hooks/`、作業前gateや検索などの固定手順なら `knowledge/ops/orchestrators/<orchestrator-name>/` に説明ファイルと同居させる。生成SQLite indexは `knowledge/.index/` に置き、正本にしない。
-6. どれにも当てはまらない場合だけ、rootに置く理由があるか確認する。
+6. clone直後の依存、hook接続、生成物、確認コマンドなら root の `setup.md` へ置く。ただしhook一覧は複製せず、`knowledge/ops/registry.md` と `knowledge/ops/hooks/README.md` を参照する。
+7. どれにも当てはまらない場合だけ、rootに置く理由があるか確認する。
 
 ## 禁止
 
