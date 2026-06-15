@@ -172,4 +172,3 @@ Other active locks at registration:
 - verified: git diff --checkを確認済み。README/AGENTS/MEMORY/Decisionの反映をrgで確認済み
 - residual_risk: 比喩は会話補助であり、phase/IRの実装判断ではcontract/manifest/gate/executor/ledger/validationへ戻す必要がある
 - released_locks: 4
-
