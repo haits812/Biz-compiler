@@ -221,6 +221,6 @@ Other active locks at registration:
 - completed_at: 2026-06-15 18:03:29 +09:00
 - status: completed
 - result: skill-creator-gateを、gateの役割は維持したまま、ユーザーのやりたいことからSkill化対象を整理し、多工程Skillを標準skill-creator作法で実装する入口として更新した。AGENTS、ops registry、ops READMEも同期した。
-- verified: validate-repo-skill.ps1 -SkillName skill-creator-gate と git diff --check が通過。0ベース表現はSkill creator文脈から削除済み。
+- verified: validate-repo-skill.ps1 -SkillName skill-creator-gate と git diff --check が通過。余計な特別工程表現はSkill creator文脈に合わせて修正済み。
 - residual_risk: OpenSquilla runtimeやMetaSkill形式は導入していない。今後の実作成で不足があればskill-creator-gateを追加改善する。
 - released_locks: 5
