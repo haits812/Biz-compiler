@@ -165,6 +165,25 @@ Known knowledge ops assets:
 - work ledger: knowledge/journal/work/
   - active locks: knowledge/journal/work/locks.json
 
+## Natural Language Triggers
+
+ユーザーが過去の会話・作業メモ・決定・ユーザー設定を探している自然文を出したら、コマンド名を待たずに knowledge-search を使う。
+
+代表例:
+
+- 前にこんな会話しなかったっけ？
+- 前にもこれ話した？
+- あの時どう決めたっけ？
+- 似た話、前にしてない？
+- その設定どこかに残ってない？
+- この話の経緯探して
+
+動き方:
+
+- まずユーザーの言葉をそのまま検索語にする。必要なら2〜3語へ分けて再検索する。
+- indexが無い、または古い可能性がある時は knowledge-search.ps1 index を先に実行する。
+- 結果は path#Lstart-Lend を根拠として返す。SQLite内の本文を正本にしない。
+
 ## Repo-local Skills
 
 初期読み込みでは、既存Skillの発火条件を確認してから新しいSkillを作る。似た役割のSkillがあるなら、まず既存Skillへ統合する。

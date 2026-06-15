@@ -35,7 +35,7 @@
 | id | 状態 | 役割 | path | command | 出力 |
 |---|---|---|---|---|---|
 | `impact-orchestrator` | 整備済み | 作業前に目的、影響、Markdown参照impact、読むべきもの、既存ops資産、実行者、完了gateを1枚に切り、必要ならfile lockを取る | `knowledge/ops/orchestrators/impact-orchestrator/` | `knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1` | `knowledge/journal/work/` |
-| `knowledge-search` | 整備済み | Markdown正本をSQLite FTS5へindexし、過去会話・作業メモ・決定・設定をpath付きで検索する | `knowledge/ops/orchestrators/knowledge-search/` | `knowledge/ops/orchestrators/knowledge-search/knowledge-search.ps1` | `knowledge/.index/knowledge.sqlite` |
+| `knowledge-search` | 整備済み | Markdown正本をSQLite FTS5へindexし、過去会話・作業メモ・決定・設定をpath付きで検索する。「前にこんな会話しなかったっけ？」系の自然文でも使う | `knowledge/ops/orchestrators/knowledge-search/` | `knowledge/ops/orchestrators/knowledge-search/knowledge-search.ps1` | `knowledge/.index/knowledge.sqlite` |
 
 ## Hooks
 

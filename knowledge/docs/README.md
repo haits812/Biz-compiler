@@ -20,7 +20,7 @@
 
 ## Search Before Broad Reading
 
-過去の会話、作業メモ、決定、ユーザー設定を横断して探す時は、全量を読む前に `knowledge-search` を使う。
+過去の会話、作業メモ、決定、ユーザー設定を横断して探す時は、全量を読む前に `knowledge-search` を使う。「前にこんな会話しなかったっけ？」「あの時どう決めたっけ？」のような自然文も検索トリガーとして扱う。
 
 ```powershell
 .\knowledge\ops\orchestrators\knowledge-search\knowledge-search.ps1 index

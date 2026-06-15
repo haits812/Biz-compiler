@@ -86,7 +86,7 @@ subagentや別作業者へ重い作業を渡す時は、`Hello-world.md`、`SOUL
 
 作業対象がコード、ドキュメント、Skill、ops、templateを変更する場合は、編集前に `impact-orchestrator` で作業の意図、影響、Markdown参照impact、読むもの、完了gateを切る。`-Files` を渡した場合はfile lockも取る。短い質問回答、読み取りだけ、対象なしのGitHub確認では不要。
 
-過去の会話、作業メモ、決定、ユーザー設定を探す時は `knowledge-search` を使う。`knowledge/.index/knowledge.sqlite` はMarkdown正本から生成する検索indexであり、直接編集しない。indexが古い場合は `knowledge-search.ps1 index` で再生成する。
+過去の会話、作業メモ、決定、ユーザー設定を探す時は `knowledge-search` を使う。ユーザーが「前にこんな会話しなかったっけ？」「前にもこれ話した？」「あの時どう決めたっけ？」「似た話、前にしてない？」のように自然文で聞いた場合も、コマンド名を待たずに `knowledge-search` を発火する。`knowledge/.index/knowledge.sqlite` はMarkdown正本から生成する検索indexであり、直接編集しない。indexが古い場合は `knowledge-search.ps1 index` で再生成する。
 
 ```powershell
 .\knowledge\ops\orchestrators\impact-orchestrator\impact-orchestrator.ps1 `
