@@ -7,6 +7,7 @@
 - `memory/`: `MEMORY.md` へ反映する候補。
 - `compass/`: `COMPASS.md` へ反映する候補。
 - `decisions/`: `knowledge/docs/decisions/` へ昇格する候補。
+- `skills/`: `skill-creator-gate` が作るrepo-local Skill proposal。
 - `approved/`: 人間が正式反映を認めたが、まだ対象ファイルへ反映済みとは限らない候補。
 
 ## ルール
@@ -25,6 +26,7 @@
 - `MEMORY.md` に入れるには長い、または確信度が足りない事実。
 - `COMPASS.md` に入れるか検討したい判断prior。
 - ADR化するほど重要そうだが、背景整理がまだ足りない決定。
+- repo-local Skillにするか、既存Skillへ統合するか、orchestrator/hook/docs-ruleに逃がすか迷う作業パターン。
 
 ## 推奨フォーマット
 
@@ -32,7 +34,7 @@
 # <提案タイトル>
 
 ## Target
-MEMORY.md / COMPASS.md / knowledge/docs/decisions
+MEMORY.md / COMPASS.md / knowledge/docs/decisions / knowledge/ops/skills
 
 ## Proposed Change
 反映したい内容。

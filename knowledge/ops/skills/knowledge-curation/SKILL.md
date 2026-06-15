@@ -11,7 +11,7 @@ description: Biz-compiler repo内のMEMORYメモと知識候補を、Markdownル
 
 目的は、普段 `MEMORY.md` に置いたメモや会話・作業で出た知識候補を「どこへ格上げするか、保留するか、退避するか、捨てるか」判断し、必要なら `knowledge/pending/` の承認フローを通して正本へ反映すること。
 
-未承認候補専用の別Skillは作らない。未承認候補の作成・確認・承認・却下・適用済み化は、この `knowledge-curation` のサブ機能として扱う。
+未承認候補専用の別Skillは作らない。未承認候補の作成・確認・承認・却下・適用済み化は、この `knowledge-curation` のサブ機能として扱う。Skill proposalの作成・設計・検査は `skill-creator-gate` が担当し、承認/却下/appliedの状態遷移はこのpending-reviewでも扱える。
 
 外部hook、deny rule、グローバル設定、他リポジトリへ影響する仕組み化は、このSkillの対象外。
 
@@ -40,6 +40,7 @@ description: Biz-compiler repo内のMEMORYメモと知識候補を、Markdownル
 | メタ土台 | `knowledge/docs/meta/` |
 | 用語・方法・IRなど | `knowledge/docs/README.md` のread routing先 |
 | 未承認候補 | `knowledge/pending/` |
+| Skill proposal | `knowledge/pending/skills/`, `knowledge/ops/skills/skill-creator-gate/` |
 | 会話履歴/作業ログ | `knowledge/journal/` |
 | 決定理由 | `knowledge/docs/decisions/` |
 | repo-local gate | `knowledge/ops/skills/hello-world-gate/` |
@@ -123,6 +124,7 @@ description: Biz-compiler repo内のMEMORYメモと知識候補を、Markdownル
 | `memory` | まだ分類しきれない短い普段メモとして残す | `MEMORY.md` |
 | `memory-prune` | `MEMORY.md` から正本化済み、重複、古い状態を削る | `MEMORY.md` |
 | `pending` | 未承認、判断に迷う | `knowledge/pending/` |
+| `skill-proposal` | repo-local Skill化候補。作成・検査は `skill-creator-gate` に寄せる | `knowledge/pending/skills/` |
 | `journal` | 会話履歴、作業過程、試行錯誤、長いログ | `knowledge/journal/` |
 | `decision` | 背景理由つきの設計判断 | `knowledge/docs/decisions/` |
 | `prune` | 重複、解決済み、誤り、もう効かない | 削除、またはrejected記録 |
@@ -130,7 +132,7 @@ description: Biz-compiler repo内のMEMORYメモと知識候補を、Markdownル
 
 ## 禁止事項
 
-- 未承認候補専用の別Skillを作らない。pending運用は `knowledge-curation` に統合する。
+- 未承認候補専用の別Skillを作らない。pending運用は `knowledge-curation` に統合する。ただしSkill proposalの作成・設計・検査は `skill-creator-gate` に寄せる。
 - 外部hook、deny rule、グローバル設定をこのSkillで作らない。
 - `MEMORY.md` を普段メモの入口として使ってよい。ただし恒久ルール、現在構成、決定済み一覧、次アクション台帳の正本にはしない。
 - 既に正本化された内容をpending、journal、MEMORYへ二重保持しない。Memoryに見つけたら整理対象として削る。

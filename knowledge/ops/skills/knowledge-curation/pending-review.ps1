@@ -31,9 +31,11 @@ function Get-PendingSources {
     @{ Stage = "pending"; Category = "memory"; Dir = Join-Path $pendingRoot "memory"; IdPrefix = "memory" },
     @{ Stage = "pending"; Category = "compass"; Dir = Join-Path $pendingRoot "compass"; IdPrefix = "compass" },
     @{ Stage = "pending"; Category = "decisions"; Dir = Join-Path $pendingRoot "decisions"; IdPrefix = "decisions" },
+    @{ Stage = "pending"; Category = "skills"; Dir = Join-Path $pendingRoot "skills"; IdPrefix = "skills" },
     @{ Stage = "approved"; Category = "memory"; Dir = Join-Path $pendingRoot "approved\memory"; IdPrefix = "approved/memory" },
     @{ Stage = "approved"; Category = "compass"; Dir = Join-Path $pendingRoot "approved\compass"; IdPrefix = "approved/compass" },
-    @{ Stage = "approved"; Category = "decisions"; Dir = Join-Path $pendingRoot "approved\decisions"; IdPrefix = "approved/decisions" }
+    @{ Stage = "approved"; Category = "decisions"; Dir = Join-Path $pendingRoot "approved\decisions"; IdPrefix = "approved/decisions" },
+    @{ Stage = "approved"; Category = "skills"; Dir = Join-Path $pendingRoot "approved\skills"; IdPrefix = "approved/skills" }
   )
 
   foreach ($source in $sources) {

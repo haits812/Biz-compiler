@@ -24,6 +24,7 @@ Get-Content -Raw .\knowledge\ops\registry.md
 |---|---|---|
 | `hello-world-gate` | `knowledge/ops/skills/hello-world-gate/SKILL.md` | ハロワ更新、GitHub反映、出口gateを扱う時 |
 | `knowledge-curation` | `knowledge/ops/skills/knowledge-curation/SKILL.md` | MEMORY、pending、journal、decisionsの整理を扱う時 |
+| `skill-creator-gate` | `knowledge/ops/skills/skill-creator-gate/SKILL.md` | repo-local Skillの作成、改修、Skill化、trigger設計、proposalを扱う時 |
 | `impact-orchestrator` | `knowledge/ops/orchestrators/impact-orchestrator/README.md` | 編集前impact、work card、lock、completionを扱う時 |
 | `knowledge-search` | `knowledge/ops/orchestrators/knowledge-search/README.md` | 過去会話・作業メモ・決定の検索、SQLite indexを扱う時 |
 | `hooks` | `knowledge/ops/hooks/README.md` | Codex / Claude Code など環境別hook adapterを扱う時 |
@@ -76,6 +77,25 @@ hook adapterは薄い入口なので、呼び出し先のowner説明も読む。
 ```
 
 `approve` は候補を `knowledge/pending/approved/` へ移すだけで、正式ファイルを自動編集しない。正式反映では、対象ファイルの役割と既存記述を読んでから文脈込みで編集する。
+
+## skills/skill-creator-gate/
+
+OpenSquillaの `meta-skill-creator` 作法を、Biz-compilerのrepo-local Skill作成へ移植したcreator/gateである。
+
+いきなり正式Skillを増やすのではなく、必要に応じて `knowledge/pending/skills/` にproposalを作り、既存Skill / orchestrator / hook / commandとの衝突確認、trigger-rich description設計、owner説明、検査、registry / Hello World同期まで扱う。
+
+```powershell
+.\knowledge\ops\skills\skill-creator-gate\new-skill-proposal.ps1 `
+  -Name "skill-name" `
+  -Intent "何をSkill化したいか" `
+  -Triggers "自然文1;自然文2" `
+  -Steps "intake;inventory;design;validate" `
+  -Validation "何を確認するか" `
+  -CollisionCheck "既存Skillとの関係" `
+  -Risk "残リスク"
+
+.\knowledge\ops\skills\skill-creator-gate\validate-repo-skill.ps1 -SkillName "skill-name"
+```
 
 ## orchestrators/impact-orchestrator/
 

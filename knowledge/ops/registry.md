@@ -45,6 +45,7 @@
 
 - `knowledge/ops/skills/hello-world-gate/SKILL.md`
 - `knowledge/ops/skills/knowledge-curation/SKILL.md`
+- `knowledge/ops/skills/skill-creator-gate/SKILL.md`
 - `knowledge/ops/hooks/README.md`
 - `knowledge/ops/orchestrators/impact-orchestrator/README.md`
 - `knowledge/ops/orchestrators/knowledge-search/README.md`
@@ -57,6 +58,7 @@ owner説明が無いops資産は未整備として扱う。新規追加時は、
 |---|---|---|---|---|
 | `hello-world-gate` | 整備済み | `Hello-world.md` の再生成、検査、日本語commit、GitHub push、post-checkを一気通貫で行う | `knowledge/ops/skills/hello-world-gate/` | `knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1` |
 | `knowledge-curation` | 整備済み | `MEMORY.md`、pending、journal、decisionsなどの知識候補を整理し、格上げ/保留/退避/廃棄へ振り分ける | `knowledge/ops/skills/knowledge-curation/` | `new-pending-update.ps1`, `pending-review.ps1` |
+| `skill-creator-gate` | 整備済み | OpenSquillaの`meta-skill-creator`作法を流用し、repo-local Skillのproposal、衝突確認、trigger設計、作成、登録、検査を段階的に行う | `knowledge/ops/skills/skill-creator-gate/` | `new-skill-proposal.ps1`, `validate-repo-skill.ps1` |
 
 ## Orchestrators
 
@@ -80,6 +82,8 @@ owner説明が無いops資産は未整備として扱う。新規追加時は、
 | `knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1` | `hello-world-gate` | ハロワ更新、GitHub push、構成変更後の同期 |
 | `knowledge/ops/skills/knowledge-curation/new-pending-update.ps1` | `knowledge-curation` | 未承認の知識更新候補を作る |
 | `knowledge/ops/skills/knowledge-curation/pending-review.ps1` | `knowledge-curation` | pending候補のlist/show/approve/reject/applied |
+| `knowledge/ops/skills/skill-creator-gate/new-skill-proposal.ps1` | `skill-creator-gate` | repo-local Skill proposalを `knowledge/pending/skills/` に作る |
+| `knowledge/ops/skills/skill-creator-gate/validate-repo-skill.ps1` | `skill-creator-gate` | repo-local Skillのfrontmatter、命名、script構文、registry/ops README参照を検査する |
 | `knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1` | `impact-orchestrator` | 編集前のwork card/impact/lock作成、完了時のlock解放 |
 | `knowledge/ops/orchestrators/knowledge-search/knowledge-search.ps1` | `knowledge-search` | Markdown正本をSQLite FTS5へindex/searchする |
 | `knowledge/ops/hooks/codex-pre-work.ps1` | `codex-pre-work` | Codex hook adapterとして `impact-orchestrator` を呼ぶ |
@@ -93,6 +97,7 @@ owner説明が無いops資産は未整備として扱う。新規追加時は、
 | `knowledge/journal/work/locks.json` | active file lock台帳。完了時に空へ戻す |
 | `knowledge/journal/work/*.md` | `impact-orchestrator` のwork card |
 | `knowledge/.index/knowledge.sqlite` | Markdown正本から生成するSQLite FTS5検索index。git管理しない |
+| `knowledge/pending/skills/*.md` | `skill-creator-gate` が作るrepo-local Skill proposal。正式Skillではない |
 
 ## Tools
 

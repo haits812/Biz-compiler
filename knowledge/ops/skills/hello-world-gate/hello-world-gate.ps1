@@ -150,13 +150,15 @@ function Get-PendingCounts {
   $pendingDirs = @(
     (Join-Path $pendingRoot "memory"),
     (Join-Path $pendingRoot "compass"),
-    (Join-Path $pendingRoot "decisions")
+    (Join-Path $pendingRoot "decisions"),
+    (Join-Path $pendingRoot "skills")
   )
 
   $approvedDirs = @(
     (Join-Path $pendingRoot "approved\memory"),
     (Join-Path $pendingRoot "approved\compass"),
-    (Join-Path $pendingRoot "approved\decisions")
+    (Join-Path $pendingRoot "approved\decisions"),
+    (Join-Path $pendingRoot "approved\skills")
   )
 
   $pendingCount = 0
@@ -231,6 +233,9 @@ function Get-OpsEntrypointLines {
     "  - hello-world-gate docs: knowledge/ops/skills/hello-world-gate/SKILL.md",
     "  - hello-world-gate command: knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1",
     "  - knowledge-curation docs: knowledge/ops/skills/knowledge-curation/SKILL.md",
+    "  - skill-creator-gate docs: knowledge/ops/skills/skill-creator-gate/SKILL.md",
+    "  - skill-creator-gate proposal command: knowledge/ops/skills/skill-creator-gate/new-skill-proposal.ps1",
+    "  - skill-creator-gate validation command: knowledge/ops/skills/skill-creator-gate/validate-repo-skill.ps1",
     "- hooks: knowledge/ops/hooks/README.md",
     "  - codex-pre-work: knowledge/ops/hooks/codex-pre-work.ps1",
     "  - claude-code-pre-work: knowledge/ops/hooks/claude-code-pre-work.ps1",

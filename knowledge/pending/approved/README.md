@@ -9,3 +9,4 @@
 - `memory/`: `MEMORY.md` へ反映してよい候補。
 - `compass/`: `COMPASS.md` へ反映してよい候補。
 - `decisions/`: `knowledge/docs/decisions/` へ昇格してよい候補。
+- `skills/`: `knowledge/ops/skills/` へ正式反映してよいrepo-local Skill proposal。

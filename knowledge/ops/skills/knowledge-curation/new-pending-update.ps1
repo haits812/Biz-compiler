@@ -3,7 +3,7 @@ param(
   [string]$Title,
 
   [Parameter(Mandatory=$false)]
-  [ValidateSet("MEMORY.md", "COMPASS.md", "knowledge/docs/decisions")]
+  [ValidateSet("MEMORY.md", "COMPASS.md", "knowledge/docs/decisions", "knowledge/ops/skills")]
   [string]$Target = "MEMORY.md",
 
   [Parameter(Mandatory=$false)]
@@ -23,6 +23,7 @@ $category = switch ($Target) {
   "MEMORY.md" { "memory" }
   "COMPASS.md" { "compass" }
   "knowledge/docs/decisions" { "decisions" }
+  "knowledge/ops/skills" { "skills" }
 }
 
 $targetDir = Join-Path $knowledgeRoot "pending\$category"
