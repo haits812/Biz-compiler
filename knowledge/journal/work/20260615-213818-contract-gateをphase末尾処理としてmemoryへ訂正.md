@@ -114,4 +114,3 @@ Other active locks at registration:
 - verified: git diff --checkを確認済み。MEMORY.mdの未整理メモ欄にphase末尾処理としてのContract Gate候補が入っていることを確認済み
 - residual_risk: 正式なphase catalog/templateへの反映は未実施。後でknowledge-curation時に昇格判断が必要
 - released_locks: 1
-
