@@ -41,14 +41,14 @@
 2. 実業務の成果物なら、実業務作成時に `output/Biz-001-業務名/` 配下へ置く。現時点でプレースホルダは作らない。
 3. 業務フォルダへコピーして使う原型なら、`template/<phase>/` か `template/_shared/` へ置く。
 4. repoを作るための知識なら、`knowledge/docs/` のread routingに従う。
-5. knowledgeを操作するSkillなら、`knowledge/ops/skills/<skill-name>/` に `SKILL.md` と同居させる。作業前gateなどの固定手順なら、`knowledge/ops/orchestrators/<orchestrator-name>/` に説明ファイルと同居させる。
+5. knowledgeを操作するSkillなら、`knowledge/ops/skills/<skill-name>/` に `SKILL.md` と同居させる。環境別hook adapterなら `knowledge/ops/hooks/`、作業前gateなどの固定手順なら `knowledge/ops/orchestrators/<orchestrator-name>/` に説明ファイルと同居させる。
 6. どれにも当てはまらない場合だけ、rootに置く理由があるか確認する。
 
 ## 禁止
 
 - repo直下に `docs/`、`pending/`、`journal/`、`samples/`、`internal/`、`scripts/`、`schemas/`、`runner/`、`tools/`、`validators/`、`phase-packs/` を増やさない。
 - `output/` 直下に `example-business-id`、`_business-id`、サンプル業務、プレースホルダ業務フォルダを作らない。
-- `knowledge/ops/` 直下に `.ps1` を置かない。
+- `knowledge/ops/` 直下に `.ps1` を置かない。hook adapterは `knowledge/ops/hooks/`、orchestrator実行体は `knowledge/ops/orchestrators/<name>/` に置く。
 - phase-localな不足物を `knowledge/docs/meta/README.md` のメタ土台台帳へ混ぜない。
 - 個別業務のSkill、adapter、workflowをcompiler repo直下へ溜め込まない。
 

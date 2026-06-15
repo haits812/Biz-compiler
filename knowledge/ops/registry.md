@@ -8,9 +8,9 @@
 
 - 新しい Skill / hook / orchestrator / command / tool を作る前に、この台帳を確認する。
 - 似た役割がある場合は、新規追加より既存入口の拡張を優先する。
-- 実行スクリプトを `knowledge/ops/` 直下に置かない。所有する Skill または orchestrator のフォルダに同居させる。
+- 実行スクリプトを `knowledge/ops/` 直下に置かない。所有する Skill、hook adapter、orchestrator のフォルダに同居させる。
 - hook は環境別の adapter であり、正本ではない。正本はこの台帳と repo-local script に置く。
-- MergeGate本体は導入しない。採用するのは register / impact / assign / verify の作法である。
+- MergeGate本体は導入しない。採用するのは register / impact / lock / assign / verify の作法である。
 
 ## 初期読み込みでの扱い
 
@@ -34,15 +34,15 @@
 
 | id | 状態 | 役割 | path | command | 出力 |
 |---|---|---|---|---|---|
-| `impact-orchestrator` | 整備済み | 作業前に目的、影響、読むべきもの、既存ops資産、実行者、完了gateを1枚に切る | `knowledge/ops/orchestrators/impact-orchestrator/` | `knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1` | `knowledge/journal/work/` |
+| `impact-orchestrator` | 整備済み | 作業前に目的、影響、Markdown参照impact、読むべきもの、既存ops資産、実行者、完了gateを1枚に切り、必要ならfile lockを取る | `knowledge/ops/orchestrators/impact-orchestrator/` | `knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1` | `knowledge/journal/work/` |
 
 ## Hooks
 
 | id | 状態 | 役割 | 呼び出すもの | 備考 |
 |---|---|---|---|---|
-| `codex-pre-work` | 未実装 | Codex環境で編集前に作業影響を切るadapter候補 | `impact-orchestrator` | 現時点ではCodex設定ファイルを自動編集しない |
-| `claude-code-pre-work` | 未実装 | Claude Code環境で編集前に作業影響を切るadapter候補 | `impact-orchestrator` | hook移植は各環境で再現する |
-| `pre-publish` | 運用済み相当 | GitHubへ上げる前にHello World同期とcommit/pushを通す | `hello-world-gate` | hookではなく発話/手動gateとして運用中 |
+| `codex-pre-work` | 実装済み / 未接続 | Codex環境で編集前に作業影響を切るadapter | `impact-orchestrator` | 環境側hook設定から呼ぶ |
+| `claude-code-pre-work` | 実装済み / 未接続 | Claude Code環境で編集前に作業影響を切るadapter | `impact-orchestrator` | hook移植は各環境で再現する |
+| `pre-publish` | 実装済み / 未接続 | GitHubへ上げる前にHello World同期とcommit/pushを通すadapter | `hello-world-gate` | 日本語commit情報が必要 |
 
 ## Commands
 
@@ -51,24 +51,34 @@
 | `knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1` | `hello-world-gate` | ハロワ更新、GitHub push、構成変更後の同期 |
 | `knowledge/ops/skills/knowledge-curation/new-pending-update.ps1` | `knowledge-curation` | 未承認の知識更新候補を作る |
 | `knowledge/ops/skills/knowledge-curation/pending-review.ps1` | `knowledge-curation` | pending候補のlist/show/approve/reject/applied |
-| `knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1` | `impact-orchestrator` | 編集前に作業の意図、影響、読むもの、完了gateを記録する |
+| `knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1` | `impact-orchestrator` | 編集前のwork card/impact/lock作成、完了時のlock解放 |
+| `knowledge/ops/hooks/codex-pre-work.ps1` | `codex-pre-work` | Codex hook adapterとして `impact-orchestrator` を呼ぶ |
+| `knowledge/ops/hooks/claude-code-pre-work.ps1` | `claude-code-pre-work` | Claude Code hook adapterとして `impact-orchestrator` を呼ぶ |
+| `knowledge/ops/hooks/pre-publish.ps1` | `pre-publish` | publish hook adapterとして `hello-world-gate` を呼ぶ |
+
+## Work Ledger
+
+| file | 役割 |
+|---|---|
+| `knowledge/journal/work/locks.json` | active file lock台帳。完了時に空へ戻す |
+| `knowledge/journal/work/*.md` | `impact-orchestrator` のwork card |
 
 ## Tools
 
 現時点で `knowledge/ops/tools/` は作らない。
 
-repo開発運用に必要な道具は、まず Skill または orchestrator の所有フォルダへ置く。業務フォルダへコピーされる実行部品は `template/_shared/` 側へ置く。
+repo開発運用に必要な道具は、まず Skill、hook adapter、orchestrator の所有フォルダへ置く。業務フォルダへコピーされる実行部品は `template/_shared/` 側へ置く。
 
 ## MergeGate 作法の対応
 
 | MergeGate風の作法 | Biz-compilerでの採用形 |
 |---|---|
 | register work | `impact-orchestrator` が work card を作る |
-| record impact | work cardの `Impact`、`Touched files`、`Read routing` に残す |
-| lock files | 現時点では実装しない。必要なら将来のhook adapterで扱う |
+| record impact | work cardの `Impact`、`Touched Files`、`Markdown Reference Impact`、`Read Routing` に残す |
+| lock files | `knowledge/journal/work/locks.json` にactive lockを持ち、衝突時に停止する |
 | assign execution | work cardの `Executor` と `Subagent hint` に残す |
-| track branch / PR state | 現時点では `hello-world-gate` のgit status / push確認に寄せる |
-| verify completion | work cardの `Finish gate` と `hello-world-gate` に寄せる |
+| track branch / PR state | 未実装。GitHub運用が固まってから判断する |
+| verify completion | `impact-orchestrator -Complete` でwork cardを閉じ、lockを解放する。GitHub反映は `hello-world-gate` に寄せる |
 
 ## 更新ルール
 

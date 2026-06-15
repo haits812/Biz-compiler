@@ -223,11 +223,15 @@ function Get-OpsEntrypointLines {
   return @(
     "- registry: knowledge/ops/registry.md",
     "- hooks: knowledge/ops/hooks/README.md",
+    "  - codex-pre-work: knowledge/ops/hooks/codex-pre-work.ps1",
+    "  - claude-code-pre-work: knowledge/ops/hooks/claude-code-pre-work.ps1",
+    "  - pre-publish: knowledge/ops/hooks/pre-publish.ps1",
     "- orchestrators: knowledge/ops/orchestrators/",
-    "  - impact-orchestrator: knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1"
+    "  - impact-orchestrator: knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1",
+    "- work ledger: knowledge/journal/work/",
+    "  - active locks: knowledge/journal/work/locks.json"
   )
 }
-
 function Assert-HelloWorldStructure {
   $errors = New-Object System.Collections.Generic.List[string]
 
@@ -286,8 +290,13 @@ function Assert-HelloWorldStructure {
     "knowledge\ops\README.md",
     "knowledge\ops\registry.md",
     "knowledge\ops\hooks\README.md",
+    "knowledge\ops\hooks\codex-pre-work.ps1",
+    "knowledge\ops\hooks\claude-code-pre-work.ps1",
+    "knowledge\ops\hooks\pre-publish.ps1",
     "knowledge\ops\orchestrators\impact-orchestrator\README.md",
-    "knowledge\ops\orchestrators\impact-orchestrator\impact-orchestrator.ps1"
+    "knowledge\ops\orchestrators\impact-orchestrator\impact-orchestrator.ps1",
+    "knowledge\journal\work\README.md",
+    "knowledge\journal\work\locks.json"
   )
   foreach ($relativePath in $requiredOpsFiles) {
     $filePath = Join-Path $repoRoot $relativePath
@@ -492,7 +501,7 @@ function New-HelloWorldContent {
     "",
     "## Ops Entrypoints",
     "",
-    "初期読み込みでは、ここで存在と入口だけを確認する。Skillを作る、hook/orchestrator/command/toolを触る、作業前impactを切る時だけ knowledge/ops/registry.md を読む。",
+    "初期読み込みでは、ここで存在と入口だけを確認する。Skillを作る、hook/orchestrator/command/toolを触る、作業前impactやlockを扱う時だけ knowledge/ops/registry.md を読む。",
     ""
   )
   $lines += $opsEntrypointLines
