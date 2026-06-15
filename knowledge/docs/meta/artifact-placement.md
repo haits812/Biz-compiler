@@ -18,6 +18,7 @@
 | `knowledge/docs/evaluation.md` | fresh executor、shadow run、eval、受け入れ条件 | 実業務の検証結果そのもの | 検証の設計・観点か |
 | `knowledge/docs/decisions/` | 採用/却下の背景理由 | 常時読む短い現在地 | なぜそう決めたかを残す必要があるか |
 | `knowledge/ops/` | repo-local Skill、hook adapter、orchestrator、ops registry、管理コマンド | 業務実行用の個別Skill、直下の野良`.ps1` | このrepoの知識運用や作業前gateを操作するか |
+| `knowledge/.index/` | Markdown正本から生成するSQLite検索index、index README | 正本メモ、決定、手編集する台帳 | 生成物/cacheであり、正本へ戻るpathを持つか |
 | `template/<数字phase>/` | 業務フォルダへコピーされるphase-local雛形 | 全phase共通の思想や用語本文 | 特定phaseで作業者が使う雛形か |
 | `template/_shared/` | 業務フォルダ内から使う横断runner、validator、schema、script、tool | 開発運用メモ、要求定義 | outputへコピーされる横断部品か |
 | `output/Biz-001-業務名/` | 実際にコンパイルしている個別業務のartifact、ledger、event log | サンプル、プレースホルダ、compiler repoの知識 | 実業務作成時に採番された成果物か |
@@ -41,7 +42,7 @@
 2. 実業務の成果物なら、実業務作成時に `output/Biz-001-業務名/` 配下へ置く。現時点でプレースホルダは作らない。
 3. 業務フォルダへコピーして使う原型なら、`template/<phase>/` か `template/_shared/` へ置く。
 4. repoを作るための知識なら、`knowledge/docs/` のread routingに従う。
-5. knowledgeを操作するSkillなら、`knowledge/ops/skills/<skill-name>/` に `SKILL.md` と同居させる。環境別hook adapterなら `knowledge/ops/hooks/`、作業前gateなどの固定手順なら `knowledge/ops/orchestrators/<orchestrator-name>/` に説明ファイルと同居させる。
+5. knowledgeを操作するSkillなら、`knowledge/ops/skills/<skill-name>/` に `SKILL.md` と同居させる。環境別hook adapterなら `knowledge/ops/hooks/`、作業前gateや検索などの固定手順なら `knowledge/ops/orchestrators/<orchestrator-name>/` に説明ファイルと同居させる。生成SQLite indexは `knowledge/.index/` に置き、正本にしない。
 6. どれにも当てはまらない場合だけ、rootに置く理由があるか確認する。
 
 ## 禁止
@@ -49,6 +50,7 @@
 - repo直下に `docs/`、`pending/`、`journal/`、`samples/`、`internal/`、`scripts/`、`schemas/`、`runner/`、`tools/`、`validators/`、`phase-packs/` を増やさない。
 - `output/` 直下に `example-business-id`、`_business-id`、サンプル業務、プレースホルダ業務フォルダを作らない。
 - `knowledge/ops/` 直下に `.ps1` を置かない。hook adapterは `knowledge/ops/hooks/`、orchestrator実行体は `knowledge/ops/orchestrators/<name>/` に置く。
+- `knowledge/.index/*.sqlite` を正本として編集・commitしない。Markdown正本から再生成する。
 - phase-localな不足物を `knowledge/docs/meta/README.md` のメタ土台台帳へ混ぜない。
 - 個別業務のSkill、adapter、workflowをcompiler repo直下へ溜め込まない。
 

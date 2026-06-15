@@ -35,6 +35,7 @@
 | id | 状態 | 役割 | path | command | 出力 |
 |---|---|---|---|---|---|
 | `impact-orchestrator` | 整備済み | 作業前に目的、影響、Markdown参照impact、読むべきもの、既存ops資産、実行者、完了gateを1枚に切り、必要ならfile lockを取る | `knowledge/ops/orchestrators/impact-orchestrator/` | `knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1` | `knowledge/journal/work/` |
+| `knowledge-search` | 整備済み | Markdown正本をSQLite FTS5へindexし、過去会話・作業メモ・決定・設定をpath付きで検索する | `knowledge/ops/orchestrators/knowledge-search/` | `knowledge/ops/orchestrators/knowledge-search/knowledge-search.ps1` | `knowledge/.index/knowledge.sqlite` |
 
 ## Hooks
 
@@ -52,6 +53,7 @@
 | `knowledge/ops/skills/knowledge-curation/new-pending-update.ps1` | `knowledge-curation` | 未承認の知識更新候補を作る |
 | `knowledge/ops/skills/knowledge-curation/pending-review.ps1` | `knowledge-curation` | pending候補のlist/show/approve/reject/applied |
 | `knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1` | `impact-orchestrator` | 編集前のwork card/impact/lock作成、完了時のlock解放 |
+| `knowledge/ops/orchestrators/knowledge-search/knowledge-search.ps1` | `knowledge-search` | Markdown正本をSQLite FTS5へindex/searchする |
 | `knowledge/ops/hooks/codex-pre-work.ps1` | `codex-pre-work` | Codex hook adapterとして `impact-orchestrator` を呼ぶ |
 | `knowledge/ops/hooks/claude-code-pre-work.ps1` | `claude-code-pre-work` | Claude Code hook adapterとして `impact-orchestrator` を呼ぶ |
 | `knowledge/ops/hooks/pre-publish.ps1` | `pre-publish` | publish hook adapterとして `hello-world-gate` を呼ぶ |
@@ -62,6 +64,7 @@
 |---|---|
 | `knowledge/journal/work/locks.json` | active file lock台帳。完了時に空へ戻す |
 | `knowledge/journal/work/*.md` | `impact-orchestrator` のwork card |
+| `knowledge/.index/knowledge.sqlite` | Markdown正本から生成するSQLite FTS5検索index。git管理しない |
 
 ## Tools
 
@@ -87,6 +90,7 @@ repo開発運用に必要な道具は、まず Skill、hook adapter、orchestrat
 - repo-local Skill の追加、改名、削除
 - hook adapter の追加、改名、削除
 - orchestrator の追加、改名、削除
+- `knowledge/.index/` の生成物ルール変更
 - `knowledge/ops/` 配下の command / script の追加、改名、削除
 - `Hello-world.md` に載せる ops entrypoint の変更
 

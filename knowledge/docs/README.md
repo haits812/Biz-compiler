@@ -18,6 +18,17 @@
 
 `knowledge/docs/requirements/` は常時読む対象ではない。要求全体確認、要求変更、要求定義との照合が必要な時だけ追加で読む。
 
+## Search Before Broad Reading
+
+過去の会話、作業メモ、決定、ユーザー設定を横断して探す時は、全量を読む前に `knowledge-search` を使う。
+
+```powershell
+.\knowledge\ops\orchestrators\knowledge-search\knowledge-search.ps1 index
+.\knowledge\ops\orchestrators\knowledge-search\knowledge-search.ps1 search -Query "承認 gate"
+```
+
+SQLiteは `knowledge/.index/knowledge.sqlite` に生成される検索indexであり、正本ではない。正本はMarkdown側に置き、SQLiteを手編集しない。
+
 ## Conditional Read Routing
 
 | 読むタイミング | 読む場所 | 用途 |

@@ -59,6 +59,7 @@ D:\local\Biz-compiler
 ├─ output/  業務ごとの成果物置き場。実業務作成まで空
 ├─ knowledge/  確定知識・pending・journal・管理ops
 ├─ README.md  GitHub入口。正本はHello World
+├─ .gitignore  生成物除外
 ├─ AGENTS.md  作業規約と読み込み順
 ├─ Hello-world.md  現在地。このファイル
 ├─ COMPASS.md  direction packet / heading
@@ -126,7 +127,8 @@ knowledge/
 ├─ docs/  確定済み要求・決定
 ├─ pending/  未承認候補
 ├─ journal/  作業ログ・適用/却下ログ
-└─ ops/  repo-local skills / hooks / orchestrators / registry
+├─ ops/  repo-local skills / hooks / orchestrators / registry
+└─ .index/  生成SQLite検索index。正本ではない
 ~~~
 
 Known knowledge ops assets:
@@ -136,6 +138,10 @@ Known knowledge ops assets:
 - knowledge/ops/hooks/README.md
 - knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1
 - knowledge/ops/orchestrators/impact-orchestrator/README.md
+- knowledge/ops/orchestrators/knowledge-search/__pycache__/knowledge_search.cpython-312.pyc
+- knowledge/ops/orchestrators/knowledge-search/knowledge_search.py
+- knowledge/ops/orchestrators/knowledge-search/knowledge-search.ps1
+- knowledge/ops/orchestrators/knowledge-search/README.md
 - knowledge/ops/README.md
 - knowledge/ops/registry.md
 - knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1
@@ -146,7 +152,7 @@ Known knowledge ops assets:
 
 ## Ops Entrypoints
 
-初期読み込みでは、ここで存在と入口だけを確認する。Skillを作る、hook/orchestrator/command/toolを触る、作業前impactやlockを扱う時だけ knowledge/ops/registry.md を読む。
+初期読み込みでは、ここで存在と入口だけを確認する。Skillを作る、hook/orchestrator/command/toolを触る、作業前impact、lock、knowledge searchを扱う時だけ knowledge/ops/registry.md を読む。
 
 - registry: knowledge/ops/registry.md
 - hooks: knowledge/ops/hooks/README.md
@@ -155,6 +161,8 @@ Known knowledge ops assets:
   - pre-publish: knowledge/ops/hooks/pre-publish.ps1
 - orchestrators: knowledge/ops/orchestrators/
   - impact-orchestrator: knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1
+  - knowledge-search: knowledge/ops/orchestrators/knowledge-search/knowledge-search.ps1
+- knowledge index: knowledge/.index/README.md (SQLite DBは生成物。commitしない)
 - work ledger: knowledge/journal/work/
   - active locks: knowledge/journal/work/locks.json
 

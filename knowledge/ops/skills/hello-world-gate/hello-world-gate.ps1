@@ -38,17 +38,18 @@ $forbiddenRootDirs = @(
 )
 
 $requiredRootDirs = @("template", "output", "knowledge")
-$requiredRootFiles = @("README.md", "AGENTS.md", "Hello-world.md", "SOUL.md", "USER.md", "COMPASS.md", "MEMORY.md")
+$requiredRootFiles = @("README.md", ".gitignore", "AGENTS.md", "Hello-world.md", "SOUL.md", "USER.md", "COMPASS.md", "MEMORY.md")
 $rootDirOrder = @("template", "output", "knowledge")
-$rootFileOrder = @("README.md", "AGENTS.md", "Hello-world.md", "COMPASS.md", "MEMORY.md", "SOUL.md", "USER.md")
+$rootFileOrder = @("README.md", ".gitignore", "AGENTS.md", "Hello-world.md", "COMPASS.md", "MEMORY.md", "SOUL.md", "USER.md")
 $templateDirOrder = @("_shared", "00-entry", "10-source-intake", "20-decompose-encrs", "30-route-executor", "40-ir-freeze", "50-consent", "60-validation", "70-improvement", "80-operation")
-$knowledgeDirOrder = @("docs", "pending", "journal", "ops")
+$knowledgeDirOrder = @("docs", "pending", "journal", "ops", ".index")
 
 $rootDescriptions = @{
   "template" = "業務フォルダの原型"
   "output" = "業務ごとの成果物置き場。実業務作成まで空"
   "knowledge" = "確定知識・pending・journal・管理ops"
   "README.md" = "GitHub入口。正本はHello World"
+  ".gitignore" = "生成物除外"
   "AGENTS.md" = "作業規約と読み込み順"
   "Hello-world.md" = "現在地。このファイル"
   "COMPASS.md" = "direction packet / heading"
@@ -75,6 +76,7 @@ $knowledgeDescriptions = @{
   "pending" = "未承認候補"
   "journal" = "作業ログ・適用/却下ログ"
   "ops" = "repo-local skills / hooks / orchestrators / registry"
+  ".index" = "生成SQLite検索index。正本ではない"
 }
 
 function Sort-ByPreferredOrder {
@@ -228,6 +230,8 @@ function Get-OpsEntrypointLines {
     "  - pre-publish: knowledge/ops/hooks/pre-publish.ps1",
     "- orchestrators: knowledge/ops/orchestrators/",
     "  - impact-orchestrator: knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1",
+    "  - knowledge-search: knowledge/ops/orchestrators/knowledge-search/knowledge-search.ps1",
+    "- knowledge index: knowledge/.index/README.md (SQLite DBは生成物。commitしない)",
     "- work ledger: knowledge/journal/work/",
     "  - active locks: knowledge/journal/work/locks.json"
   )
@@ -295,6 +299,10 @@ function Assert-HelloWorldStructure {
     "knowledge\ops\hooks\pre-publish.ps1",
     "knowledge\ops\orchestrators\impact-orchestrator\README.md",
     "knowledge\ops\orchestrators\impact-orchestrator\impact-orchestrator.ps1",
+    "knowledge\ops\orchestrators\knowledge-search\README.md",
+    "knowledge\ops\orchestrators\knowledge-search\knowledge-search.ps1",
+    "knowledge\ops\orchestrators\knowledge-search\knowledge_search.py",
+    "knowledge\.index\README.md",
     "knowledge\journal\work\README.md",
     "knowledge\journal\work\locks.json"
   )
@@ -501,7 +509,7 @@ function New-HelloWorldContent {
     "",
     "## Ops Entrypoints",
     "",
-    "初期読み込みでは、ここで存在と入口だけを確認する。Skillを作る、hook/orchestrator/command/toolを触る、作業前impactやlockを扱う時だけ knowledge/ops/registry.md を読む。",
+    "初期読み込みでは、ここで存在と入口だけを確認する。Skillを作る、hook/orchestrator/command/toolを触る、作業前impact、lock、knowledge searchを扱う時だけ knowledge/ops/registry.md を読む。",
     ""
   )
   $lines += $opsEntrypointLines

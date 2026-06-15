@@ -86,6 +86,8 @@ subagentや別作業者へ重い作業を渡す時は、`Hello-world.md`、`SOUL
 
 作業対象がコード、ドキュメント、Skill、ops、templateを変更する場合は、編集前に `impact-orchestrator` で作業の意図、影響、Markdown参照impact、読むもの、完了gateを切る。`-Files` を渡した場合はfile lockも取る。短い質問回答、読み取りだけ、対象なしのGitHub確認では不要。
 
+過去の会話、作業メモ、決定、ユーザー設定を探す時は `knowledge-search` を使う。`knowledge/.index/knowledge.sqlite` はMarkdown正本から生成する検索indexであり、直接編集しない。indexが古い場合は `knowledge-search.ps1 index` で再生成する。
+
 ```powershell
 .\knowledge\ops\orchestrators\impact-orchestrator\impact-orchestrator.ps1 `
   -Title "作業名" `
@@ -174,6 +176,7 @@ knowledge/
   pending/
   journal/
   ops/
+  .index/  # generated SQLite search index
 ```
 
 守ること:
@@ -185,6 +188,7 @@ knowledge/
 - `output/` は業務ごとの実行成果物置き場である。業務を作るタイミングで `Biz-001-業務名` のように採番したフォルダを作り、その配下に `template/` と同じ数字phase構成を作る。
 - `output/` 直下に `example-business-id`、`_business-id`、サンプル業務、プレースホルダ業務フォルダを作らない。
 - `knowledge/` はこのリポジトリを作るための知識置き場である。`docs/`、`pending/`、`journal/`、知識管理用 `ops/` は混ぜずに `knowledge/` 配下で分ける。
+- `knowledge/.index/` は生成SQLite検索index置き場であり、Markdown正本ではない。`*.sqlite` はcommitしない。
 - リポジトリ直下に `docs/`、`pending/`、`journal/`、`samples/`、`internal/`、`scripts/`、`schemas/`、`runner/`、`tools/`、`validators/`、`phase-packs/` を増やさない。
 - 会話UIやCLIの説明は、まず `template/<phase>` と `output/Biz-001-業務名/<phase>` を主語にする。`template/_shared/` と `knowledge/` は補助構造であり、人間向けの主要導線にしない。
 

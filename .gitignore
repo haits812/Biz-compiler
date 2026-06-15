@@ -1,0 +1,3 @@
+# Generated knowledge search indexes
+knowledge/.index/*.sqlite
+knowledge/.index/*.sqlite-*
