@@ -155,9 +155,11 @@ Known knowledge ops assets:
 - knowledge/ops/skills/knowledge-curation/new-pending-update.ps1
 - knowledge/ops/skills/knowledge-curation/pending-review.ps1
 - knowledge/ops/skills/knowledge-curation/SKILL.md
+- knowledge/ops/skills/paper-write/SKILL.md
 - knowledge/ops/skills/skill-creator-gate/new-skill-proposal.ps1
 - knowledge/ops/skills/skill-creator-gate/SKILL.md
 - knowledge/ops/skills/skill-creator-gate/validate-repo-skill.ps1
+- knowledge/ops/skills/web-research-to-report/SKILL.md
 
 ## Ops Entrypoints
 
@@ -170,9 +172,11 @@ Known knowledge ops assets:
   - hello-world-gate docs: knowledge/ops/skills/hello-world-gate/SKILL.md
   - hello-world-gate command: knowledge/ops/skills/hello-world-gate/hello-world-gate.ps1
   - knowledge-curation docs: knowledge/ops/skills/knowledge-curation/SKILL.md
+  - paper-write docs: knowledge/ops/skills/paper-write/SKILL.md
   - skill-creator-gate docs: knowledge/ops/skills/skill-creator-gate/SKILL.md
   - skill-creator-gate proposal command: knowledge/ops/skills/skill-creator-gate/new-skill-proposal.ps1
   - skill-creator-gate validation command: knowledge/ops/skills/skill-creator-gate/validate-repo-skill.ps1
+  - web-research-to-report docs: knowledge/ops/skills/web-research-to-report/SKILL.md
 - hooks: knowledge/ops/hooks/README.md
   - codex-pre-work: knowledge/ops/hooks/codex-pre-work.ps1
   - claude-code-pre-work: knowledge/ops/hooks/claude-code-pre-work.ps1
@@ -216,9 +220,13 @@ repo-local Skillを追加・改名・削除したら、SKILL.mdのname/descripti
 - knowledge-curation: Biz-compiler repo内のMEMORYメモと知識候補を、Markdownルール化、Hello World Gate、将来phase script候補、pending、journal、decisions、廃棄へ振り分けるrepo-local Skill。pending候補の作成・承認・却下・適用もこのSkillで扱う。
   - path: knowledge/ops/skills/knowledge-curation/
   - commands: knowledge/ops/skills/knowledge-curation/new-pending-update.ps1, knowledge/ops/skills/knowledge-curation/pending-review.ps1
+- paper-write: Use when Biz-compiler repoでpaper-write、論文を書いて、研究論文ドラフト、academic/research paper、LaTeX manuscript、論文骨子、研究稿、引用付き論文、PDF/LaTeX原稿の作成・修復・コンパイルを依頼された時。普通の業務文書、Web調査レポート、ブログ、要約、スライド、意思決定メモには使わない。OpenSquillaのmeta-paper-writeからmeta-とruntimeを外し、論文/研究稿向けのcontract、citation、figure/table placeholder、length/citation gate作法を移植する。
+  - path: knowledge/ops/skills/paper-write/
 - skill-creator-gate: Use when Biz-compiler repoで新しいrepo-local Skillを作る、既存Skillを改修する、作業をSkill化する、やりたいことを元にどれをSkill化するか組み立てる、スキル作って/Skill作って/この流れをSkillにして/この仕事をSkill化できるか/creator gate/skill-creator-gate/meta-skill-creator流用と言われた時。やりたいことの聞き取り、Skill候補整理、多工程Skill設計、標準skill-creator作法による実装、repo-local登録、検査まで行う。
   - path: knowledge/ops/skills/skill-creator-gate/
   - commands: knowledge/ops/skills/skill-creator-gate/new-skill-proposal.ps1, knowledge/ops/skills/skill-creator-gate/validate-repo-skill.ps1
+- web-research-to-report: Use when Biz-compiler repoでWeb調査を出典付きレポート、ブリーフ、意思決定メモにする、調べて根拠付きでまとめて、出典付きで比較して、最新情報を調査して報告して、市場/技術/選択肢/リスクをsource-backedに整理してと言われた時。単発の事実確認、与えられたメモだけの要約、普通の文章作成には使わない。OpenSquillaのmeta-web-research-to-reportからmeta-とruntimeを外し、普通のrepo-local Skillとして工程作法を移植する。
+  - path: knowledge/ops/skills/web-research-to-report/
 
 Current pending state at last verification:
 
