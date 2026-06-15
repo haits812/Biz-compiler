@@ -227,4 +227,3 @@ Other active locks at registration:
 - verified: paper-writeとweb-research-to-reportのvalidate-repo-skill、hello-world-gate.ps1のPowerShell parse、git diff --checkを確認済み
 - residual_risk: paper-writeは自然発火を絞っている。web-research-to-reportは自然発火寄りにしたため、実運用で過発火する場合はdescriptionを調整する。
 - released_locks: 5
-
