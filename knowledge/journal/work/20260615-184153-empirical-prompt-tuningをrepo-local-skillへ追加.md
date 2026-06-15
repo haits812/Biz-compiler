@@ -200,4 +200,3 @@ Other active locks at registration:
 - verified: validate-repo-skill pass。raw sourceとのSHA256一致。hello-world-gate.ps1 parse ok。git diff --check pass
 - residual_risk: 元SKILL.mdのdescriptionは明示呼び出し寄りで、自然発火語が少ない警告が出るが、今回は原文維持を優先して未改変
 - released_locks: 4
-
