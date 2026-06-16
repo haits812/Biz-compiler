@@ -17,13 +17,34 @@
 
 ## 00-entry
 
-入口で未整備:
+入口のv0雛形は作成済み。
 
-- 業務ID、業務名、対象scope、関係者、仮ゴールの記入雛形
-- self / org、bottom-up / top-down の入口分岐メモ
-- 他部署・社外・個人情報・契約情報などの初期risk確認
-- N-interface候補の初期メモ
-- この業務をコンパイル対象にする/しないの判定基準
+既存:
+
+- `template/00-entry/README.md`: phase目的、入力、出力、workflow、Contract Gate
+- `template/00-entry/contract.md`: entry contract雛形
+- `template/00-entry/questions.md`: 初期問診質問票
+- `template/00-entry/checks.md`: phase出口チェック
+- `template/00-entry/handoff.md`: 10-source-intakeへのhandoff packet
+- `template/00-entry/artifacts/entry-packet.md`: entry_type、intent、actor、rough goalの一枚化
+- `template/00-entry/artifacts/scope-memo.md`: scope in/out/undecidedのメモ
+- `template/00-entry/artifacts/initial-risk-memo.md`: 初期risk hint
+- `template/00-entry/artifacts/source-candidates.md`: 10で確認する材料候補
+- `template/00-entry/artifacts/later-phase-notes.md`: 00で決めず後続phaseへ送る話
+- `template/00-entry/_context/README.md`: 00実行補助contextの読み方
+- `template/00-entry/_context/phase-boundary.md`: 00で聞く/聞かない/送る先
+- `template/00-entry/_context/grill-rules.md`: grill-meの00向け運用
+- `template/00-entry/_context/sorting-rules.md`: 回答分類ルール
+- `template/00-entry/_context/anomaly-rules.md`: 違和感、stop/rework条件
+- `template/00-entry/_context/gate-rubric.md`: subagent自己チェックとmain review観点
+- `template/00-entry/_context/matt-pocock-skills.md`: grill-me / grill-with-docs / to-prdの翻訳
+- `template/00-entry/_context/subagent-brief.md`: 00担当subagent brief雛形
+
+今後の候補:
+
+- 00-entry完了判定validator
+- entry packet / scope memo / risk memo のschema化
+- 実業務作成時にoutput側へコピーするphase runner
 
 ## 10-source-intake
 
@@ -132,6 +153,6 @@ IR凍結で未整備:
 - Lexicon: `knowledge/docs/lexicon.md`
 - 状態分類: 決定済み / 仮説 / 未検証 / pending / accepted / applied など
 - session brief: 今回の作業の仮ゴール、scope、完了条件
-- subagent brief: 委譲先への仮ゴール、Compass、必要資料、成果物契約
+- 横断subagent brief: 委譲先への仮ゴール、Compass、必要資料、成果物契約。phase固有の実行briefは `template/<phase>/_context/` に置いてよい
 - read routing: どの作業で何を追加で読むか
 - schema / validator / runner: 原則 `template/_shared/internal/`

@@ -18,7 +18,42 @@
 
 - PDG / taint analysis は本格的な静的解析として先に実装するより、まず `taint-lite` 的な観点として `skill-creator-gate` や検収/validation gate に残す候補。特に shell、外部送信、secret/env、ファイル削除/上書き、ユーザー入力からcommand stringへの流入、approval bypass などを、成果物の品質チェック項目として扱う方向がよさそう。
 
-- `code-impact` はGitNexus型のフル基盤ではなく、Biz-compilerのメタ土台向けに軽量な永続グラフを生成indexとして持つ方向を本命候補にする。対象は `knowledge/`、`template/`、repo-local ops、root正本の関連ファイル探索で、`output/Biz-*` の個別業務フォルダは原則そのフォルダ内で完結する前提。ハロワゲート時にindex鮮度や再確認対象を見られるとよいが、正本はMarkdown/台帳であり、グラフは補助indexとして扱う。
+### Matt Pocock skills の数字phase実装への流用メモ
+
+しばらく数字phase実装が続く間は、`mattpocock/skills` の工程・チェックリスト・テンプレを Biz-compiler 語彙へ置換して流用する。思想だけでなく、`SKILL.md` の実装手順も取り込む候補にする。外部repoは MIT License なので、実装として取り込む場合は著作権表示を残す。
+
+凡例: `A` = かなり直接流用、`B` = Biz-compiler向けに改造して流用、`C` = 参考程度。
+
+| Phase | 使えそうなMatt skills | 流用度 | どう効くか |
+|---|---|---:|---|
+| `00-entry` | `grill-me`, `grill-with-docs`, `to-prd` | A/B | 対象業務、scope、仮ゴール、初期リスクを質問で詰める。`to-prd` はPRDではなく `00-entry/contract` や entry packet 生成へ転用。 |
+| `10-source-intake` | `grill-with-docs`, `zoom-out`, `triage` | A/B | ソースと本人説明を照合し、用語衝突を拾う。`zoom-out` は既存資料・コードの地図化に使える。`triage` の `needs-info` 発想は未確認事項管理に合う。 |
+| `20-decompose-encrs` | `to-issues`, `prototype`, `grill-me`, `zoom-out` | A/B | `to-issues` の vertical slice / tracer bullet が、IPO/ENCRS分解に効く。As-Is手順を横断sliceにして、孤児手順を潰せる。 |
+| `30-route-executor` | `triage`, `to-issues`, `write-a-skill` | A/B | `triage` の `ready-for-agent` / `ready-for-human` が executor routing に近い。`write-a-skill` は Skill 化候補の構造化に使える。 |
+| `40-ir-freeze` | `to-prd`, `tdd`, `prototype`, `review` | A/B | `to-prd` の Implementation Decisions / Testing Decisions を IR freeze 用に変換できる。`tdd` の public interface test は contract/schema/validator の設計に合う。 |
+| `50-consent` | `prototype`, `grill-with-docs`, `tdd`, `to-prd` | A/B | consent view や flowchart のUI/状態モデルを試すなら `prototype` が直撃。人間が見る粗い契約とnode payloadの分離も、grillで詰められる。 |
+| `60-validation` | `tdd`, `diagnose`, `review`, `to-issues` | A | 一番流用度が高い。`diagnose` の feedback loop構築、再現、仮説、instrument、regression test は validation gate そのものに近い。 |
+| `70-improvement` | `improve-codebase-architecture`, `review`, `diagnose`, `to-issues`, `grill-with-docs` | A/B | drift / near-miss / rework から改善候補を出すところに合う。deep module、deletion test、standards/spec二軸reviewは改善案の質を上げる。 |
+| `80-operation` | `triage`, `diagnose`, `handoff`, `review` | B | 運用中の事故・改善要望・引き継ぎに効く。`handoff` は一時ファイル出力ではなく operation ledger / runbook handoff へ置換する必要あり。 |
+
+置換ルール:
+
+| Matt側 | Biz-compiler側 |
+|---|---|
+| `CONTEXT.md` | `knowledge/docs/lexicon.md` + phase README |
+| `docs/adr/` | `knowledge/docs/decisions/` |
+| GitHub Issues | `knowledge/journal/work/` or phase-local work items |
+| PRD | phase contract / handoff / checks |
+| `ready-for-agent` | automation / Skill / orchestrator / AFK executor |
+| `ready-for-human` | human / approval gate / HITL |
+| prototype output | decision / contract / schema へ吸収して削除 |
+
+実装候補:
+
+- `phase-implementation-gate` っぽいrepo-local Skillを作る。
+- 中身は `grill-with-docs`、`to-issues`、`to-prd`、`tdd`、`diagnose` を合成する。
+- 出力は数字phaseごとの `README.md`、`contract.md`、`questions.md`、`checks.md`、`handoff.md`、`artifacts/` に寄せる。
+- phaseごとに、目的・語彙・scopeをgrillし、phase-local contract / acceptance criteriaへ落とし、vertical sliceに分解し、迷う部分だけprototypeし、public interface越しにtest/validatorを作り、hello-world-gate / code-impact / phase gateで閉じる。
 
 ## 掃除ルール
 

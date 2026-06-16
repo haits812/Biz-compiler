@@ -99,6 +99,24 @@ template/
 ~~~
 
 Known template assets:
+- template/00-entry/_context/anomaly-rules.md
+- template/00-entry/_context/gate-rubric.md
+- template/00-entry/_context/grill-rules.md
+- template/00-entry/_context/matt-pocock-skills.md
+- template/00-entry/_context/phase-boundary.md
+- template/00-entry/_context/README.md
+- template/00-entry/_context/sorting-rules.md
+- template/00-entry/_context/subagent-brief.md
+- template/00-entry/artifacts/entry-packet.md
+- template/00-entry/artifacts/initial-risk-memo.md
+- template/00-entry/artifacts/later-phase-notes.md
+- template/00-entry/artifacts/scope-memo.md
+- template/00-entry/artifacts/source-candidates.md
+- template/00-entry/checks.md
+- template/00-entry/contract.md
+- template/00-entry/handoff.md
+- template/00-entry/questions.md
+- template/00-entry/README.md
 - template/10-source-intake/artifacts/fact-register.md
 - template/10-source-intake/artifacts/intake-log.md
 - template/10-source-intake/artifacts/source-inventory.md
