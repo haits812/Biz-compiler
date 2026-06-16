@@ -11,7 +11,7 @@ Biz-compilerの変更をコミットできるようにするため、private Git
 
 ## Decision
 
-GitHub上に private repository `haits812/Biz-compiler` を作成し、ローカル `D:\local\Biz-compiler` を `main` branch のgit repositoryとして初期化する。
+GitHub上に private repository `haits812/Biz-compiler` を作成し、作業者のローカルclone先を `main` branch のgit repositoryとして初期化する。
 
 Gitは空ディレクトリを追跡しないため、`output/` 以外の空ディレクトリには `.gitkeep` を置いて構成を保持する。
 

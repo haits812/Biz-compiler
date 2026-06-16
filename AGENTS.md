@@ -28,7 +28,7 @@ Biz-compilerは、AI業務委託の契約・検収・稼働管理をするため
 
 ### apply_patch 禁止（非交渉）
 
-`apply_patch` を使わない。Windows絶対パス（`d:/...` / `D:\...`）でプロセスがハングする既知バグがある。
+`apply_patch` を使わない。Windows絶対パス（`<drive>:/...` / `<drive>:\...`）でプロセスがハングする既知バグがある。
 
 代替:
 
@@ -49,6 +49,10 @@ Biz-compilerは、AI業務委託の契約・検収・稼働管理をするため
 返答に `::git-stage{...}` / `::git-commit{...}` / `::git-push{...}` / 未文書化の `::git-*` directive を出さない。
 
 gitのstage / commit / push結果は、通常の文章またはbacktick付きコマンド名で報告する。Windows cwd属性を含むgit directiveはCodex Desktopのmarkdown/review parserを壊す既知リスクがある。
+
+### clone-safe path rule
+
+commitされるMarkdown、script、templateには、特定PCのローカル絶対パスを前提として焼かない。repo内参照は相対パス、repo rootの説明は `<repo-root>/`、実パス確認は `git rev-parse --show-toplevel` を使う。過去の経緯としてローカルパスを説明する必要がある場合も、個人環境の絶対パスではなく一般表現に寄せる。
 
 ## 読み込み順
 

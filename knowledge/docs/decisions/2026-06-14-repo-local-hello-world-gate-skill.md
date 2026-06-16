@@ -15,7 +15,7 @@
 
 `knowledge/ops/skills/hello-world-gate/SKILL.md` を追加する。
 
-これはBiz-compiler repo-local Skillであり、`C:\Users\khsub\.agents\skills` や `C:\Users\khsub\.codex\skills` には置かない。
+これはBiz-compiler repo-local Skillであり、ユーザー環境のグローバルSkill置き場には置かない。
 
 このSkillは、次を定義する。
 

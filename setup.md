@@ -37,10 +37,15 @@
 
 ## Clone後の初期確認
 
+任意の場所へcloneしてよい。以降のコマンド例は、cloneしたrepo rootで実行する前提で相対パスを書く。
+
 ```powershell
+git rev-parse --show-toplevel
 git status --short --branch
 python --version
 ```
+
+Markdown正本やスクリプトには、特定PCのユーザーディレクトリやドライブ直下など、ローカル絶対パスを前提として焼かない。ローカル実パスを確認する必要がある時は、手元の一時出力か `git rev-parse --show-toplevel` の結果として扱う。
 
 `Hello-world.md` が現在地の入口である。環境構築後、構成が変わった場合は最後に Hello World Gate を通す。
 

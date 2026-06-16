@@ -59,8 +59,10 @@ setup.md は、必要ツール、hook接続、生成物、knowledge-search index
 
 ## Current Root
 
+この構成図では、clone先に依存しないようrepo rootを `<repo-root>/` と表記する。実パスを確認する時は `git rev-parse --show-toplevel` を使う。
+
 ~~~text
-D:\local\Biz-compiler
+<repo-root>/
 ├─ template/  業務フォルダの原型
 ├─ output/  業務ごとの成果物置き場。実業務作成まで空
 ├─ knowledge/  確定知識・pending・journal・管理ops

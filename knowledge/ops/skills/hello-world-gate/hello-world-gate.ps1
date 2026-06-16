@@ -351,7 +351,7 @@ function New-HelloWorldContent {
   $rootDirs = Sort-ByPreferredOrder -Items @(Get-ChildItem -LiteralPath $repoRoot -Directory -Force | Where-Object { $_.Name -ne ".git" }) -PreferredOrder $rootDirOrder
   $rootFiles = Sort-ByPreferredOrder -Items @(Get-ChildItem -LiteralPath $repoRoot -File -Force) -PreferredOrder $rootFileOrder
   $rootEntries = @($rootDirs + $rootFiles)
-  $rootTree = Format-TreeLines -RootLabel $repoRoot -Entries $rootEntries -Descriptions $rootDescriptions
+  $rootTree = Format-TreeLines -RootLabel "<repo-root>/" -Entries $rootEntries -Descriptions $rootDescriptions
 
   $templatePath = Join-Path $repoRoot "template"
   $templateDirs = Sort-ByPreferredOrder -Items @(Get-ChildItem -LiteralPath $templatePath -Directory -Force) -PreferredOrder $templateDirOrder
@@ -467,6 +467,8 @@ function New-HelloWorldContent {
     "setup.md は、必要ツール、hook接続、生成物、knowledge-search index、確認コマンドの入口である。hook一覧は複製せず、knowledge/ops/registry.md と knowledge/ops/hooks/README.md を正本にする。",
     "",
     "## Current Root",
+    "",
+    "この構成図では、clone先に依存しないようrepo rootを ``<repo-root>/`` と表記する。実パスを確認する時は ``git rev-parse --show-toplevel`` を使う。",
     "",
     "~~~text"
   )
