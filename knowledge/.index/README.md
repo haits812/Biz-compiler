@@ -1,13 +1,17 @@
 # Knowledge Index
 
-このディレクトリは、Markdown正本を検索するための生成物置き場である。
+このディレクトリは、Markdown検索や軽量code impact graphのための生成物置き場である。
 
-- 正本は `MEMORY.md`、`knowledge/docs/`、`knowledge/journal/`、`knowledge/pending/`、`template/` などのMarkdownファイル。
+- 正本は `MEMORY.md`、`knowledge/docs/`、`knowledge/journal/`、`knowledge/pending/`、`template/`、repo-local ops などのファイル。
 - `knowledge.sqlite` は `knowledge-search` が作るSQLite FTS5 indexであり、正本ではない。
+- `code-impact.sqlite` は `code-impact` が作るSQLite graph indexであり、正本ではない。
 - `*.sqlite` と `*.sqlite-*` は `.gitignore` で除外する。
-- indexが古い場合は `knowledge-search.ps1 index` で作り直す。
+- `knowledge-search` indexが古い場合は `knowledge-search.ps1 index` で作り直す。
+- `code-impact` indexが古い場合は `code-impact.ps1 rebuild` で作り直す。
 
 ```powershell
 .\knowledge\ops\orchestrators\knowledge-search\knowledge-search.ps1 index
 .\knowledge\ops\orchestrators\knowledge-search\knowledge-search.ps1 search -Query "検索語"
+.\knowledge\ops\orchestrators\code-impact\code-impact.ps1 rebuild
+.\knowledge\ops\orchestrators\code-impact\code-impact.ps1 query -Files "MEMORY.md"
 ```

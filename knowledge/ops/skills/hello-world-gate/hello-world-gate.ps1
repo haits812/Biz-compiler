@@ -77,7 +77,7 @@ $knowledgeDescriptions = @{
   "pending" = "未承認候補"
   "journal" = "作業ログ・適用/却下ログ"
   "ops" = "repo-local skills / hooks / orchestrators / registry"
-  ".index" = "生成SQLite検索index。正本ではない"
+  ".index" = "生成SQLite index（knowledge-search / code-impact）。正本ではない"
 }
 
 function Sort-ByPreferredOrder {
@@ -246,6 +246,8 @@ function Get-OpsEntrypointLines {
     "- orchestrators: knowledge/ops/orchestrators/",
     "  - impact-orchestrator docs: knowledge/ops/orchestrators/impact-orchestrator/README.md",
     "  - impact-orchestrator command: knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1",
+    "  - code-impact docs: knowledge/ops/orchestrators/code-impact/README.md",
+    "  - code-impact command: knowledge/ops/orchestrators/code-impact/code-impact.ps1",
     "  - knowledge-search docs: knowledge/ops/orchestrators/knowledge-search/README.md",
     "  - knowledge-search command: knowledge/ops/orchestrators/knowledge-search/knowledge-search.ps1",
     "- knowledge index: knowledge/.index/README.md (SQLite DBは生成物。commitしない)",
@@ -316,6 +318,9 @@ function Assert-HelloWorldStructure {
     "knowledge\ops\hooks\pre-publish.ps1",
     "knowledge\ops\orchestrators\impact-orchestrator\README.md",
     "knowledge\ops\orchestrators\impact-orchestrator\impact-orchestrator.ps1",
+    "knowledge\ops\orchestrators\code-impact\README.md",
+    "knowledge\ops\orchestrators\code-impact\code-impact.ps1",
+    "knowledge\ops\orchestrators\code-impact\code_impact.py",
     "knowledge\ops\orchestrators\knowledge-search\README.md",
     "knowledge\ops\orchestrators\knowledge-search\knowledge-search.ps1",
     "knowledge\ops\orchestrators\knowledge-search\knowledge_search.py",
@@ -771,6 +776,19 @@ function Assert-HelloWorldMatches {
   }
 }
 
+function Invoke-CodeImpactRebuild {
+  $codeImpactPath = Join-Path $repoRoot "knowledge\ops\orchestrators\code-impact\code-impact.ps1"
+  if (-not (Test-Path -LiteralPath $codeImpactPath -PathType Leaf)) {
+    throw "Required code-impact command is missing: knowledge/ops/orchestrators/code-impact/code-impact.ps1"
+  }
+
+  Write-Output "hello-world-gate: code-impact rebuild"
+  & $codeImpactPath rebuild
+  if ($LASTEXITCODE -ne 0) {
+    throw "code-impact rebuild failed before hello-world-gate publish flow."
+  }
+}
+
 function Invoke-HelloWorldGate {
   Set-Location -LiteralPath $repoRoot
 
@@ -796,6 +814,8 @@ function Invoke-HelloWorldGate {
 
   Assert-HelloWorldMatches -ExpectedContent $publishExpected
   Write-Output "hello-world-gate: check passed"
+
+  Invoke-CodeImpactRebuild
 
   $statusBefore = Get-GitOutput -GitArgs @("status", "--porcelain")
   $upstream = Get-UpstreamBranch

@@ -16,6 +16,10 @@
 
 - Revision/Recompile Model（manifest revision、contract patch、approval再取得、gate降格など）は、70/80の運用・改善ループに到達してから整備する。現時点の先行メタ土台からは外し、phase handoff、gate policy、evidence/confidenceを先に扱う。
 
+- PDG / taint analysis は本格的な静的解析として先に実装するより、まず `taint-lite` 的な観点として `skill-creator-gate` や検収/validation gate に残す候補。特に shell、外部送信、secret/env、ファイル削除/上書き、ユーザー入力からcommand stringへの流入、approval bypass などを、成果物の品質チェック項目として扱う方向がよさそう。
+
+- `code-impact` はGitNexus型のフル基盤ではなく、Biz-compilerのメタ土台向けに軽量な永続グラフを生成indexとして持つ方向を本命候補にする。対象は `knowledge/`、`template/`、repo-local ops、root正本の関連ファイル探索で、`output/Biz-*` の個別業務フォルダは原則そのフォルダ内で完結する前提。ハロワゲート時にindex鮮度や再確認対象を見られるとよいが、正本はMarkdown/台帳であり、グラフは補助indexとして扱う。
+
 ## 掃除ルール
 
 `knowledge-curation` で定期的にこのファイルを見直し、各メモを次のどれかへ振り分ける。

@@ -58,7 +58,13 @@ param(
   [switch]$NoLock,
 
   [Parameter(Mandatory=$false)]
-  [switch]$Force
+  [switch]$Force,
+
+  [Parameter(Mandatory=$false)]
+  [switch]$IncludeCodeImpact,
+
+  [Parameter(Mandatory=$false)]
+  [switch]$NoCodeImpact
 )
 
 $ErrorActionPreference = "Stop"
@@ -253,6 +259,90 @@ function Get-MarkdownReferenceImpact($TouchedFiles) {
   return @($result)
 }
 
+function Get-CodeImpactLines($TouchedFiles) {
+  if ($NoCodeImpact) { return @() }
+  $files = @(Split-Items $TouchedFiles)
+  if ($files.Count -eq 0) { return @() }
+
+  $codeImpactPath = Join-Path $repoRoot "knowledge\ops\orchestrators\code-impact\code-impact.ps1"
+  $fileArg = $files -join ";"
+  $rebuildCommand = ".\knowledge\ops\orchestrators\code-impact\code-impact.ps1 rebuild"
+  $queryCommand = ".\knowledge\ops\orchestrators\code-impact\code-impact.ps1 query -Files `"$fileArg`" -Depth 2 -Format markdown"
+
+  if (-not (Test-Path -LiteralPath $codeImpactPath -PathType Leaf)) {
+    return @(
+      "## Code Impact Candidates",
+      "",
+      "- Warning: code-impact command is missing: knowledge/ops/orchestrators/code-impact/code-impact.ps1",
+      "- Rebuild after adding it: ``$rebuildCommand``"
+    )
+  }
+
+  function Invoke-CodeImpactQueryLocal {
+    try {
+      $output = @(& $codeImpactPath query -Files $fileArg -Depth 2 -Format markdown 2>&1 | ForEach-Object { [string]$_ })
+      $exitCode = $LASTEXITCODE
+    } catch {
+      $output = @([string]$_.Exception.Message)
+      $exitCode = 1
+    }
+    return [pscustomobject]@{ ExitCode = $exitCode; Output = @($output) }
+  }
+
+  function Invoke-CodeImpactRebuildLocal {
+    try {
+      $output = @(& $codeImpactPath rebuild 2>&1 | ForEach-Object { [string]$_ })
+      $exitCode = $LASTEXITCODE
+    } catch {
+      $output = @([string]$_.Exception.Message)
+      $exitCode = 1
+    }
+    return [pscustomobject]@{ ExitCode = $exitCode; Output = @($output) }
+  }
+
+  function Add-AutoRebuildNote($OutputLines) {
+    $items = @($OutputLines)
+    if ($items.Count -gt 0 -and $items[0] -eq "## Code Impact Candidates") {
+      return @($items[0], "", "> Note: code-impact index was rebuilt automatically before query.") + @($items | Select-Object -Skip 1)
+    }
+    return @("## Code Impact Candidates", "", "> Note: code-impact index was rebuilt automatically before query.", "") + $items
+  }
+
+  $query = Invoke-CodeImpactQueryLocal
+  if ($query.ExitCode -eq 0) { return @($query.Output) }
+
+  $queryText = ($query.Output -join [Environment]::NewLine)
+  $shouldRebuild = $queryText -match "stale|missing|not found|not indexed|index"
+  if ($shouldRebuild) {
+    $rebuild = Invoke-CodeImpactRebuildLocal
+    if ($rebuild.ExitCode -eq 0) {
+      $retry = Invoke-CodeImpactQueryLocal
+      if ($retry.ExitCode -eq 0) { return @(Add-AutoRebuildNote $retry.Output) }
+      $query = $retry
+    } else {
+      return @(
+        "## Code Impact Candidates",
+        "",
+        "- Warning: code-impact query required rebuild, but rebuild failed. Work card creation continues.",
+        "- Rebuild: ``$rebuildCommand``",
+        "- Retry: ``$queryCommand``",
+        "",
+        '```text'
+      ) + @($rebuild.Output | Select-Object -First 40) + @('```')
+    }
+  }
+
+  return @(
+    "## Code Impact Candidates",
+    "",
+    "- Warning: code-impact query failed. Work card creation continues.",
+    "- Exit code: $($query.ExitCode)",
+    "- Rebuild: ``$rebuildCommand``",
+    "- Retry: ``$queryCommand``",
+    "",
+    '```text'
+  ) + @($query.Output | Select-Object -First 40) + @('```')
+}
 function Invoke-RegisterWork {
   if ([string]::IsNullOrWhiteSpace($Title)) { throw "Title is required when registering work." }
   New-Item -ItemType Directory -Force -Path $workRoot | Out-Null
@@ -315,6 +405,11 @@ function Invoke-RegisterWork {
   $lines += Markdown-List (Get-RoutingHints "$Title $Kind $Intent $Impact" $touchedFiles)
   $lines += @("", "## Markdown Reference Impact", "")
   $lines += Get-MarkdownReferenceImpact $touchedFiles
+  $codeImpactLines = Get-CodeImpactLines $touchedFiles
+  if ($codeImpactLines.Count -gt 0) {
+    $lines += ""
+    $lines += $codeImpactLines
+  }
   $lines += @("", "## Execution Assignment", "", "- executor: $Executor", "- subagent: 必要なら `knowledge/docs/meta/subagent-brief.md` に従って、タスク用仮ゴールを別で渡す", "", "## Finish Gate")
   $lines += Markdown-List (Get-FinishHints $touchedFiles)
   $lines += @(
