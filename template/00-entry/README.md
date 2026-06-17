@@ -42,6 +42,7 @@
 | later phase notes | `artifacts/later-phase-notes.md` | 00では深掘りしないが後続phaseへ送る話 |
 | phase contract | `contract.md` | 00が凍結するentry contract |
 | handoff packet | `handoff.md` | 10へ渡す最小情報 |
+| phase orchestrator | `phase-orchestrator.ps1` | dispatch bundle作成、subagent返答review、entry-gate判定 |
 
 ## Phase Context
 
@@ -58,6 +59,24 @@
 | `_context/matt-pocock-skills.md` | grill-me / grill-with-docs / to-prd の00向け翻訳 |
 | `_context/dispatch-packet.md` | 00担当subagentへ必ず渡すdispatch packet |
 | `_context/dispatch-checks.md` | 00担当subagentの返答をmain agentが確認する観点 |
+
+## Phase Orchestrator
+
+00-entry を実行する時は、まず `phase-orchestrator.ps1 start` でdispatch bundleを作る。これを00担当subagentへ渡し、subagent返答を保存してから `phase-orchestrator.ps1 review` でmain reviewを行う。
+
+```powershell
+.\phase-orchestrator.ps1 start `
+  -Request "<ユーザーの入口発話>" `
+  -Materials "<資料1;資料2>" `
+  -OutDir "output/Biz-001-業務名/00-entry/_work"
+
+.\phase-orchestrator.ps1 review `
+  -SubagentResultFile "output/Biz-001-業務名/00-entry/_work/subagent-result.md"
+```
+
+`reviewer_result = ask_rework` の場合、00は完了しない。追加質問で00内loopへ戻す。`accept_pass` / `accept_defer` の場合だけ `handoff.md` を埋めて10-source-intakeへ進める。`accept_stop` は停止理由を残して閉じる。
+
+`phase-orchestrator.ps1` はAI呼び出しそのものは行わない。人間またはsubagentへ渡す入力を固定し、返答の形とgate resultを保守的に検査するphase-local driverである。
 
 ## Workflow
 

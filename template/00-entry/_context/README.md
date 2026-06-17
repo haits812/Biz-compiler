@@ -6,7 +6,7 @@
 
 ## Dispatch / Read Order
 
-00担当subagentを立てる時は、`template/00-entry/_context/dispatch-packet.md` の本文をdispatch packetとして渡す。subagentは、このpacket内の必読ファイルを読んでから最初の質問を始める。
+00担当subagentを立てる時は、`template/00-entry/phase-orchestrator.ps1 start` でdispatch bundleを作り、その中の `Dispatch Prompt` を渡す。直接渡す場合でも、`template/00-entry/_context/dispatch-packet.md` の本文をdispatch packetとして渡す。subagentは、このpacket内の必読ファイルを読んでから最初の質問を始める。
 
 00担当者またはsubagentは、次の順で読む。
 
@@ -20,7 +20,7 @@
 7. `_context/anomaly-rules.md`: 違和感とstop条件
 8. `_context/gate-rubric.md`: 00 gate
 
-subagent返答後、main agentは `_context/dispatch-checks.md` を読み、00を閉じてよいか、00内reworkへ戻すか、stopにするかを確認する。
+subagent返答後、main agentは `phase-orchestrator.ps1 review` を実行し、必要に応じて `_context/dispatch-checks.md` も読み、00を閉じてよいか、00内reworkへ戻すか、stopにするかを確認する。
 
 ## Test Fixture
 

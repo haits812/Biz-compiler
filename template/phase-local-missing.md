@@ -26,6 +26,7 @@
 - `template/00-entry/questions.md`: 初期問診質問票
 - `template/00-entry/checks.md`: phase出口チェック
 - `template/00-entry/handoff.md`: 10-source-intakeへのhandoff packet
+- `template/00-entry/phase-orchestrator.ps1`: dispatch bundle作成、subagent返答review、entry-gate判定を行うphase-local driver
 - `template/00-entry/artifacts/entry-packet.md`: entry_type、intent、actor、rough goalの一枚化
 - `template/00-entry/artifacts/scope-memo.md`: scope in/out/undecidedのメモ
 - `template/00-entry/artifacts/initial-risk-memo.md`: 初期risk hint
@@ -45,7 +46,6 @@
 
 - 00-entry完了判定validator
 - entry packet / scope memo / risk memo のschema化
-- 実業務作成時にoutput側へコピーするphase runner
 
 ## 10-source-intake
 

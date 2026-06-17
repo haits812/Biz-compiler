@@ -168,6 +168,7 @@ Known template assets:
 - template/00-entry/checks.md
 - template/00-entry/contract.md
 - template/00-entry/handoff.md
+- template/00-entry/phase-orchestrator.ps1
 - template/00-entry/questions.md
 - template/00-entry/README.md
 - template/10-source-intake/artifacts/fact-register.md
