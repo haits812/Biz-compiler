@@ -73,6 +73,26 @@ $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..\..\..")).Path
 $workRoot = Join-Path $repoRoot "knowledge\journal\work"
 $lockPath = Join-Path $workRoot "locks.json"
 $registryPath = Join-Path $repoRoot "knowledge\ops\registry.md"
+$Lf = [string][char]10
+$Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
+
+function Convert-ToLf {
+  param([Parameter(Mandatory=$true)][string]$Text)
+
+  $cr = [string][char]13
+  $lf = [string][char]10
+  $crlf = $cr + $lf
+  return $Text.Replace($crlf, $lf).Replace($cr, $lf)
+}
+
+function Write-Utf8LfFile {
+  param(
+    [Parameter(Mandatory=$true)][string]$Path,
+    [Parameter(Mandatory=$true)][string]$Text
+  )
+
+  [System.IO.File]::WriteAllText($Path, (Convert-ToLf -Text $Text), $Utf8NoBom)
+}
 
 if ($Complete) { $Action = "complete" }
 if ($ListLocks) { $Action = "locks" }
@@ -140,7 +160,7 @@ function Save-Locks($Locks) {
   New-Item -ItemType Directory -Force -Path $workRoot | Out-Null
   $payload = [ordered]@{ locks = @($Locks) }
   $json = $payload | ConvertTo-Json -Depth 8
-  Set-Content -LiteralPath $lockPath -Value $json -Encoding UTF8
+  Write-Utf8LfFile -Path $lockPath -Text ($json + $Lf)
 }
 
 function Get-ActiveLocks {
@@ -311,7 +331,7 @@ function Get-CodeImpactLines($TouchedFiles) {
   $query = Invoke-CodeImpactQueryLocal
   if ($query.ExitCode -eq 0) { return @($query.Output) }
 
-  $queryText = ($query.Output -join [Environment]::NewLine)
+  $queryText = ($query.Output -join $Lf)
   $shouldRebuild = $queryText -match "stale|missing|not found|not indexed|index"
   if ($shouldRebuild) {
     $rebuild = Invoke-CodeImpactRebuildLocal
@@ -356,7 +376,7 @@ function Invoke-RegisterWork {
     $message += Format-LockLines -Locks $conflicts
     $message += ""
     $message += "Use -Force only when intentionally overriding a stale or coordinated lock."
-    throw ($message -join [Environment]::NewLine)
+    throw ($message -join $Lf)
   }
 
   if ([string]::IsNullOrWhiteSpace($Intent)) { $Intent = "未記入。作業前に補う。" }
@@ -432,10 +452,10 @@ function Invoke-RegisterWork {
   $lines += ('- close command: `knowledge/ops/orchestrators/impact-orchestrator/impact-orchestrator.ps1 -Complete -WorkCard "{0}" -Result "..." -Verified "..." -ResidualRisk "..."`' -f $relativeOutputPath)
   $lines += @("", "## Notes", "", "- このファイルは作業ログであり、正本仕様ではない。", "- 長期の採用理由は `knowledge/docs/decisions/` へ移す。")
 
-  $content = (($lines -join [Environment]::NewLine) + [Environment]::NewLine)
+  $content = (($lines -join $Lf) + $Lf)
   if ($NoWrite) { Write-Output $content; return }
 
-  Set-Content -LiteralPath $outputPath -Value $content -Encoding UTF8
+  Write-Utf8LfFile -Path $outputPath -Text $content
   if (-not $NoLock -and $touchedFiles.Count -gt 0) {
     $locks = New-Object System.Collections.Generic.List[object]
     foreach ($lock in Read-Locks) { $locks.Add($lock) }
@@ -500,11 +520,11 @@ function Invoke-CompleteWork {
     "- residual_risk: $ResidualRisk",
     "- released_locks: $($released.Count)",
     ""
-  ) -join [Environment]::NewLine
-  $updated = $updated.TrimEnd() + [Environment]::NewLine + $completionBlock
+  ) -join $Lf
+  $updated = $updated.TrimEnd() + $Lf + $completionBlock
 
   if ($NoWrite) { Write-Output "impact-orchestrator: would complete $relativeWorkCard as $Status"; return }
-  Set-Content -LiteralPath $workCardPath -Value $updated -Encoding UTF8
+  Write-Utf8LfFile -Path $workCardPath -Text $updated
   Write-Output "impact-orchestrator: completed $relativeWorkCard as $Status"
   Write-Output "impact-orchestrator: released $($released.Count) lock(s)"
 }

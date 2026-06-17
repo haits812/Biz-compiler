@@ -68,14 +68,15 @@ setup.md は、必要ツール、hook接続、生成物、knowledge-search index
 ├─ knowledge/  確定知識・pending・journal・管理ops
 ├─ README.md  GitHub入口。正本はHello World
 ├─ setup.md  clone後の初期セットアップ入口
+├─ .gitattributes  Git改行・text正規化ルール
+├─ .editorconfig  エディタ向け改行・文字コードルール
 ├─ .gitignore  生成物除外
 ├─ AGENTS.md  作業規約と読み込み順
 ├─ Hello-world.md  現在地。このファイル
 ├─ COMPASS.md  direction packet / heading
 ├─ MEMORY.md  常時参照メモリ
 ├─ SOUL.md  agentの対話姿勢
-├─ USER.md  ユーザーの作業モデル
-└─ .gitattributes
+└─ USER.md  ユーザーの作業モデル
 ~~~
 
 ## Template
@@ -369,4 +370,3 @@ Current pending state at last verification:
 AIが何をすればいいか分からない時は、まずここを見る。
 
 Hello World が現在地を返せないなら、次の作業へ進まない。
-

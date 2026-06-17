@@ -22,6 +22,26 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..\..\..")).Path
 $helloPath = Join-Path $repoRoot "Hello-world.md"
+$Lf = [string][char]10
+$Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
+
+function Convert-ToLf {
+  param([Parameter(Mandatory=$true)][string]$Text)
+
+  $cr = [string][char]13
+  $lf = [string][char]10
+  $crlf = $cr + $lf
+  return $Text.Replace($crlf, $lf).Replace($cr, $lf)
+}
+
+function Write-Utf8LfFile {
+  param(
+    [Parameter(Mandatory=$true)][string]$Path,
+    [Parameter(Mandatory=$true)][string]$Text
+  )
+
+  [System.IO.File]::WriteAllText($Path, (Convert-ToLf -Text $Text), $Utf8NoBom)
+}
 
 $forbiddenRootDirs = @(
   "docs",
@@ -38,9 +58,9 @@ $forbiddenRootDirs = @(
 )
 
 $requiredRootDirs = @("template", "output", "knowledge")
-$requiredRootFiles = @("README.md", "setup.md", ".gitignore", "AGENTS.md", "Hello-world.md", "SOUL.md", "USER.md", "COMPASS.md", "MEMORY.md")
+$requiredRootFiles = @("README.md", "setup.md", ".gitattributes", ".editorconfig", ".gitignore", "AGENTS.md", "Hello-world.md", "SOUL.md", "USER.md", "COMPASS.md", "MEMORY.md")
 $rootDirOrder = @("template", "output", "knowledge")
-$rootFileOrder = @("README.md", "setup.md", ".gitignore", "AGENTS.md", "Hello-world.md", "COMPASS.md", "MEMORY.md", "SOUL.md", "USER.md")
+$rootFileOrder = @("README.md", "setup.md", ".gitattributes", ".editorconfig", ".gitignore", "AGENTS.md", "Hello-world.md", "COMPASS.md", "MEMORY.md", "SOUL.md", "USER.md")
 $templateDirOrder = @("_shared", "00-entry", "10-source-intake", "20-decompose-encrs", "30-route-executor", "40-ir-freeze", "50-consent", "60-validation", "70-improvement", "80-operation")
 $knowledgeDirOrder = @("docs", "pending", "journal", "ops", ".index")
 
@@ -50,6 +70,8 @@ $rootDescriptions = @{
   "knowledge" = "確定知識・pending・journal・管理ops"
   "README.md" = "GitHub入口。正本はHello World"
   "setup.md" = "clone後の初期セットアップ入口"
+  ".gitattributes" = "Git改行・text正規化ルール"
+  ".editorconfig" = "エディタ向け改行・文字コードルール"
   ".gitignore" = "生成物除外"
   "AGENTS.md" = "作業規約と読み込み順"
   "Hello-world.md" = "現在地。このファイル"
@@ -343,7 +365,7 @@ function Assert-HelloWorldStructure {
     }
   }
   if ($errors.Count -gt 0) {
-    throw ($errors -join [Environment]::NewLine)
+    throw ($errors -join $Lf)
   }
 }
 
@@ -625,7 +647,7 @@ function New-HelloWorldContent {
     "Hello World が現在地を返せないなら、次の作業へ進まない。"
   )
 
-  return (($lines -join [Environment]::NewLine) + [Environment]::NewLine)
+  return (($lines -join $Lf) + $Lf)
 }
 
 function Normalize-Text {
@@ -653,7 +675,7 @@ function Get-GitOutput {
   if ($LASTEXITCODE -ne 0) {
     throw "git command failed: git $($GitArgs -join ' ')"
   }
-  return ($output -join [Environment]::NewLine).Trim()
+  return ($output -join $Lf).Trim()
 }
 
 function Get-UpstreamBranch {
@@ -661,7 +683,7 @@ function Get-UpstreamBranch {
   if ($LASTEXITCODE -ne 0) {
     return ""
   }
-  return ($output -join [Environment]::NewLine).Trim()
+  return ($output -join $Lf).Trim()
 }
 
 function Get-AheadCount {
@@ -760,7 +782,7 @@ function New-GateCommitMessage {
   )
   $lines += Convert-ToBulletLines -Text $Risks
 
-  return (($lines -join [Environment]::NewLine) + [Environment]::NewLine)
+  return (($lines -join $Lf) + $Lf)
 }
 
 function Assert-HelloWorldMatches {
@@ -809,7 +831,7 @@ function Invoke-HelloWorldGate {
 
   Assert-HelloWorldStructure
   $publishExpected = New-HelloWorldContent
-  Set-Content -LiteralPath $helloPath -Value $publishExpected -Encoding UTF8
+  Write-Utf8LfFile -Path $helloPath -Text $publishExpected
   Write-Output "hello-world-gate: synced Hello-world.md"
 
   Assert-HelloWorldMatches -ExpectedContent $publishExpected
@@ -852,7 +874,7 @@ function Invoke-HelloWorldGate {
 
   $message = New-GateCommitMessage
   $messagePath = Join-Path ([System.IO.Path]::GetTempPath()) ("hello-world-gate-message-{0}.txt" -f [System.Guid]::NewGuid().ToString("N"))
-  Set-Content -LiteralPath $messagePath -Value $message -Encoding UTF8
+  Write-Utf8LfFile -Path $messagePath -Text $message
 
   try {
     Write-Output "hello-world-gate: git add -A"
