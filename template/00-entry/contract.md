@@ -74,15 +74,19 @@
 | Field | Value |
 |---|---|
 | result | `pass` / `defer` / `rework` / `stop` |
+| terminality | `terminal` / `non-terminal loop` |
 | reason | `<判断理由>` |
 | rework_target | `00-entry` / `none` |
 | deferred_items | `<10で検証する未確認事項>` |
-| next_phase | `10-source-intake` |
+| next_00_questions | `<reworkの場合に00内で次に聞く質問>` |
+| next_phase | `10-source-intake` / `none` |
 | stop_reason | `<stopの場合の理由>` |
+
+`pass` / `defer` / `stop` はterminal resultとして00を閉じる。`rework` はnon-terminal loopであり、このcontractを完了扱いにせず、00内で追加質問して再判定する。
 
 ## Handoff Minimum
 
-00から10へ渡す最小情報は次の通り。
+00から10へ渡す最小情報は次の通り。`pass` / `defer` の場合だけhandoffする。`rework` は00内loop、`stop` は停止理由を残して閉じる。
 
 - entry_type
 - target_statement

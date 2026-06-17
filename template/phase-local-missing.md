@@ -21,7 +21,7 @@
 
 既存:
 
-- `template/00-entry/README.md`: phase目的、入力、出力、workflow、Contract Gate
+- `template/00-entry/README.md`: phase目的、入力、出力、workflow、entry-gate
 - `template/00-entry/contract.md`: entry contract雛形
 - `template/00-entry/questions.md`: 初期問診質問票
 - `template/00-entry/checks.md`: phase出口チェック
@@ -36,7 +36,7 @@
 - `template/00-entry/_context/grill-rules.md`: grill-meの00向け運用
 - `template/00-entry/_context/sorting-rules.md`: 回答分類ルール
 - `template/00-entry/_context/anomaly-rules.md`: 違和感、stop/rework条件
-- `template/00-entry/_context/gate-rubric.md`: subagent自己チェックとmain review観点
+- `template/00-entry/_context/gate-rubric.md`: entry-gate、subagent自己チェック、main review観点
 - `template/00-entry/_context/matt-pocock-skills.md`: grill-me / grill-with-docs / to-prdの翻訳
 - `template/00-entry/_context/subagent-brief.md`: 00担当subagent brief雛形
 
@@ -55,7 +55,7 @@
 - `template/10-source-intake/README.md`: phase目的、入力、出力、workflow、Contract Gate
 - `template/10-source-intake/contract.md`: source intake contract雛形
 - `template/10-source-intake/questions.md`: ヒアリング/観測質問票
-- `template/10-source-intake/checks.md`: phase出口チェック
+- `template/10-source-intake/checks.md`: phase出口チェックとcompletion reviewer subagent観点
 - `template/10-source-intake/handoff.md`: 20-decompose-encrsへのhandoff packet
 - `template/10-source-intake/artifacts/source-inventory.md`: 観測対象一覧
 - `template/10-source-intake/artifacts/intake-log.md`: ヒアリング/観測ログ

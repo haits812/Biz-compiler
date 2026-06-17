@@ -13,11 +13,22 @@
 | `derived` | 他claimから導出した主張 | `derived` | 入力の最弱confidence以下 |
 | `unconfirmed` | まだ確認していないが重要な項目 | `hypothesized` | `low` |
 
+## Source Class On Claims
+
+claimは、supporting source の性質も見る。
+
+| source_class | claimでの扱い |
+|---|---|
+| `primary` | observed_fact候補。ただしscopeや例外があればconfidenceを上げすぎない |
+| `secondary` | observed_factの補助、またはperson_explanation/hypothesisの裏取り候補 |
+| `hearsay` | person_explanation または unconfirmed。observed_factへ昇格しない |
+| `assumption` | hypothesis。source確認まで low confidence |
+
 ## Claims
 
-| claim_id | claim_type | statement | source_ids | provenance | confidence | counter_evidence | status | used_by_20 |
-|---|---|---|---|---|---|---|---|---|
-| `C-001` | `observed_fact` | `<主張>` | `<S-001>` | `observed` | `medium` | `<none/反例>` | `open` | `yes` |
+| claim_id | claim_type | statement | source_ids | source_class | provenance | confidence | source_holder | owner | approver_or_permission | counter_evidence | status | used_by_20 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `C-001` | `observed_fact` | `<主張>` | `<S-001>` | `primary` | `observed` | `medium` | `<source holder>` | `<owner>` | `<承認/許可>` | `<none/反例>` | `open` | `yes` |
 
 ## Status Values
 
@@ -26,6 +37,7 @@
 | `open` | 10内で扱い中 |
 | `ready-for-20` | 20へ渡せる |
 | `deferred` | 未確認のまま制約付きで渡す |
+| `needs-owner` | owner、承認者、利用許可の確認が足りない |
 | `needs-source` | source不足 |
 | `contradicted` | 反例や矛盾がある |
 | `out-of-scope` | 00へ戻す、または対象外として扱う |

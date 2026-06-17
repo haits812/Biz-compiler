@@ -1,6 +1,6 @@
 # 00 -> 10 Handoff Packet
 
-このファイルは、00-entry から 10-source-intake へ渡す最小情報の形である。
+このファイルは、00-entry から 10-source-intake へ渡す最小情報の形である。`pass` / `defer` のterminal resultで00を閉じる時だけ作る。`rework` は00内のnon-terminal loopであり、このhandoffを作らず追加質問して再判定する。`stop` はhandoffせず停止理由を残す。
 
 ## Packet
 
@@ -13,7 +13,8 @@
 | target_statement | `<業務候補の一文説明>` |
 | artifacts_produced | `entry-packet.md`, `scope-memo.md`, `initial-risk-memo.md`, `source-candidates.md`, `later-phase-notes.md` |
 | contracts_frozen | `contract.md` |
-| gate_result | `pass` / `defer` / `rework` / `stop` |
+| gate_result | `pass` / `defer` |
+| deferred_items | `<deferの場合に10で検証する未確認事項>` |
 
 ## Scope Summary
 
@@ -48,6 +49,8 @@
 | sensitive data | `yes/no/unknown` | `<個人情報、契約情報など>` | `<確認source>` |
 | irreversible action | `yes/no/unknown` | `<発注、確定、削除など>` | `<確認source>` |
 | approval need | `yes/no/unknown` | `<人間確認候補>` | `<確認source>` |
+| authorization unclear | `yes/no/unknown` | `<requester/owner/approver/送信主体の権限不明>` | `<確認sourceまたは00へ差戻>` |
+| abuse or deception signal | `yes/no/unknown` | `<なりすまし、隠蔽、承認迂回、同意なし収集など>` | `<yesならstop/rework。10へ送る場合は正規業務として確認>` |
 
 ## Unknowns For 10
 
@@ -55,24 +58,35 @@
 |---|---|---|---|
 | `U-001` | `<未確認事項>` | `<10で確認する理由>` | `<source candidate>` |
 
+## Low Confidence Hypotheses For 10
+
+| hypothesis_id | Area | Candidate | Provenance | Confidence | Suggested source |
+|---|---|---|---|---|---|
+| `H-001` | `<business_name/target_statement/success_guess/rough_io/scope/owner>` | `<assistantが置いた候補>` | `assistant_hypothesis_from_conversation` | `low` | `<10で確認するsource>` |
+
 ## Later Phase Notes
 
-| note_id | suggested_phase | Note | Do not decide in 00 |
-|---|---|---|---|
-| `L-001` | `20-decompose-encrs` | `<後続phaseで扱う話>` | `yes` |
+| note_id | first_check_phase | after_confirmed_phase | Note | Do not decide in 00 |
+|---|---|---|---|---|
+| `L-001` | `10-source-intake` | `20-decompose-encrs` | `<source確認後に後続phaseで扱う話>` | `yes` |
 
-## Rework Targets
+## Rework Targets Before Handoff
 
 | Condition | Rework target |
 |---|---|
 | entry_typeが切れない | `00-entry` |
 | 業務候補を一文で言えない | `00-entry` |
 | source候補がなく10で何を読むか分からない | `00-entry` |
+| 権限、承認者、送信主体が不明なまま外部作用やsensitiveを扱おうとしている | `00-entry` |
+| なりすまし、隠蔽、承認迂回、同意なし収集の疑いがある | `00-entry` / `stop` |
 | source確認でscopeが違うと判明 | `00-entry` |
 
 ## Handoff Notes
 
+- `rework` 条件が残っている場合、このhandoffを作らず00内で追加質問して再判定する。
 - 10では、00の本人説明を観測済み事実として扱わない。
+- 00でassistantが置いた仮説は、ユーザー同意があってもsource確認まで `confidence = low` として扱う。
 - 既存型は現物sourceの取得と確認を優先する。
 - 新規型は仮説、参考例、想定シナリオをsource候補として扱う。
 - 00で出たautomationやexecutor案は、30まで設計判断にしない。
+- 手順、例外、必須列、期限ルール、対応表、AI読取精度などは、20以降に送る前に10でsource確認する。

@@ -46,7 +46,7 @@
 | `_context/grill-rules.md` | grill-meを00へ翻訳した質問運用ルール |
 | `_context/sorting-rules.md` | 回答をどの箱へ入れるか |
 | `_context/anomaly-rules.md` | 入口で拾う違和感、stop/rework条件 |
-| `_context/gate-rubric.md` | 00 gateとmain review観点 |
+| `_context/gate-rubric.md` | `entry-gate` とmain review観点 |
 | `_context/matt-pocock-skills.md` | grill-me / grill-with-docs / to-prd の00向け翻訳 |
 | `_context/subagent-brief.md` | 00担当subagentへ渡すbrief雛形 |
 
@@ -57,12 +57,13 @@
 3. `intent`、actor/owner候補、粗いinput/output、scope in/out、材料候補、初期riskを集める。
 4. 後続phaseに属する話は深掘りせず、`artifacts/later-phase-notes.md` へ送る。
 5. `artifacts/source-candidates.md` に10で確認する材料を置く。
-6. `checks.md` と `_context/gate-rubric.md` で、10へ進めるかを判定する。
-7. `handoff.md` を埋め、10-source-intake へ渡す。
+6. `checks.md` と `_context/gate-rubric.md` の `entry-gate` で、次の実物確認へ進めるか、00内で追加質問するか、停止するかを判定する。
+7. `rework` の場合は00内で追加質問して再判定する。`pass` / `defer` / `stop` のいずれかになるまで、00は完了扱いにしない。
+8. `pass` / `defer` の場合だけ `handoff.md` を埋め、10-source-intake へ渡す。`stop` は停止理由を残して閉じる。
 
-## Contract Gate
+## Entry Gate
 
-00の出口では、次を満たす必要がある。
+00の出口では、`entry-gate` で次を確認する。
 
 | Check | 通す条件 |
 |---|---|
@@ -71,10 +72,19 @@
 | material path | 既存型は現物候補、新規型は構想/参考/想定シナリオ候補がある |
 | scope | in-scope / out-of-scope / undecided が粗く分かれる |
 | risk hints | 外部影響、sensitive、不可逆操作の有無を初期確認している |
-| source handoff | 10で確認するsource候補と未確認事項がある |
+| source handoff | 次に確認するsource候補と未確認事項がある |
 | boundary | 20以降の詳細を00で決め切っていない |
 
-結果は `pass` / `defer` / `rework` / `stop` のいずれかにする。`pass` は10へ進む。`defer` は低confidenceのまま10で検証する。`rework` は00で追加質問する。`stop` はBiz-compiler対象外または人間判断待ちで止める。
+結果は `pass` / `defer` / `rework` / `stop` のいずれかにする。
+
+| Result | 00の扱い | 次の動き |
+|---|---|---|
+| `pass` | terminal | 00完了。通常のsource確認として10-source-intakeへ進む |
+| `defer` | terminal | 00完了。未確認事項を明記して10-source-intakeで検証する |
+| `rework` | non-terminal loop | 00未完了。00内で追加質問し、再判定する |
+| `stop` | terminal | 00完了。Biz-compiler対象外または危険な依頼として止める |
+
+`rework` は最終出口ではない。実運用では `rework` で会話を閉じず、この初期状態なら00内で追加質問が必要、というループ指示として扱う。source候補があるだけでは `pass` にしない。
 
 ## Do Not
 

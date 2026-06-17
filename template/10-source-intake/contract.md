@@ -30,10 +30,13 @@
 |---|---|
 | source inventory | 主要sourceが `source_id` 付きで登録されている |
 | source status | `target` / `collected` / `reviewed` / `unavailable` が分かる |
+| source class | `primary` / `secondary` / `hearsay` / `assumption` 相当が分かる |
+| actor separation | 実担当者、source holder、owner、承認者、利用許可者が混ざっていない |
 | fact separation | `observed_fact` / `person_explanation` / `hypothesis` / `unconfirmed` が分かれている |
 | provenance | 各主張に `observed` / `hypothesized` / `negotiated` / `derived` の由来がある |
 | confidence | 各主張に `low` / `medium` / `high` がある |
 | evidence | 主張を支えるsource_idまたはログ参照がある |
+| permission | 権限、閲覧範囲、source利用許可、外部連絡条件が必要なものは未確認のまま進んでいない |
 | counter_evidence | 反例、未確認、矛盾、near-missが記録されている |
 | handoff | 20へ渡すsource packetが作られている |
 
@@ -57,6 +60,8 @@
 | deferred_items | `<deferする未確認項目>` |
 | next_phase | `20-decompose-encrs` |
 | gate_policy_notes | `<gate-policy-matrix上の注意>` |
+| completion_reviewer_result | `<pass/defer/rework/stop>` |
+| completion_reviewer_notes | `<一次情報化、権限、代理/伝聞、差戻し理由>` |
 
 ## Handoff Minimum
 
@@ -67,5 +72,7 @@
 - person explanation一覧
 - hypotheses / unconfirmed一覧
 - source不足と追加観測候補
+- primary / secondary / hearsay / assumption の区別
+- 実担当者、source holder、owner、承認者、利用許可者の区別
 - scope外、external、sensitive候補
 - confidenceが低いが20で扱う必要がある項目

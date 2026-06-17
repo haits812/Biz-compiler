@@ -39,7 +39,8 @@
 4. 主張を `artifacts/fact-register.md` に移し、`observed_fact` / `person_explanation` / `hypothesis` / `unconfirmed` を分ける。
 5. 各主張に `source_id`、`provenance`、`confidence`、`counter_evidence` を付ける。
 6. `checks.md` で、由来不明・推測混入・scope混入・source不足を確認する。
-7. `handoff.md` を埋め、20-decompose-encrs へ渡す。
+7. completion reviewer subagent が、20へ渡してよいかを別視点で検査する。
+8. `handoff.md` を埋め、20-decompose-encrs へ渡す。
 
 ## Contract Gate
 
@@ -53,8 +54,25 @@
 | confidence | 低confidenceを確定扱いにしていない |
 | scope | scope外、external、sensitiveの可能性が見える |
 | rework | source不足の場合に、何を追加観測するか分かる |
+| reviewer | completion reviewer subagent が、一次情報化できているかを確認している |
 
 結果は `pass` / `defer` / `rework` / `stop` のいずれかにする。`defer` の場合は、未確認事項と次に検証するphaseを明記する。
+
+## Completion Reviewer
+
+10-source-intake の最後では、実行担当とは別のcompletion reviewer subagentが `checks.md` を使って確認する。
+
+reviewer は、sourceを集めた量ではなく、20へ渡す主張が一次情報化できているかを見る。
+
+特に次を確認する。
+
+- source inventory があるか。
+- 各claimに `primary` / `secondary` / `hearsay` / `assumption` のsource class、またはそれに相当する provenance が付いているか。
+- 実担当者、source holder、owner、承認者が分かれているか。
+- 権限、閲覧範囲、利用許可が未確認のまま進んでいないか。
+- 最終成果物だけを見て、作業実態を逆算していないか。
+- 本人断定、新任者の「普通は」、権限者の説明、代理依頼、善意の説明を観測済み事実へ昇格していないか。
+- `defer` のまま20へ送ってよいものと、10または00へ差し戻すものを分けたか。
 
 ## Do Not
 

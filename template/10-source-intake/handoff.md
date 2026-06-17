@@ -13,6 +13,8 @@
 | artifacts_produced | `source-inventory.md`, `intake-log.md`, `fact-register.md` |
 | contracts_frozen | `contract.md` |
 | gate_result | `pass` / `defer` / `rework` / `stop` |
+| completion_reviewer_result | `<pass/defer/rework/stop>` |
+| completion_reviewer_notes | `<20へ渡す前の注意>` |
 
 ## Source Summary
 
@@ -22,6 +24,7 @@
 | input/output examples | `<S-002>` | `<入出力の対応>` | `<reviewed>` |
 | person explanation | `<S-003>` | `<本人説明>` | `<collected>` |
 | failure / near-miss | `<S-004>` | `<例外・差戻し>` | `<target/collected/reviewed>` |
+| owner / approval evidence | `<S-005>` | `<owner、承認者、利用許可>` | `<target/collected/reviewed>` |
 
 ## Observed Facts For 20
 
@@ -40,6 +43,15 @@
 | claim_id | Statement | Why it matters | Next check |
 |---|---|---|---|
 | `<C-020>` | `<未確認事項>` | `<20で分解に効く理由>` | `<追加観測または20でdefer>` |
+
+## Reviewer Notes
+
+| Lens | Note | Action |
+|---|---|---|
+| primary / secondary / hearsay / assumption | `<claim分類の注意>` | `<20へ渡す/10へ戻す/00へ戻す>` |
+| real worker / source holder | `<実担当者またはsource holderへの接続>` | `<20へ渡す/10へ戻す/00へ戻す>` |
+| owner / approver / permission | `<権限、承認、利用許可>` | `<20へ渡す/10へ戻す/stop>` |
+| final artifact reverse-engineering | `<最終成果物だけから逆算していないか>` | `<20へ渡す/10へ戻す>` |
 
 ## Scope / Gate Notes
 

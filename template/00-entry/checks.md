@@ -1,6 +1,6 @@
 # 00 Entry Checks
 
-00-entry の出口チェック。10-source-intakeへ渡す前に確認する。
+00-entry の入口判定チェック。`pass` / `defer` / `stop` はterminal resultとして00を閉じる。`rework` はnon-terminal loopであり、10-source-intakeへ渡す前に00内で追加質問して再判定する。
 
 ## Entry Checks
 
@@ -10,14 +10,20 @@
 | target statement | 業務候補を一文で説明できる | `<pass/defer/rework/stop>` |
 | intent | 何をしたいかが粗く分類されている | `<pass/defer/rework/stop>` |
 | not a one-off | 単発作業ならBiz-compiler対象外として扱いが明記されている | `<pass/defer/rework/stop>` |
+| assistant hypotheses | 低言語化ユーザーに対してこちらが置いた業務名、出力案、success guessが `confidence = low` で分離されている | `<pass/defer/rework>` |
+| low articulation pass guard | 低言語化経由の候補を、具体sourceとsource holder確認前に `pass` にしていない | `<defer/rework>` |
+| authority is not evidence | 役職、権限、経験、善意、自信を観測済み事実として扱っていない | `<pass/defer/rework>` |
+| proxy / hearsay | 代理説明、伝聞、最終成果物からの逆算を一次情報として扱っていない | `<pass/defer/rework>` |
+| proxy pass guard | 代理/伝聞経由の候補を、本人またはsource holderへの実接続前に `pass` にしていない。「確認してよい」は `defer` として扱う | `<defer/rework>` |
 
 ## Material Checks
 
 | Check | Pass Criteria | Result |
 |---|---|---|
 | existing material path | 既存型はマニュアル、ツール、成果物、ログ、画面などの候補がある | `<pass/defer/rework>` |
+| upfront flow/material | 初手で既存フロー、手順書、マニュアル、Excelが渡された場合でも、owner、更新日、対象scope、実運用との差分、例外、差戻し履歴が未確認なら `defer` にしている | `<defer/rework>` |
 | new concept path | 新規型は構想、参考例、想定シナリオ、制約の候補がある | `<pass/defer/rework>` |
-| source candidates | 10で最初に確認するsource候補がある | `<pass/defer/rework>` |
+| source candidates | 10で最初に確認するsource候補がある。ただし候補があるだけでは `pass` にしない | `<pass/defer/rework>` |
 | missing materials | ない/取れない/未確認の材料が記録されている | `<pass/defer/rework>` |
 
 ## Scope Checks
@@ -37,6 +43,9 @@
 | sensitive data | 個人情報、契約情報、機密情報候補を確認した | `<pass/defer/rework>` |
 | irreversible action | 外部送信、発注、確定、削除、権限変更候補を確認した | `<pass/defer/rework>` |
 | responsibility | 間違えた時の責任者/停止者が不明なら不明として残した | `<pass/defer/rework>` |
+| authorization | owner、承認者、送信主体、source利用許可が必要な依頼で、権限不明を隠していない | `<pass/defer/rework/stop>` |
+| abuse or deception | なりすまし、隠蔽、承認迂回、同意なし収集の疑いを確認し、実行案を出していない | `<pass/rework/stop>` |
+| high-risk domain | finance / HR / legal / procurement / customer / account / approval を扱う場合、未確認事項を `defer` に倒している | `<pass/defer/rework>` |
 
 ## Phase Boundary Checks
 
@@ -47,13 +56,15 @@
 | no 40+ work | IR、consent、validation、operation設計を00で固定していない | `<pass/rework>` |
 | later notes | 後続phaseの話を `later-phase-notes.md` に送っている | `<pass/defer/rework>` |
 
-## Gate Decision
+## Entry Gate Decision
 
 | Field | Value |
 |---|---|
-| result | `pass` / `defer` / `rework` / `stop` |
+| entry_gate_result | `pass` / `defer` / `rework` / `stop` |
+| terminality | `terminal` / `non-terminal loop` |
 | reason | `<判断理由>` |
-| next_phase | `10-source-intake` |
+| next_phase | `10-source-intake` / `none` |
 | rework_target | `00-entry` / `none` |
 | deferred_items | `<10で検証する未確認事項>` |
+| next_00_questions | `<reworkの場合に00内で次に聞く質問>` |
 | stop_reason | `<stopの場合の理由>` |

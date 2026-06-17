@@ -40,6 +40,14 @@
 | trigger | `<いつ/何をきっかけに始まるか>` | `low` | `<10で確認>` |
 | cadence | `<頻度が分かれば>` | `low` | `<不明ならunknown>` |
 
+## Low Confidence Hypotheses
+
+低言語化ユーザーに対して、00担当が置いた仮説を記録する。ユーザーが同意しても、sourceで確認されるまでは観測済み事実にしない。
+
+| hypothesis_id | Area | Candidate | Provenance | Confidence | Next Check |
+|---|---|---|---|---|---|
+| `H-001` | `business_name/target_statement/success_guess/rough_io/scope/owner` | `<こちらが置いた候補>` | `assistant_hypothesis_from_conversation` | `low` | `<10で確認するsourceまたは00で聞き直すこと>` |
+
 ## Entry Notes
 
 - `<入口で残すメモ>`

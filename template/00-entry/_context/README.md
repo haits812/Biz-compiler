@@ -17,6 +17,12 @@
 7. `_context/anomaly-rules.md`: 違和感とstop条件
 8. `_context/gate-rubric.md`: 00 gate
 
+## Test Fixture
+
+30 persona の再テストfixtureは `template/_shared/evaluation/persona-test-matrix.md` に置く。
+
+これは00-entryだけでなく後続phaseでも同じ人物像を使って検査するため、`_context/` には置かない。00-entryのprompt tuningやgate-rubric改修後に使う場合だけ、shared fixtureとして読む。
+
 ## Boundary
 
 `_context/` は、phase-localな実行補助である。
