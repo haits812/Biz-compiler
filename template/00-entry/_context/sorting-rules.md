@@ -50,13 +50,18 @@ intentは複数選んでよい。ただし00では解決策を決めない。
 | later_phase_notes | 後続phaseで扱う話 | `later-phase-notes.md` |
 | stop_reason | 00で止める理由 | `checks.md` / `contract.md` |
 
-## Provenance
+## Provenance / Claim Source
 
-00の情報は多くが本人説明または仮説である。`observed` と断定しない。
+00でclaimに入れる `provenance` は、IR共通値の `observed` / `hypothesized` / `negotiated` / `derived` だけを使う。本人説明、assistant推測、source候補種別を `provenance` 値にしない。
 
-| 入力 | 00での扱い |
-|---|---|
-| その場のユーザー説明 | `person_explanation` / low confidence |
-| 実ファイルや画面が渡された | `source_candidate`。review済みではない |
-| 既存decisionやtemplateと照合できた | `derived` / medium以下 |
-| 作業者の推測 | `hypothesis` / low confidence |
+00の会話由来claimは、原則 `provenance = hypothesized` とする。細かい由来は `claim_type`、`source_type`、`source_ref` に逃がす。
+
+| 00で見たもの | provenance | claim_type | source_type | source_ref | confidence | 00での扱い |
+|---|---|---|---|---|---|---|
+| その場のユーザー説明 | `hypothesized` | `person_explanation` | `interview` | `conversation` | `low` | 重要な本人説明だが、観測済み事実ではない |
+| 実ファイルや画面が渡された | `hypothesized` | `source_candidate` | `file/screen/log/document` | `SC-xxx` | `low` | source候補。10で読まれるまでreview済みにしない |
+| 既存decisionやtemplateから機械的に写したメタ情報 | `derived` | `reference_mapping` | `repo_doc/template` | `<path>` | `medium` 以下 | 導出元を残す。入力のconfidenceを超えない |
+| 00内で明示合意したscope | `negotiated` | `negotiated_scope` | `conversation` | `conversation` | `medium` 以下 | 合意でありvalidationではない |
+| 作業者やassistantの推測 | `hypothesized` | `hypothesis` | `assumption` | `conversation` | `low` | 低confidence仮説として分離する |
+
+`assistant_hypothesis_from_conversation`、`person_explanation`、`user_statement`、`source_candidate` は `provenance` 値として使わない。

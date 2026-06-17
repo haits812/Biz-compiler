@@ -18,7 +18,7 @@
 
 | Field | Value |
 |---|---|
-| entry_type | `existing_work` / `new_work` / `unclear` |
+| entry_type | `existing_work` / `new_work` / `unclear` (`unclear` はdraft/rework専用。handoff不可) |
 | intent | `<automate/improve/redesign/reduce_manual_work/add_ai_support/create_new_operation/design_workflow/validate_idea/prepare_launch>` |
 | target_statement | `<この業務候補を一文で説明>` |
 | rough_goal | `<00時点の仮ゴール>` |
@@ -79,22 +79,22 @@
 | rework_target | `00-entry` / `none` |
 | deferred_items | `<10で検証する未確認事項>` |
 | next_00_questions | `<reworkの場合に00内で次に聞く質問>` |
-| next_phase | `10-source-intake` / `none` |
+| next_phase | `10-source-intake` / `none` (`10-source-intake` は `entry_type` が `existing_work` / `new_work` に切れている場合だけ) |
 | stop_reason | `<stopの場合の理由>` |
 
-`pass` / `defer` / `stop` はterminal resultとして00を閉じる。`rework` はnon-terminal loopであり、このcontractを完了扱いにせず、00内で追加質問して再判定する。
+`pass` / `defer` / `stop` はterminal resultとして00を閉じる。`rework` はnon-terminal loopであり、このcontractを完了扱いにせず、00内で追加質問して再判定する。`entry_type = unclear` は `rework` 条件であり、`pass` / `defer` のhandoffに残さない。
 
 ## Handoff Minimum
 
 00から10へ渡す最小情報は次の通り。`pass` / `defer` の場合だけhandoffする。`rework` は00内loop、`stop` は停止理由を残して閉じる。
 
-- entry_type
+- entry_type (`existing_work` / `new_work` のみ。`unclear` はhandoff不可)
 - target_statement
 - rough_goal
 - scope in/out/undecided
 - actor / owner / approver候補
 - rough input/output
-- source candidates
+- source candidates（00の `provided` は10へ `collected` + 未reviewとして渡す）
 - initial risk hints
 - unknowns / explanation-only items
 - later phase notes

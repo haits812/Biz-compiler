@@ -36,9 +36,14 @@
 推奨分類: <existing_work/new_work/unclear など。出力案の断定ではない>
 理由: <なぜその分類が00に必要か>
 回答後の扱い: <どのartifactへ入れるか>
-confidence: <observed / medium / low。assistant仮説ならlow>
-provenance: <user_statement / source_candidate / assistant_hypothesis_from_conversation など>
+confidence: <low / medium / high。assistant仮説ならlow>
+provenance: <observed / hypothesized / negotiated / derived。00会話由来claimは原則hypothesized>
+claim_type: <person_explanation / hypothesis / source_candidate / negotiated_scope / reference_mapping>
+source_type: <interview / assumption / file / screen / log / document / repo_doc>
+source_ref: <conversation / SC-xxx / path>
 ```
+
+`user_statement`、`source_candidate`、`assistant_hypothesis_from_conversation` を `provenance` 値として使わない。必要なら `claim_type` または `source_type` に置く。
 
 ## Low-Articulation Users
 

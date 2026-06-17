@@ -8,7 +8,8 @@
 |---|---|---|
 | source inventory exists | `artifacts/source-inventory.md` が埋まっている | `<pass/defer/rework>` |
 | source IDs | 主要sourceに一意な `source_id` がある | `<pass/defer/rework>` |
-| source status | `target` / `collected` / `reviewed` / `unavailable` が分かる | `<pass/defer/rework>` |
+| source status | `target` / `collected` / `reviewed` / `unavailable` が分かり、00由来の `provided` が残っていない | `<pass/defer/rework>` |
+| 00 status import | 00の `provided` は `collected` + 未reviewとして扱い、内容確認前に `reviewed` へ上げていない | `<pass/defer/rework>` |
 | source class | 主要sourceまたはclaimに `primary` / `secondary` / `hearsay` / `assumption` 相当の分類がある | `<pass/defer/rework>` |
 | input/output examples | 入力例と出力例がある、または欠落理由がある | `<pass/defer/rework>` |
 | failure traces | 差戻し、例外、near-missの有無を確認した | `<pass/defer/rework>` |

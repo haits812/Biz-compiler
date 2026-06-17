@@ -34,7 +34,7 @@
 ## Workflow
 
 1. 00-entry から対象業務、scope、仮ゴールを受け取る。
-2. source候補を `artifacts/source-inventory.md` に登録する。
+2. source候補を `artifacts/source-inventory.md` に登録する。00の `provided` は `collected` + 未reviewとして正規化し、10のstatusへ `provided` を残さない。
 3. ヒアリング、観測、資料確認のログを `artifacts/intake-log.md` に残す。
 4. 主張を `artifacts/fact-register.md` に移し、`observed_fact` / `person_explanation` / `hypothesis` / `unconfirmed` を分ける。
 5. 各主張に `source_id`、`provenance`、`confidence`、`counter_evidence` を付ける。
@@ -48,7 +48,7 @@
 
 | Check | 通す条件 |
 |---|---|
-| source | 20で分解するための主要sourceが列挙されている |
+| source | 20で分解するための主要sourceが列挙され、00由来statusが10正規statusへ変換されている |
 | provenance | 重要な主張に由来がある |
 | separation | 事実、本人説明、推測、未確認が混ざっていない |
 | confidence | 低confidenceを確定扱いにしていない |

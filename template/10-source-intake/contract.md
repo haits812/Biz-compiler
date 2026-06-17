@@ -22,14 +22,14 @@
 | out_of_scope | `<対象外>` |
 | external_or_sensitive_candidates | `<他部署、社外、個人情報、契約情報など>` |
 | initial_goal | `<仮ゴール>` |
-| source_candidates_from_00 | `<00から渡されたsource候補>` |
+| source_candidates_from_00 | `<00から渡されたsource候補。providedはcollected + 未reviewへ正規化>` |
 
 ## Source Intake Contract
 
 | Contract Item | Required State |
 |---|---|
 | source inventory | 主要sourceが `source_id` 付きで登録されている |
-| source status | `target` / `collected` / `reviewed` / `unavailable` が分かる |
+| source status | `target` / `collected` / `reviewed` / `unavailable` が分かる。00由来の `provided` は残さない |
 | source class | `primary` / `secondary` / `hearsay` / `assumption` 相当が分かる |
 | actor separation | 実担当者、source holder、owner、承認者、利用許可者が混ざっていない |
 | fact separation | `observed_fact` / `person_explanation` / `hypothesis` / `unconfirmed` が分かれている |

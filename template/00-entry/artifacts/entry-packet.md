@@ -8,7 +8,7 @@
 |---|---|
 | business_id_candidate | `<Biz-XXX or pending>` |
 | business_name_candidate | `<業務名候補>` |
-| entry_type | `existing_work` / `new_work` / `unclear` |
+| entry_type | `existing_work` / `new_work` / `unclear` (`unclear` はdraft/rework専用。handoff不可) |
 | intent | `<intent values>` |
 | prepared_by | `<作業者>` |
 | created_at | `<YYYY-MM-DD>` |
@@ -44,9 +44,9 @@
 
 低言語化ユーザーに対して、00担当が置いた仮説を記録する。ユーザーが同意しても、sourceで確認されるまでは観測済み事実にしない。
 
-| hypothesis_id | Area | Candidate | Provenance | Confidence | Next Check |
-|---|---|---|---|---|---|
-| `H-001` | `business_name/target_statement/success_guess/rough_io/scope/owner` | `<こちらが置いた候補>` | `assistant_hypothesis_from_conversation` | `low` | `<10で確認するsourceまたは00で聞き直すこと>` |
+| hypothesis_id | Area | Candidate | provenance | claim_type | source_type | source_ref | Confidence | Next Check |
+|---|---|---|---|---|---|---|---|---|
+| `H-001` | `business_name/target_statement/success_guess/rough_io/scope/owner` | `<こちらが置いた候補>` | `hypothesized` | `hypothesis` | `assumption` | `conversation` | `low` | `<10で確認するsourceまたは00で聞き直すこと>` |
 
 ## Entry Notes
 

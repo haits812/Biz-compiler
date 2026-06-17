@@ -6,11 +6,12 @@
 
 | Check | Pass Criteria | Result |
 |---|---|---|
-| entry type | `existing_work` / `new_work` / `unclear` が記録され、`unclear` なら理由がある | `<pass/defer/rework/stop>` |
+| entry type | `existing_work` / `new_work` のどちらかに切れている。`unclear` は `rework` とし、handoffしない | `<pass/defer/rework/stop>` |
 | target statement | 業務候補を一文で説明できる | `<pass/defer/rework/stop>` |
 | intent | 何をしたいかが粗く分類されている | `<pass/defer/rework/stop>` |
 | not a one-off | 単発作業ならBiz-compiler対象外として扱いが明記されている | `<pass/defer/rework/stop>` |
-| assistant hypotheses | 低言語化ユーザーに対してこちらが置いた業務名、出力案、success guessが `confidence = low` で分離されている | `<pass/defer/rework>` |
+| assistant hypotheses | 低言語化ユーザーに対してこちらが置いた業務名、出力案、success guessが `provenance = hypothesized`、`claim_type = hypothesis`、`confidence = low` で分離されている | `<pass/defer/rework>` |
+| provenance vocabulary | 00のclaimが `observed` / `hypothesized` / `negotiated` / `derived` 以外を `provenance` 値として使っていない | `<pass/defer/rework>` |
 | low articulation pass guard | 低言語化経由の候補を、具体sourceとsource holder確認前に `pass` にしていない | `<defer/rework>` |
 | authority is not evidence | 役職、権限、経験、善意、自信を観測済み事実として扱っていない | `<pass/defer/rework>` |
 | proxy / hearsay | 代理説明、伝聞、最終成果物からの逆算を一次情報として扱っていない | `<pass/defer/rework>` |

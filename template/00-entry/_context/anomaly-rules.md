@@ -44,7 +44,7 @@
 
 - 候補を出す時は「候補の一つ」「仮説」「違っていたら直す」と明示する。
 - 出力案、業務名、success guess、rough IOをこちらが置いた場合は `confidence = low` とする。
-- provenance は `assistant_hypothesis_from_conversation` のように、観測済みsourceではないことが分かる形にする。
+- provenance はIR共通値の `hypothesized` にし、細かい由来は `claim_type = hypothesis`、`source_type = assumption`、`source_ref = conversation` のように分ける。
 - ユーザーが「それでいい」と答えても、sourceで確認されるまでは観測済み事実に昇格しない。
 - 具体sourceとsource holderを確認するまでは、業務候補が見えても `pass` ではなく `defer` にする。
 - 低言語化そのものを `stop` 理由にしない。業務候補、owner、source候補が一つも決まらない場合だけ `rework` にする。

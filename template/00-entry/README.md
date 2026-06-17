@@ -8,6 +8,14 @@
 
 00はファーストオピニオンである。深く聞く対象は業務全体ではなく、10へ進めるための入口判断に限定する。
 
+## Operating Assumption
+
+口頭ヒアリング入口では、相手が要件や用件を整理して話せる場合もある。ただし、多くの場合は言葉足らず、暗黙前提、未確認の自己整理、代理説明、現物不足のどれかが混ざる前提で設計する。
+
+00-entry は、整った要求だけを受け取る工程ではない。曖昧な発話、頷き、代理説明、現物不足を、source候補、scope、risk、low confidence仮説へ分ける受付/初期トリアージとして扱う。
+
+したがって、00担当は相手の自己整理や合意反応をそのまま確定扱いしない。こちらで補った業務名、出力案、success guess、rough IOは、source確認まで `confidence = low` の仮説として分離する。
+
 ## Position
 
 | From | This phase | To |
@@ -48,18 +56,18 @@
 | `_context/anomaly-rules.md` | 入口で拾う違和感、stop/rework条件 |
 | `_context/gate-rubric.md` | `entry-gate` とmain review観点 |
 | `_context/matt-pocock-skills.md` | grill-me / grill-with-docs / to-prd の00向け翻訳 |
-| `_context/subagent-brief.md` | 00担当subagentへ渡すbrief雛形 |
+| `_context/subagent-brief.md` | 00担当subagentへ必ず渡すdispatch packet |
 
 ## Workflow
 
 1. `COMPASS.md`、`knowledge/docs/lexicon.md`、`template/00-entry/_context/` を読む。
-2. `questions.md` の入口質問で `entry_type` を `existing_work` / `new_work` / `unclear` に分類する。
+2. `questions.md` の入口質問で `entry_type` を `existing_work` / `new_work` / `unclear` に分類する。`unclear` はdraft/rework状態であり、10へhandoffしない。
 3. `intent`、actor/owner候補、粗いinput/output、scope in/out、材料候補、初期riskを集める。
 4. 後続phaseに属する話は深掘りせず、`artifacts/later-phase-notes.md` へ送る。
 5. `artifacts/source-candidates.md` に10で確認する材料を置く。
 6. `checks.md` と `_context/gate-rubric.md` の `entry-gate` で、次の実物確認へ進めるか、00内で追加質問するか、停止するかを判定する。
 7. `rework` の場合は00内で追加質問して再判定する。`pass` / `defer` / `stop` のいずれかになるまで、00は完了扱いにしない。
-8. `pass` / `defer` の場合だけ `handoff.md` を埋め、10-source-intake へ渡す。`stop` は停止理由を残して閉じる。
+8. `pass` / `defer` かつ `entry_type` が `existing_work` / `new_work` に確定している場合だけ `handoff.md` を埋め、10-source-intake へ渡す。`stop` は停止理由を残して閉じる。
 
 ## Entry Gate
 
@@ -67,7 +75,7 @@
 
 | Check | 通す条件 |
 |---|---|
-| entry type | `existing_work` / `new_work` のどちらか、または `unclear` の理由が明確 |
+| entry type | `existing_work` / `new_work` のどちらかに切れている。`unclear` はrework理由でありhandoffしない |
 | target | 何を業務候補として扱うか一文で言える |
 | material path | 既存型は現物候補、新規型は構想/参考/想定シナリオ候補がある |
 | scope | in-scope / out-of-scope / undecided が粗く分かれる |
@@ -80,7 +88,7 @@
 | Result | 00の扱い | 次の動き |
 |---|---|---|
 | `pass` | terminal | 00完了。通常のsource確認として10-source-intakeへ進む |
-| `defer` | terminal | 00完了。未確認事項を明記して10-source-intakeで検証する |
+| `defer` | terminal | 00完了。`entry_type` が切れており、未確認事項を明記して10-source-intakeで検証する |
 | `rework` | non-terminal loop | 00未完了。00内で追加質問し、再判定する |
 | `stop` | terminal | 00完了。Biz-compiler対象外または危険な依頼として止める |
 

@@ -11,6 +11,19 @@
 | `reviewed` | 内容を確認し、claimへ接続済み |
 | `unavailable` | 存在しない、アクセス不能、取得できない |
 
+## Import From 00 Source Candidates
+
+00-entry の `source-candidates.md` から受け取る場合、10の正規statusへ先に変換する。
+
+| 00 status | 10 status | 10での扱い |
+|---|---|---|
+| `target` | `target` | 確認対象として登録する |
+| `provided` | `collected` | 受領済みだが未review。`caveat` に `not reviewed` を残す |
+| `unavailable` | `unavailable` | 存在しない、アクセス不能、取得不能として理由を残す |
+| `unknown` | `target` または00へ差戻し | 存在確認自体が10のtaskなら `target`。対象が切れていなければ00へrework |
+
+10の `status` に `provided` は入れない。内容確認後だけ `reviewed` に進める。
+
 ## Source Class Values
 
 | source_class | 意味 |

@@ -4,10 +4,13 @@
 
 00-entry は要求定義ではない。業務候補を初期問診し、Biz-compiler のコンパイル対象として10-source-intakeへ進めるかを判定する入口phaseである。
 
-## Read Order
+## Dispatch / Read Order
+
+00担当subagentを立てる時は、`template/00-entry/_context/subagent-brief.md` の本文をdispatch packetとして渡す。subagentは、このpacket内の必読ファイルを読んでから最初の質問を始める。
 
 00担当者またはsubagentは、次の順で読む。
 
+0. `_context/subagent-brief.md`: 00専用dispatch packet、成果物契約、戻し方
 1. `COMPASS.md`: 共通の方位、価値順位、疑うもの
 2. `knowledge/docs/lexicon.md`: gate、validation、provenance、confidence、scopeなどの語彙
 3. `template/00-entry/README.md`: phase目的と成果物

@@ -2,15 +2,23 @@
 
 このファイルは、00-entry から 10-source-intake へ渡す最小情報の形である。`pass` / `defer` のterminal resultで00を閉じる時だけ作る。`rework` は00内のnon-terminal loopであり、このhandoffを作らず追加質問して再判定する。`stop` はhandoffせず停止理由を残す。
 
+`entry_type = unclear` はhandoff不可である。既存業務か新規業務かが切れない場合は、00内で追加質問して `existing_work` / `new_work` のどちらかへ寄せるか、`stop` 理由を残す。
+
 ## Packet
 
 | Field | Value |
 |---|---|
 | phase_id | `00-entry` |
 | next_phase | `10-source-intake` |
-| entry_type | `existing_work` / `new_work` / `unclear` |
+| entry_type | `existing_work` / `new_work` |
 | intent | `<intent values>` |
 | target_statement | `<業務候補の一文説明>` |
+| business_scope | `<in-scope / out-of-scope / undecided summary>` |
+| inputs_used | `<00で使った会話、資料、source_candidate_id>` |
+| open_hypotheses | `<low confidence hypothesis id list>` |
+| evidence | `<00時点で支えにしたsource_candidate_idまたは会話参照>` |
+| counter_evidence | `<反例、矛盾、未確認。なければ未確認として明記>` |
+| gate_policy | `<pass/deferの理由、10で検証する条件>` |
 | artifacts_produced | `entry-packet.md`, `scope-memo.md`, `initial-risk-memo.md`, `source-candidates.md`, `later-phase-notes.md` |
 | contracts_frozen | `contract.md` |
 | gate_result | `pass` / `defer` |
@@ -37,9 +45,20 @@
 
 ## Source Candidates For 10
 
-| source_candidate_id | source_type | description | expected_use | status |
-|---|---|---|---|---|
-| `SC-001` | `document/tool/log/screen/output_sample/concept_note/reference` | `<10で確認するもの>` | `<何を支えるか>` | `target` |
+| source_candidate_id | source_type | description | expected_use | 00_status | 10_initial_status | review_state | notes |
+|---|---|---|---|---|---|---|---|
+| `SC-001` | `document/tool/log/screen/output_sample/concept_note/reference` | `<10で確認するもの>` | `<何を支えるか>` | `target` | `target` | `not_reviewed` | `<注意>` |
+
+## 00 To 10 Source Status Mapping
+
+| 00_status | 10_initial_status | 10での扱い |
+|---|---|---|
+| `target` | `target` | 確認対象。まだ取得していない |
+| `provided` | `collected` | 受領済みだが未読。`review_state = not_reviewed` として扱う |
+| `unavailable` | `unavailable` | 取得不能または存在しない候補として理由を残す |
+| `unknown` | `target` または00へrework | 存在確認自体が10のsource taskなら `target`。何を確認するか不明なら00へ戻す |
+
+10-source-intake の正規statusに `provided` は入れない。00から来た `provided` は、handoff時点で必ず `collected` に正規化し、内容未確認であることを残す。
 
 ## Initial Risk Hints
 
@@ -60,9 +79,9 @@
 
 ## Low Confidence Hypotheses For 10
 
-| hypothesis_id | Area | Candidate | Provenance | Confidence | Suggested source |
-|---|---|---|---|---|---|
-| `H-001` | `<business_name/target_statement/success_guess/rough_io/scope/owner>` | `<assistantが置いた候補>` | `assistant_hypothesis_from_conversation` | `low` | `<10で確認するsource>` |
+| hypothesis_id | Area | Candidate | provenance | claim_type | source_type | source_ref | Confidence | Suggested source |
+|---|---|---|---|---|---|---|---|---|
+| `H-001` | `<business_name/target_statement/success_guess/rough_io/scope/owner>` | `<assistantが置いた候補>` | `hypothesized` | `hypothesis` | `assumption` | `conversation` | `low` | `<10で確認するsource>` |
 
 ## Later Phase Notes
 
@@ -84,6 +103,7 @@
 ## Handoff Notes
 
 - `rework` 条件が残っている場合、このhandoffを作らず00内で追加質問して再判定する。
+- `entry_type = unclear` はrework条件であり、`pass` / `defer` のhandoffには残さない。
 - 10では、00の本人説明を観測済み事実として扱わない。
 - 00でassistantが置いた仮説は、ユーザー同意があってもsource確認まで `confidence = low` として扱う。
 - 既存型は現物sourceの取得と確認を優先する。
