@@ -56,7 +56,8 @@
 | `_context/anomaly-rules.md` | 入口で拾う違和感、stop/rework条件 |
 | `_context/gate-rubric.md` | `entry-gate` とmain review観点 |
 | `_context/matt-pocock-skills.md` | grill-me / grill-with-docs / to-prd の00向け翻訳 |
-| `_context/subagent-brief.md` | 00担当subagentへ必ず渡すdispatch packet |
+| `_context/dispatch-packet.md` | 00担当subagentへ必ず渡すdispatch packet |
+| `_context/dispatch-checks.md` | 00担当subagentの返答をmain agentが確認する観点 |
 
 ## Workflow
 

@@ -38,7 +38,8 @@
 - `template/00-entry/_context/anomaly-rules.md`: 違和感、stop/rework条件
 - `template/00-entry/_context/gate-rubric.md`: entry-gate、subagent自己チェック、main review観点
 - `template/00-entry/_context/matt-pocock-skills.md`: grill-me / grill-with-docs / to-prdの翻訳
-- `template/00-entry/_context/subagent-brief.md`: 00担当subagent brief雛形
+- `template/00-entry/_context/dispatch-packet.md`: 00担当subagentへ渡すphase実行入力契約
+- `template/00-entry/_context/dispatch-checks.md`: 00担当subagent返答のmain review観点
 
 今後の候補:
 
@@ -153,6 +154,6 @@ IR凍結で未整備:
 - Lexicon: `knowledge/docs/lexicon.md`
 - 状態分類: 決定済み / 仮説 / 未検証 / pending / accepted / applied など
 - session brief: 今回の作業の仮ゴール、scope、完了条件
-- 横断subagent brief: 委譲先への仮ゴール、Compass、必要資料、成果物契約。phase固有の実行briefは `template/<phase>/_context/` に置いてよい
+- 横断subagent brief: 委譲先への仮ゴール、Compass、必要資料、成果物契約。phase固有のdispatch packet/checksは `template/<phase>/_context/` に置いてよい
 - read routing: どの作業で何を追加で読むか
 - schema / validator / runner: 原則 `template/_shared/internal/`

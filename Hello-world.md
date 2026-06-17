@@ -152,13 +152,14 @@ Known template assets:
 - template/_shared/evaluation/personas/README.md
 - template/_shared/evaluation/README.md
 - template/00-entry/_context/anomaly-rules.md
+- template/00-entry/_context/dispatch-checks.md
+- template/00-entry/_context/dispatch-packet.md
 - template/00-entry/_context/gate-rubric.md
 - template/00-entry/_context/grill-rules.md
 - template/00-entry/_context/matt-pocock-skills.md
 - template/00-entry/_context/phase-boundary.md
 - template/00-entry/_context/README.md
 - template/00-entry/_context/sorting-rules.md
-- template/00-entry/_context/subagent-brief.md
 - template/00-entry/artifacts/entry-packet.md
 - template/00-entry/artifacts/initial-risk-memo.md
 - template/00-entry/artifacts/later-phase-notes.md

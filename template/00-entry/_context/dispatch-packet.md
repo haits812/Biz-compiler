@@ -8,6 +8,8 @@
 
 subagentは、`必読ファイル` に挙げたファイルを読んでから最初の質問を始める。README、phase-local context、gate-rubricを読めない状態では、入口質問を開始せず、未読理由をmain agentへ返す。
 
+返答後のmain reviewは `template/00-entry/_context/dispatch-checks.md` で行う。
+
 ## タスク用仮ゴール
 
 00-entry の業務候補を初期問診し、10-source-intakeへ進めるか判定できるentry packetを作る。
