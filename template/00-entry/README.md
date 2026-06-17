@@ -64,14 +64,25 @@
 
 00-entry を実行する時は、まず `phase-orchestrator.ps1 start` でdispatch bundleを作る。これを00担当subagentへ渡し、subagent返答を保存してから `phase-orchestrator.ps1 review` でmain reviewを行う。
 
+実運用では、`template/00-entry/` を `output/Biz-001-業務名/00-entry/` へコピーした後、そのoutput側の `phase-orchestrator.ps1` を実行する。scriptは自分が置かれたフォルダを `PhaseDir` として扱うため、output側で実行すれば `_work/` もoutput側に作られる。template側で直接試す時だけ、`-NoWrite` または `-OutDir` を明示する。
+
 ```powershell
+cd output/Biz-001-業務名/00-entry
 .\phase-orchestrator.ps1 start `
   -Request "<ユーザーの入口発話>" `
-  -Materials "<資料1;資料2>" `
-  -OutDir "output/Biz-001-業務名/00-entry/_work"
+  -Materials "<資料1;資料2>"
 
 .\phase-orchestrator.ps1 review `
-  -SubagentResultFile "output/Biz-001-業務名/00-entry/_work/subagent-result.md"
+  -SubagentResultFile "_work/subagent-result.md"
+```
+
+template側でpreviewする場合:
+
+```powershell
+.\template\00-entry\phase-orchestrator.ps1 start `
+  -Request "<ユーザーの入口発話>" `
+  -Materials "<資料1;資料2>" `
+  -NoWrite
 ```
 
 `reviewer_result = ask_rework` の場合、00は完了しない。追加質問で00内loopへ戻す。`accept_pass` / `accept_defer` の場合だけ `handoff.md` を埋めて10-source-intakeへ進める。`accept_stop` は停止理由を残して閉じる。

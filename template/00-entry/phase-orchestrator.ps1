@@ -118,35 +118,50 @@ function Write-Or-Print {
 function Get-RequiredFiles {
   param([string]$PhasePath)
   $repoRoot = Get-RepoRoot
-  $items = @(
+  $rootItems = @(
     'Hello-world.md',
     'SOUL.md',
     'USER.md',
     'COMPASS.md',
     'knowledge/docs/lexicon.md',
     'MEMORY.md',
-    'knowledge/docs/meta/phase-catalog.md',
-    'template/00-entry/README.md',
-    'template/00-entry/questions.md',
-    'template/00-entry/checks.md',
-    'template/00-entry/contract.md',
-    'template/00-entry/handoff.md',
-    'template/00-entry/_context/phase-boundary.md',
-    'template/00-entry/_context/grill-rules.md',
-    'template/00-entry/_context/sorting-rules.md',
-    'template/00-entry/_context/anomaly-rules.md',
-    'template/00-entry/_context/gate-rubric.md',
-    'template/00-entry/_context/dispatch-packet.md',
-    'template/00-entry/_context/dispatch-checks.md'
+    'knowledge/docs/meta/phase-catalog.md'
   )
-  return @($items | ForEach-Object {
-    $path = Join-Path $repoRoot ($_ -replace '/', '\')
-    [pscustomobject]@{
-      path = $_
-      exists = [bool](Test-Path -LiteralPath $path)
-      full_path = $path
-    }
-  })
+  $phaseItems = @(
+    'README.md',
+    'questions.md',
+    'checks.md',
+    'contract.md',
+    'handoff.md',
+    '_context/phase-boundary.md',
+    '_context/grill-rules.md',
+    '_context/sorting-rules.md',
+    '_context/anomaly-rules.md',
+    '_context/gate-rubric.md',
+    '_context/dispatch-packet.md',
+    '_context/dispatch-checks.md'
+  )
+
+  $rows = New-Object System.Collections.Generic.List[object]
+  foreach ($item in $rootItems) {
+    $fullPath = Join-Path $repoRoot ($item -replace '/', '\')
+    $rows.Add([pscustomobject]@{
+      path = $item
+      source = 'repo-root'
+      exists = [bool](Test-Path -LiteralPath $fullPath)
+      full_path = $fullPath
+    }) | Out-Null
+  }
+  foreach ($item in $phaseItems) {
+    $fullPath = Join-Path $PhasePath ($item -replace '/', '\')
+    $rows.Add([pscustomobject]@{
+      path = $item
+      source = 'phase-dir'
+      exists = [bool](Test-Path -LiteralPath $fullPath)
+      full_path = $fullPath
+    }) | Out-Null
+  }
+  return $rows.ToArray()
 }
 
 function Convert-MaterialRows {
@@ -203,7 +218,7 @@ function Invoke-Start {
   $now = Get-Date -Format 'yyyy-MM-dd HH:mm:ss K'
 
   $materialTable = New-MarkdownTable -Rows $materialRows -Columns @('path', 'exists', 'resolved')
-  $requiredTable = New-MarkdownTable -Rows $requiredRows -Columns @('path', 'exists')
+  $requiredTable = New-MarkdownTable -Rows $requiredRows -Columns @('path', 'source', 'exists')
   $phaseRel = ConvertTo-RepoRelativePath -Path $phasePath
 
   $content = @"
