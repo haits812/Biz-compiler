@@ -65,3 +65,4 @@
 | 36 | 部下の業務フローを誤読する上司 | `personas/36-manager-misreads-team-flow/persona.md` |
 | 37 | 自信だけある勘違い新入社員 | `personas/37-overconfident-procurement-newcomer/persona.md` |
 | 38 | フローを持っているが話が飛ぶ依頼者 | `personas/38-incoherent-expense-flow/persona.md` |
+| 39 | 部門横断新規事業プログラム担当 | `personas/39-cross-functional-business-program/persona.md` |

@@ -7,6 +7,14 @@
 | Check | Pass Criteria | Result |
 |---|---|---|
 | entry type | `existing_work` / `new_work` のどちらかに切れている。`unclear` は `rework` とし、handoffしない | `<pass/defer/rework/stop>` |
+| work unit | `single_business` / `workflow_or_operation` / `business_program` のどれかに切れている。`business_program` は新規事業や派遣チーム相当の構想として扱う | `<pass/defer/rework>` |
+| delivery shape | 1人相当のAI/automationで足りる候補か、複数役割のチーム編成候補かを粗く分ける。確定は30以降 | `<pass/defer/rework>` |
+| source posture | 相談者本人、source holder接続済み、代理/伝聞、mixedを区別する | `<pass/defer/rework>` |
+| 20 readiness | `as_is_decompose` / `requirements_candidate` / `business_design_candidate` / `do_not_proceed_*` のどれかに切る | `<pass/defer/rework/stop>` |
+| route confirmation | `pass` / `defer` のterminal resultでは、最初に立てたroute flagを本人/source holderへ自然文で確認し、`route_confirmed_by_requester` と `route_delta_after_confirmation` を残している | `<pass/defer/rework>` |
+| first-turn terminal guard | 初回発話だけ、質問0、追加回答なし、資料実物なしの場合は `pass` / `defer` にせず、00内の追加質問へ戻す。`defer` はterminalなので質問0完了の逃げ道にしない | `<rework>` |
+| first response shape | 初回は業務候補らしさを短く受け止め、実物またはsource holderを1つだけ聞く。フェーズ表、解決策、自動化範囲、実行分担を出さない | `<rework>` |
+| question count | `rework` では次の確認質問を1つ、最大でも3つまでに絞る | `<rework>` |
 | target statement | 業務候補を一文で説明できる | `<pass/defer/rework/stop>` |
 | intent | 何をしたいかが粗く分類されている | `<pass/defer/rework/stop>` |
 | not a one-off | 単発作業ならBiz-compiler対象外として扱いが明記されている | `<pass/defer/rework/stop>` |
@@ -16,6 +24,8 @@
 | authority is not evidence | 役職、権限、経験、善意、自信を観測済み事実として扱っていない | `<pass/defer/rework>` |
 | proxy / hearsay | 代理説明、伝聞、最終成果物からの逆算を一次情報として扱っていない | `<pass/defer/rework>` |
 | proxy pass guard | 代理/伝聞経由の候補を、本人またはsource holderへの実接続前に `pass` にしていない。「確認してよい」は `defer` として扱う | `<defer/rework>` |
+| proxy as-is guard | `source_posture = proxy_hearsay` のまま `20_readiness = as_is_decompose` にしていない。source holderへ接続するか、`requirements_candidate` / `do_not_proceed_rework` に倒す | `<defer/rework>` |
+| business program guard | 新規事業や派遣チーム相当の構想を、単体既存業務のAs-Is分解として扱っていない。`business_design_candidate` として20へ渡す | `<defer/rework>` |
 
 ## Material Checks
 
@@ -47,12 +57,23 @@
 | authorization | owner、承認者、送信主体、source利用許可が必要な依頼で、権限不明を隠していない | `<pass/defer/rework/stop>` |
 | abuse or deception | なりすまし、隠蔽、承認迂回、同意なし収集の疑いを確認し、実行案を出していない | `<pass/rework/stop>` |
 | high-risk domain | finance / HR / legal / procurement / customer / account / approval を扱う場合、未確認事項を `defer` に倒している | `<pass/defer/rework>` |
+| pass strictness | external / sensitive / irreversible / authorization / approval が `yes` または `unknown` のまま `pass` にしていない | `<pass/defer/rework/stop>` |
+
+## Defer / Stop Contract Checks
+
+| Check | Pass Criteria | Result |
+|---|---|---|
+| defer contract | `defer` の場合、`defer_contract_id` と10で検証する未解決事項がある | `<defer>` |
+| unresolved policy | `defer` の未解決事項が解けなかった場合の戻し先、停止条件、再確認phaseが明記されている | `<defer>` |
+| stop reason type | `stop` の場合、`benign_non_bizcompiler` / `unsafe_or_unauthorized` / `dangerous_scope_unclear` のどれかが明記されている | `<stop>` |
 
 ## Phase Boundary Checks
 
 | Check | Pass Criteria | Result |
 |---|---|---|
 | no 20 work | As-Is詳細分解を00で完了していない | `<pass/rework>` |
+| 20 route notes | 20へ渡す入口が `as_is_decompose` / `requirements_candidate` / `business_design_candidate` のどれかとして明記されている | `<pass/defer/rework>` |
+| route confirmation | `Route Confirmation` セクションがあり、本人/source holderへの確認質問、回答または根拠、route deltaがある | `<pass/defer>` |
 | no 30 work | executor / automation / Skill routingを00で決めていない | `<pass/rework>` |
 | no 40+ work | IR、consent、validation、operation設計を00で固定していない | `<pass/rework>` |
 | later notes | 後続phaseの話を `later-phase-notes.md` に送っている | `<pass/defer/rework>` |
@@ -64,8 +85,17 @@
 | entry_gate_result | `pass` / `defer` / `rework` / `stop` |
 | terminality | `terminal` / `non-terminal loop` |
 | reason | `<判断理由>` |
+| interaction_state | `initial_request_only`、`user_answer_count`、`material_evidence_count`、`asked_question_count` |
+| work_unit | `single_business` / `workflow_or_operation` / `business_program` / `unclear` |
+| delivery_shape | `single_executor` / `multi_executor_team` / `unknown` |
+| source_posture | `first_party` / `source_holder_connected` / `proxy_hearsay` / `mixed` / `unknown` |
+| 20_readiness | `as_is_decompose` / `requirements_candidate` / `business_design_candidate` / `do_not_proceed_rework` / `do_not_proceed_stop` |
+| route_confirmed_by_requester | `yes` / `partial` / `no` / `not_yet` / `not_applicable` |
+| route_delta_after_confirmation | `none` / `existing_to_new` / `new_to_existing` / `single_to_program` / `program_to_single` / `unknown_to_fixed` |
 | next_phase | `10-source-intake` / `none` |
 | rework_target | `00-entry` / `none` |
 | deferred_items | `<10で検証する未確認事項>` |
+| defer_contract_id | `<deferの場合はDC-001など。pass/rework/stopならnone>` |
 | next_00_questions | `<reworkの場合に00内で次に聞く質問>` |
+| stop_reason_type | `benign_non_bizcompiler` / `unsafe_or_unauthorized` / `dangerous_scope_unclear` / `none` |
 | stop_reason | `<stopの場合の理由>` |

@@ -2,8 +2,29 @@
 
 この質問票は、sourceを集めるための入口である。すべてを聞き切る必要はない。20で分解できるだけのsourceと由来を集める。
 
-## Scope Confirmation
+## Natural Conversation Source Intake
 
+10担当は、00から渡された候補をそのまま成果物化しない。最初のsource確認では、最大3問までで次を揃える。
+
+| # | Question | Required Output |
+|---|---|---|
+| 1 | まず実物として見られる資料、画面、ログ、サンプルはどれか | `material_evidence_count` と source_id |
+| 2 | そのsourceを持つ人、利用許可を出せる人、現場の実担当者は誰か | `source_contact_attempt_count` と actor separation |
+| 3 | 差戻し、例外、最近の失敗、古い資料との差分はどこで確認できるか | counter_evidence / near-miss |
+
+資料確認もsource holder接続もない場合、10は `pass` / `defer` terminalにしない。10内で追加観測するか、対象やownerが崩れた場合は00へ戻す。
+## Route Flag Recheck
+
+10担当は、00のroute flagをそのまま写して終えない。source確認の入口で、次を最大2問で確認する。
+
+| # | Question | Required Output |
+|---|---|---|
+| 1 | 00で切った「既存業務 / 新規業務 / 新規事業program」の見立ては、資料やsource holderの説明と矛盾しないか | `route_rechecked_in_10` / `route_delta_from_00` |
+| 2 | 複数部署・複数役割が必要な構想なら、20では既存As-Is分解ではなく設計候補整理として扱うべきか | `20_input_contract` / `as_is_observed` |
+
+routeが揺れる場合は、20へ送らず10で追加sourceを取るか00へ戻す。
+
+## Scope Confirmation
 | # | Question | Notes |
 |---|---|---|
 | 1 | 今回扱う業務は何か。どこからどこまでを対象にするか | 00-entryと矛盾する場合は00へ戻す |

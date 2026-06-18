@@ -15,7 +15,7 @@
 
 ## Last Verified
 
-- Verified at: 2026-06-17 JST
+- Verified at: 2026-06-18 JST
 - Verified by: hello-world-gate.ps1
 - Scope: Biz-compiler repo self-description only
 - Excludes: 実際にコンパイルしている個別業務の状態
@@ -149,8 +149,11 @@ Known template assets:
 - template/_shared/evaluation/personas/36-manager-misreads-team-flow/persona.md
 - template/_shared/evaluation/personas/37-overconfident-procurement-newcomer/persona.md
 - template/_shared/evaluation/personas/38-incoherent-expense-flow/persona.md
+- template/_shared/evaluation/personas/39-cross-functional-business-program/persona.md
 - template/_shared/evaluation/personas/README.md
 - template/_shared/evaluation/README.md
+- template/_shared/internal/runner/replay/run-00-10-persona-smoke.ps1
+- template/_shared/internal/runner/replay/run-10-source-intake-review-regression.ps1
 - template/00-entry/_context/anomaly-rules.md
 - template/00-entry/_context/dispatch-checks.md
 - template/00-entry/_context/dispatch-packet.md
@@ -171,12 +174,15 @@ Known template assets:
 - template/00-entry/phase-orchestrator.ps1
 - template/00-entry/questions.md
 - template/00-entry/README.md
+- template/10-source-intake/_context/dispatch-checks.md
+- template/10-source-intake/_context/dispatch-packet.md
 - template/10-source-intake/artifacts/fact-register.md
 - template/10-source-intake/artifacts/intake-log.md
 - template/10-source-intake/artifacts/source-inventory.md
 - template/10-source-intake/checks.md
 - template/10-source-intake/contract.md
 - template/10-source-intake/handoff.md
+- template/10-source-intake/phase-orchestrator.ps1
 - template/10-source-intake/questions.md
 - template/10-source-intake/README.md
 - template/50-consent/pipeline-flowchart/pipeline-flowchart.html

@@ -35,13 +35,26 @@
 
 1. 00-entry から対象業務、scope、仮ゴールを受け取る。
 2. source候補を `artifacts/source-inventory.md` に登録する。00の `provided` は `collected` + 未reviewとして正規化し、10のstatusへ `provided` を残さない。
-3. ヒアリング、観測、資料確認のログを `artifacts/intake-log.md` に残す。
-4. 主張を `artifacts/fact-register.md` に移し、`observed_fact` / `person_explanation` / `hypothesis` / `unconfirmed` を分ける。
-5. 各主張に `source_id`、`provenance`、`confidence`、`counter_evidence` を付ける。
-6. `checks.md` で、由来不明・推測混入・scope混入・source不足を確認する。
-7. completion reviewer subagent が、20へ渡してよいかを別視点で検査する。
-8. `handoff.md` を埋め、20-decompose-encrs へ渡す。
+3. 10担当がsource確認として何を聞いたか、何を読んだか、source holderへ接続できたかを `source_intake_interaction` として残す。資料確認もsource holder接続もないterminal resultは不可。`pass` には少なくとも1つの実資料/ログ/画面/観測source確認が必要。
+4. ヒアリング、観測、資料確認のログを `artifacts/intake-log.md` に残す。
+5. 主張を `artifacts/fact-register.md` に移し、`observed_fact` / `person_explanation` / `hypothesis` / `unconfirmed` を分ける。
+6. 各主張に `source_id`、`provenance`、`confidence`、`counter_evidence` を付ける。`person_explanation` / `hypothesis` / `unconfirmed` は主張内容を `observed` に昇格しない。
+7. `checks.md` で、由来不明・推測混入・scope混入・source不足を確認する。
+8. completion reviewer subagent が、20へ渡してよいかを別視点で検査する。
+9. `handoff.md` を埋め、20-decompose-encrs へ渡す。
 
+
+## Phase Orchestrator
+
+10-source-intake の実行入口は `phase-orchestrator.ps1` である。
+
+| Command | 役割 |
+|---|---|
+| `start` | 00 handoff、materials、必読ファイル状態、dispatch promptを1つのbundleにする |
+| `review` | 10担当subagentの返答を deterministic に検査し、`accept_pass` / `accept_defer` / `ask_rework` / `accept_stop` / `preflight_retry` に分類する |
+| `status` | phase-localファイルと最近のwork fileを確認する |
+
+`preflight_retry` は10のgate resultではない。必読ファイルを読了するまで10を開始しないための実行前リトライである。
 ## Contract Gate
 
 10の出口では、次を満たす必要がある。
@@ -49,6 +62,7 @@
 | Check | 通す条件 |
 |---|---|
 | source | 20で分解するための主要sourceが列挙され、00由来statusが10正規statusへ変換されている |
+| interaction | `source_intake_interaction` があり、質問回数、資料確認数、source holder接続数が見える。資料確認もsource holder接続もないterminal resultは不可 |
 | provenance | 重要な主張に由来がある |
 | separation | 事実、本人説明、推測、未確認が混ざっていない |
 | confidence | 低confidenceを確定扱いにしていない |

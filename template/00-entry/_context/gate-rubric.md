@@ -17,6 +17,24 @@
 
 低言語化ユーザーから出た候補は、具体sourceとsource holderを確認するまで `pass` 禁止。代理/伝聞経由の候補は、本人またはsource holderへ実際に接続するまで `pass` 禁止。「確認してよい」は `defer` であり、接続済みではない。
 
+## Decision Table
+
+| 状態 | gate result | 理由 |
+|---|---|---|
+| 初回発話だけ、質問0、追加回答なし、資料実物なし | `rework` | 業務候補らしさがあっても00をterminal完了にしない |
+| 対象業務、owner/source holder候補、scope、読むsourceが見え、high-riskが `no` または低く、通常の実物確認で足りる | `pass` | 10で通常source確認へ進める |
+| 対象業務と読むsourceは見えるが、external / sensitive / irreversible / authorization / proxy / hearsay / low articulation / source正本性のいずれかが `yes` または `unknown` | `defer` | 10で検証しないと安全・権限・scopeの扱いが変わる |
+| 対象業務、owner、source holder、scope、読むsourceのどれかが切れない | `rework` | 10へ渡す前に00内で追加質問が必要 |
+| 単発支援、Biz-compiler対象外、または不正/なりすまし/承認迂回/同意なし収集/権限不明の危険な外部作用 | `stop` | 進めると業務コンパイルではなく事故になる |
+
+## Pass / Defer Boundary
+
+`pass` は「リスクがない」という意味ではない。00で扱える範囲の初期riskを見たうえで、10-source-intakeが通常のsource確認として進められる状態を指す。
+
+`defer` は「未確認のまま進めてよい」という意味ではない。10-source-intakeで検証しないと、scope、権限、承認、外部作用、sensitive、不可逆操作、proxy/hearsayの扱いが変わる未確認事項を持ったterminal handoffである。
+
+external / sensitive / irreversible / authorization が `yes` または `unknown` の場合、00で安全側に確定できない限り `pass` ではなく `defer` または `stop` に倒す。
+
 ## Entry Gate Lenses
 
 | Lens | 見ること | gateへの倒し方 |
@@ -46,7 +64,8 @@
 - 対象業務が1つに切れている。
 - 実作業者、owner候補、source holder候補が見えている。
 - 読むsource候補が具体的で、次のsource確認で通常処理できる。
-- sensitive / irreversible / external / approval の初期riskが低い、または範囲と確認先が明確である。
+- external / sensitive / irreversible / authorization / approval の初期riskが `no` または低く、10で通常確認すれば足りる。
+- high-risk領域でも、00時点でowner、承認者、source holder、確認sourceが明確で、実行判断ではなくsource確認だけへ進める場合に限る。
 - 低言語化または代理/伝聞経由の場合は、実担当者またはsource holderへ実際に接続済みである。
 - 初手で既存フローや手順書が渡された場合は、その資料のowner、鮮度、対象scope、例外/差戻しの有無を次工程で確認できる。
 - 00で後続phaseの設計を固定していない。
@@ -56,6 +75,7 @@
 - 本人断定をsource確認していない。
 - 権限、承認者、閲覧範囲、利用許可が未確認。
 - finance / HR / legal / procurement / customer / account / approval を扱う。
+- external / sensitive / irreversible / authorization / approval が `yes` または `unknown`。
 - 外部送信、確定、削除、権限変更、請求、発注に近い。
 - 新任者、一担当者、権限者、ベテラン、善意の担当者の説明が中心で、一次sourceが未確認。
 - 最終成果物や週次/月次資料から作業実態を逆算している。

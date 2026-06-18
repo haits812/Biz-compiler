@@ -12,6 +12,8 @@
 
 ## 未整理メモ
 
+- 00-entryを新規セッションでテストする時は、repo名、phase名、orchestrator利用指示などのメタ情報から入らず、利用者がいきなり雑な業務相談を投げる形を初手にする。自然な本題発話だけで入口トリアージが働くかを見ないと、口頭ヒアリング入口の検査にならない。
+
 - Contract Gate は独立した大きなgateというより、数字phase末尾に入る完了処理/出口チェックとして設計する候補。各phaseで次へ進める契約条件、検収条件、実行者、scope、rollbackなどが揃ったかを確認する処理として後で整理する。
 
 - Revision/Recompile Model（manifest revision、contract patch、approval再取得、gate降格など）は、70/80の運用・改善ループに到達してから整備する。現時点の先行メタ土台からは外し、phase handoff、gate policy、evidence/confidenceを先に扱う。
